@@ -1,9 +1,5 @@
 name: Build site
 
-# Пересобирает статические страницы из Markdown/JSON после любой правки контента:
-# бот в Telegram или CMS в /admin коммитят _projects/*.md, _articles/*.md, _content/*.md —
-# и GitHub Pages получает готовые HTML-страницы.
-
 on:
   push:
     branches: [main]
@@ -17,6 +13,7 @@ on:
       - ".github/workflows/build.yml"
   workflow_dispatch:
 
+# Глобальные права (нужны для пуша изменений ботом)
 permissions:
   contents: write
 
@@ -26,9 +23,15 @@ concurrency:
 
 jobs:
   build:
-    # защита от зацикливания: коммит самой сборки содержит [skip ci]
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
+    
+    # ВАЖНО: Вот эти права нужны для деплоя на GitHub Pages
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,3 +55,12 @@ jobs:
           fi
           git commit -m "build: regenerate pages [skip ci]"
           git push
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
