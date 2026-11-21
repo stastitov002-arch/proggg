@@ -1,0 +1,54 @@
+name: Build site
+
+# Пересобирает статические страницы из Markdown/JSON после любой правки контента:
+# бот в Telegram или CMS в /admin коммитят _projects/*.md, _articles/*.md, _content/*.md —
+# и GitHub Pages получает готовые HTML-страницы.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "_projects/**"
+      - "_articles/**"
+      - "_content/**"
+      - "_data/**"
+      - "css/**"
+      - "build.py"
+      - ".github/workflows/build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-site
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # защита от зацикливания: коммит самой сборки содержит [skip ci]
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build pages
+        run: python build.py
+
+      - name: Commit generated pages
+        run: |
+          git config user.name "4060 design bot"
+          git config user.email "bot@4060design.ru"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Изменений нет — сборка не нужна"
+            exit 0
+          fi
+          git commit -m "build: regenerate pages [skip ci]"
+          git push

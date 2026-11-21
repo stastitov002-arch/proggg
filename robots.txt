@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /preview/
+Disallow: /admin/
+Disallow: /_articles/
+Disallow: /_projects/
+Disallow: /_content/
+Disallow: /_data/
+
+Sitemap: https://4060design.ru/sitemap.xml

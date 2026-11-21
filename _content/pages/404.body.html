@@ -1,0 +1,31 @@
+<div class="err-container">
+  <p class="err-code">404</p>
+  <h1 class="err-title">Страница не найдена</h1>
+  <p class="err-text">Возможно, ссылка устарела, или страница была перемещена. Но вы всегда можете вернуться и продолжить знакомство с нашей мебелью.</p>
+  <div class="err-actions">
+    <a href="/" class="err-btn">На главную</a>
+    <a href="/portfolio.html" class="err-btn err-btn--ghost">В портфолио</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var header = document.querySelector('.hd-block');
+  if(header){
+    var burger = header.querySelector('.hd-block__burger');
+    var nav = header.querySelector('.hd-block__nav');
+    if(burger && nav){
+      burger.addEventListener('click', function(){
+        var open = !header.classList.contains('hd-block--menu-open');
+        header.classList.toggle('hd-block--menu-open', open);
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      nav.addEventListener('click', function(e){
+        if(e.target.tagName === 'A') header.classList.remove('hd-block--menu-open');
+      });
+    }
+  }
+})();
+</script>
+</body>
+</html>

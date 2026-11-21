@@ -1,0 +1,324 @@
+backend:
+  name: github
+  repo: stastitov002-arch/4060-site
+  branch: main
+  base_url: https://white-sound-877adecap-proxy.stas-titov-002.workers.dev
+  auth_endpoint: /auth
+
+# Глобальные правила генерации слагов.
+# Применяются и к именам файлов проектов, и к загружаемым фото.
+slug:
+  encoding: ascii           # только ASCII (a-z, 0-9, дефис, подчёркивание, тильда)
+  clean_accents: true       # é→e, ü→u, а также транслитерация (ß→ss и т.д.)
+  sanitize_replacement: "-" # недопустимые символы → дефис
+  trim: true                # убирать дефисы по краям
+  lowercase: true           # всё в нижний регистр
+
+media_folder: "images/uploads"
+public_folder: "images/uploads"
+
+# Главное: автоматическое переименование загружаемых файлов.
+# Без этой опции Sveltia сохраняет оригинальные имена (с пробелами и кириллицей).
+media_libraries:
+  default:
+    config:
+      slugify_filename: true   # ← вот эта опция включает переименование
+
+collections:
+  # ============================================
+  # ПРОЕКТЫ (портфолио + главная)
+  # ============================================
+  - name: "projects"
+    label: "Проекты"
+    label_singular: "Проект"
+    folder: "_projects"
+    create: true
+    identifier_field: "title"
+    slug: "{{fields.slug}}"
+    summary: "{{title}} {% if featured %}★ на главной{% endif %}"
+    description: "Заполни поле «Слаг» латиницей — это имя файла. Остальное можно писать по-русски."
+    fields:
+      - label: "Слаг (имя файла, латиница)"
+        name: "slug"
+        widget: "string"
+        hint: "Только латиница, цифры и дефис. Например: kitchen-modern-01. Без пробелов, без русских букв."
+        pattern: ['^[a-z0-9\-]+$', 'Только латиница, цифры и дефис']
+      - { label: "Название проекта", name: "title", widget: "string" }
+      - { label: "Показать на главной", name: "featured", widget: "boolean", default: false, required: false, hint: "Максимум 4 проекта" }
+      - label: "Тип мебели"
+        name: "type"
+        widget: "select"
+        required: false
+        options: ["Кухня", "Гардеробная", "Прихожая", "Санузел", "Гостиная", "Другое"]
+        hint: "В фильтре портфолио появляется отдельная группа «Тип»"
+      - label: "Черновик (не публиковать)"
+        name: "draft"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "Пока включено — проект не виден в портфолио, доступно только превью /preview/portfolio/<слаг>.html"
+      - { label: "Стиль", name: "style", widget: "string", required: false }
+      - { label: "Планировка", name: "layout", widget: "string", required: false }
+      - label: "Есть остров?"
+        name: "island"
+        widget: "boolean"
+        default: false
+        required: false
+      - label: "Материал фасада"
+        name: "material"
+        widget: "select"
+        multiple: true
+        dropdown_threshold: 20
+        required: false
+        hint: "Выбери один или несколько материалов (например, ЛДСП и Пленка ПВХ) — они появятся в фильтре портфолио."
+        options:
+          - "ЛДСП"
+          - "AGT"
+          - "Пленка ПВХ"
+          - "Пластик"
+          - "ALVIC Luxe"
+          - "Массив"
+          - "Шпон"
+          - "Эмаль"
+      - { label: "Цена", name: "price", widget: "number", required: false }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Главное фото", name: "cover", widget: "image" }
+      - { label: "Галерея (2–5 фото)", name: "gallery", widget: "list", required: false, field: { label: "Фото", name: "image", widget: "image" } }
+      - { label: "Фасады и материалы (подробно)", name: "facades", widget: "text", required: false, hint: "Текстовое описание — краска, декор, толщина. Не влияет на фильтр." }
+      - { label: "Столешница", name: "countertop", widget: "text", required: false }
+      - { label: "Фурнитура", name: "hardware", widget: "text", required: false }
+      - { label: "Комплектация", name: "equipment", widget: "text", required: false }
+
+  # ============================================
+  # СТАТЬИ (блог на главной + страница /articles)
+  # ============================================
+  - name: "articles"
+    label: "Статьи"
+    label_singular: "Статья"
+    folder: "_articles"
+    create: true
+    identifier_field: "title"
+    slug: "{{fields.slug}}"
+    summary: "{{title}} {% if draft %}(черновик){% endif %}"
+    description: "Статью можно написать здесь или прислать в Telegram-бот — результат одинаковый. После сохранения сайт пересобирается автоматически."
+    fields:
+      - { label: "Слаг (имя файла, латиница)", name: "slug", widget: "string", pattern: ['^[a-z0-9\-]+$', 'Только латиница, цифры и дефис'] }
+      - { label: "Title (для поиска, до 60 символов)", name: "title", widget: "string" }
+      - { label: "H1", name: "h1", widget: "string" }
+      - { label: "Description (140–160 символов)", name: "description", widget: "text" }
+      - { label: "Лид (короткий ответ под H1)", name: "lead", widget: "text", required: false }
+      - { label: "Обложка", name: "cover", widget: "image", required: false }
+      - label: "Категория"
+        name: "category"
+        widget: "select"
+        options: ["Цены", "Материалы", "Дизайн", "Производство", "Уход"]
+        default: "Цены"
+      - { label: "Теги", name: "tags", widget: "list", required: false, field: { label: "Тег", name: "tag", widget: "string" } }
+      - { label: "Ключевые запросы", name: "keywords", widget: "list", required: false, field: { label: "Запрос", name: "kw", widget: "string" } }
+      - { label: "Дата", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Обновлено", name: "updated", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false }
+      - { label: "Автор", name: "author", widget: "string", default: "40/60 Design", required: false }
+      - { label: "Черновик", name: "draft", widget: "boolean", default: false, required: false, hint: "Черновик не попадает в список статей; превью — /preview/<слаг>.html" }
+      - { label: "Текст статьи (Markdown)", name: "body", widget: "markdown" }
+
+  # ============================================
+  # НАСТРОЙКИ САЙТА (тексты, телефоны, кнопки)
+  # ============================================
+  - name: "settings"
+    label: "Настройки сайта"
+    files:
+      - name: "site"
+        label: "Тексты и контакты"
+        file: "_data/site.json"
+        fields:
+          - label: "Общее (шапка, футер)"
+            name: "common"
+            widget: "object"
+            fields:
+              - { label: "Телефон 1", name: "phone1", widget: "string" }
+              - { label: "Телефон 2", name: "phone2", widget: "string" }
+              - { label: "Часы работы", name: "hours", widget: "string" }
+              - { label: "Telegram (username без @)", name: "tg", widget: "string" }
+              - { label: "Текст в подвале", name: "tagline", widget: "text" }
+              - { label: "Копирайт", name: "copyright", widget: "string" }
+
+          - label: "Главная — Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Надстрочник", name: "eyebrow", widget: "string" }
+              - { label: "Заголовок (можно HTML)", name: "title", widget: "text" }
+              - { label: "Подзаголовок (можно HTML)", name: "subtitle", widget: "text" }
+              - { label: "Бейдж 1", name: "badge1", widget: "string" }
+              - { label: "Бейдж 2", name: "badge2", widget: "string" }
+              - { label: "Бейдж 3", name: "badge3", widget: "string" }
+              - { label: "Бейдж 4", name: "badge4", widget: "string" }
+              - { label: "Кнопка 1", name: "btn1", widget: "string" }
+              - { label: "Кнопка 2", name: "btn2", widget: "string" }
+              - { label: "Текст «Скролл»", name: "scroll", widget: "string" }
+
+          - label: "Главная — Портфолио"
+            name: "homePortfolio"
+            widget: "object"
+            fields:
+              - { label: "Надстрочник", name: "eyebrow", widget: "string" }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "subtitle", widget: "text" }
+              - { label: "Заголовок CTA-блока (можно HTML)", name: "ctaTitle", widget: "text" }
+              - { label: "Описание CTA-блока", name: "ctaSub", widget: "text" }
+              - { label: "Кнопка CTA", name: "ctaBtn", widget: "string" }
+
+          - label: "Главная — Шоурум"
+            name: "showroom"
+            widget: "object"
+            fields:
+              - { label: "Надстрочник", name: "eyebrow", widget: "string" }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "text", widget: "text" }
+              - { label: "Текст бейджа", name: "badge", widget: "string" }
+              - { label: "Кнопка", name: "btn", widget: "string" }
+
+          - label: "Главная — Проект под ключ"
+            name: "tpk"
+            widget: "object"
+            fields:
+              - { label: "Надстрочник", name: "eyebrow", widget: "string" }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "subtitle", widget: "string" }
+
+          - label: "Главная — Этапы работы"
+            name: "steps"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "lead", widget: "string" }
+
+          - label: "Главная — FAQ"
+            name: "faq"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "subtitle", widget: "string" }
+
+          - label: "Форма замера"
+            name: "form"
+            widget: "object"
+            fields:
+              - { label: "Бейдж", name: "badge", widget: "string" }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "lead", widget: "text" }
+              - { label: "Надстрочник формы", name: "eyebrow", widget: "string" }
+              - { label: "Заголовок формы", name: "formTitle", widget: "string" }
+              - { label: "Кнопка", name: "submit", widget: "string" }
+              - { label: "Плашка «Понравилась»", name: "projectLabel", widget: "string" }
+              - { label: "Заголовок успеха", name: "successTitle", widget: "string" }
+              - { label: "Текст успеха", name: "successText", widget: "string" }
+
+          - label: "О компании"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Hero — надстрочник", name: "heroEyebrow", widget: "string" }
+              - { label: "Hero — лид (можно HTML)", name: "heroLead", widget: "text" }
+              - { label: "Hero — заголовок (можно HTML)", name: "heroTitle", widget: "text" }
+              - { label: "Hero — описание", name: "heroDesc", widget: "text" }
+              - { label: "Hero — кнопка", name: "heroBtn", widget: "string" }
+              - { label: "Правая колонка — надстрочник", name: "rightEyebrow", widget: "string" }
+              - { label: "Правая колонка — заголовок", name: "rightTitle", widget: "string" }
+              - { label: "Правая колонка — текст", name: "rightText", widget: "text" }
+              - { label: "Правая колонка — ссылка", name: "rightLink", widget: "string" }
+              - { label: "Преимущество 1 — заголовок", name: "adv1Title", widget: "string" }
+              - { label: "Преимущество 2 — заголовок", name: "adv2Title", widget: "string" }
+              - { label: "Преимущество 3 — заголовок", name: "adv3Title", widget: "string" }
+              - { label: "Преимущество 4 — заголовок", name: "adv4Title", widget: "string" }
+              - { label: "Партнёры — надстрочник", name: "partnersEyebrow", widget: "string" }
+              - { label: "Партнёры — заголовок", name: "partnersTitle", widget: "string" }
+              - { label: "Материалы — подпись (можно HTML)", name: "materialsCaption", widget: "text" }
+              - { label: "Бренды — подпись (можно HTML)", name: "brandsCaption", widget: "text" }
+              - { label: "Фактуры — подпись (можно HTML)", name: "swatchesCaption", widget: "text" }
+
+          - label: "Партнёрам"
+            name: "partners"
+            widget: "object"
+            fields:
+              - { label: "Hero — надстрочник", name: "heroEyebrow", widget: "string" }
+              - { label: "Hero — заголовок (можно HTML)", name: "heroTitle", widget: "text" }
+              - { label: "Hero — описание", name: "heroSubtitle", widget: "text" }
+              - { label: "Hero — кнопка 1", name: "heroBtn1", widget: "string" }
+              - { label: "Hero — кнопка 2", name: "heroBtn2", widget: "string" }
+              - { label: "«С кем работаем» — надстрочник", name: "whoEyebrow", widget: "string" }
+              - { label: "«С кем работаем» — заголовок", name: "whoTitle", widget: "string" }
+              - { label: "«С кем работаем» — описание", name: "whoLead", widget: "text" }
+              - { label: "«Что получаете» — надстрочник", name: "gainEyebrow", widget: "string" }
+              - { label: "«Что получаете» — заголовок", name: "gainTitle", widget: "string" }
+              - { label: "«Что получаете» — описание", name: "gainLead", widget: "text" }
+              - { label: "«Как начать» — надстрочник", name: "stepsEyebrow", widget: "string" }
+              - { label: "«Как начать» — заголовок", name: "stepsTitle", widget: "string" }
+              - { label: "«Как начать» — описание", name: "stepsLead", widget: "text" }
+              - { label: "Форма — надстрочник", name: "formEyebrow", widget: "string" }
+              - { label: "Форма — заголовок", name: "formTitle", widget: "string" }
+              - { label: "Форма — описание", name: "formLead", widget: "text" }
+              - { label: "Форма — кнопка Telegram", name: "formTgBtn", widget: "string" }
+              - { label: "Форма — кнопка отправки", name: "formSubmit", widget: "string" }
+              - { label: "Форма — заголовок успеха", name: "formSuccessTitle", widget: "string" }
+              - { label: "Форма — текст успеха", name: "formSuccessText", widget: "string" }
+
+          - label: "Гарантия"
+            name: "warranty"
+            widget: "object"
+            fields:
+              - { label: "Hero — надстрочник", name: "heroEyebrow", widget: "string" }
+              - { label: "Hero — заголовок (можно HTML)", name: "heroTitle", widget: "text" }
+              - { label: "Hero — описание", name: "heroSubtitle", widget: "text" }
+              - { label: "Бейдж — число", name: "badgeNum", widget: "string" }
+              - { label: "Бейдж — текст", name: "badgeText", widget: "string" }
+              - { label: "«Что покрывает» — надстрочник", name: "coverEyebrow", widget: "string" }
+              - { label: "«Что покрывает» — заголовок", name: "coverTitle", widget: "string" }
+              - { label: "«Что покрывает» — описание", name: "coverLead", widget: "text" }
+              - { label: "«Ограничения» — надстрочник", name: "notEyebrow", widget: "string" }
+              - { label: "«Ограничения» — заголовок", name: "notTitle", widget: "string" }
+              - { label: "«Ограничения» — описание", name: "notLead", widget: "text" }
+              - { label: "«Сроки» — надстрочник", name: "termsEyebrow", widget: "string" }
+              - { label: "«Сроки» — заголовок", name: "termsTitle", widget: "string" }
+              - { label: "«Сроки» — описание", name: "termsLead", widget: "text" }
+              - { label: "«Обращение» — надстрочник", name: "howEyebrow", widget: "string" }
+              - { label: "«Обращение» — заголовок", name: "howTitle", widget: "string" }
+              - { label: "«Обращение» — описание", name: "howLead", widget: "text" }
+              - { label: "CTA — заголовок (можно HTML)", name: "ctaTitle", widget: "text" }
+              - { label: "CTA — описание", name: "ctaSub", widget: "text" }
+              - { label: "CTA — кнопка", name: "ctaBtn", widget: "string" }
+
+          - label: "Портфолио"
+            name: "portfolio"
+            widget: "object"
+            fields:
+              - { label: "Hero — надстрочник", name: "heroEyebrow", widget: "string" }
+              - { label: "Hero — заголовок", name: "heroTitle", widget: "string" }
+              - { label: "Hero — описание", name: "heroSubtitle", widget: "text" }
+              - { label: "Фильтры — надпись", name: "filtersLabel", widget: "string" }
+              - { label: "Фильтры — кнопка «Сбросить»", name: "filtersReset", widget: "string" }
+
+      # ---- документы (страницы-стандарты) ----
+      - name: "standards"
+        label: "Страница «Стандарты»"
+        file: "_content/standards.md"
+        fields:
+          - { label: "Title (для поиска)", name: "title", widget: "string" }
+          - { label: "H1", name: "h1", widget: "string" }
+          - { label: "SEO-заголовок", name: "seo_title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Надстрочник", name: "eyebrow", widget: "string", required: false }
+          - { label: "Лид", name: "lead", widget: "text", required: false }
+          - { label: "Текст (Markdown)", name: "body", widget: "markdown" }
+
+      - name: "requirements"
+        label: "Страница «Требования к мебели»"
+        file: "_content/requirements.md"
+        fields:
+          - { label: "Title (для поиска)", name: "title", widget: "string" }
+          - { label: "H1", name: "h1", widget: "string" }
+          - { label: "SEO-заголовок", name: "seo_title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Надстрочник", name: "eyebrow", widget: "string", required: false }
+          - { label: "Лид", name: "lead", widget: "text", required: false }
+          - { label: "Текст (Markdown)", name: "body", widget: "markdown" }

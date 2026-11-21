@@ -1,0 +1,46 @@
+{
+  "name": "40/60 Design — мебель на заказ",
+  "short_name": "40/60 Design",
+  "description": "Кухни и корпусная мебель на заказ в Москве. Портфолио, статьи о ценах и материалах, стандарты производства.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0c160e",
+  "background_color": "#0d0c0d",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/brand-mark-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Портфолио",
+      "url": "/portfolio.html",
+      "description": "Реализованные проекты кухонь и мебели"
+    },
+    {
+      "name": "Статьи",
+      "url": "/articles.html",
+      "description": "Статьи о ценах, материалах и производстве"
+    }
+  ]
+}

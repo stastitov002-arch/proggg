@@ -1,0 +1,26 @@
+name = "4060-bot"
+main = "worker.js"
+compatibility_date = "2025-01-15"
+
+# KV для состояния диалогов и зафиксированных промптов.
+# Создать:  wrangler kv namespace create BOT
+# Затем вставить полученный id вместо REPLACE_WITH_KV_ID.
+[[kv_namespaces]]
+binding = "BOT"
+id = "REPLACE_WITH_KV_ID"
+
+[vars]
+GITHUB_REPO = "stastitov002-arch/4060-site"
+GITHUB_BRANCH = "main"
+SITE_URL = "https://4060design.ru"
+DEEPSEEK_MODEL = "deepseek-chat"
+
+# Секреты (не хранить в файле):
+#   wrangler secret put TG_TOKEN
+#   wrangler secret put TG_SECRET
+#   wrangler secret put ADMIN_IDS
+#   wrangler secret put GITHUB_TOKEN
+#   wrangler secret put DEEPSEEK_KEY
+
+[observability]
+enabled = true
