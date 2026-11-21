@@ -1,6 +1,6 @@
 ---
 slug: kitchen-harmony-details
-title: Кухня ALVIC 4
+title: Угловая кухня с островом из зелёного пластика ALVIC и дерева
 featured: false
 style: ''
 layout: Угловая с островом

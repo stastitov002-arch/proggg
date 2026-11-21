@@ -1,6 +1,6 @@
 ---
 slug: wardrobe-mirror-rhythm
-title: Шкаф Эмаль 3
+title: Шкаф-купе в матовой эмали с 3D-рельефом и зеркалами
 featured: false
 style: ''
 layout: Шкаф

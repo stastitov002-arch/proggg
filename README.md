@@ -1,4 +1,4 @@
-﻿# 4060-site — сайт студии 40/60 Design
+# 4060-site — сайт студии 40/60 Design
 
 Статический сайт на GitHub Pages: `4060design.ru`.
 HTML-страницы **генерируются** из Markdown и JSON скриптом `build.py`,
@@ -8,13 +8,18 @@ HTML-страницы **генерируются** из Markdown и JSON скр�
 ```
 _projects/*.md      проекты портфолио (YAML front matter)
 _articles/*.md      статьи блога (front matter + Markdown)
-_content/*.md       страницы «Стандарты» и «Требования к мебели»
-_content/pages/     тела страниц «О нас», «Партнёрам», «Гарантия», «404»
+_content/*.md       страницы «О нас», «Гарантия», «Партнёрам», «Стандарты»,
+                    «Требования к мебели», «Контакты»
+_content/pages/     старые тела страниц (резерв, сборка их не использует)
+_content/faq/       вопросы для микроразметки FAQPage на страницах-документах
 _data/site.json     общие тексты и контакты (переопределяются на клиенте)
-build.py            генератор страниц
+build.py            генератор страниц, в т. ч. коммерческие категории
 css/site.css        единая дизайн-система
-js/site.js          шапка, модалки, формы, фильтры, галерея
+js/site.js          шапка, модалки, формы, фильтры, галерея, рубрики журнала
 bot/                Telegram-бот-редактор (Cloudflare Worker + DeepSeek)
+kuhni/              «Кухни на заказ» (генерируется)
+shkafy-i-garderobnye/          «Шкафы и гардеробные» (генерируется)
+mebel-dlya-vannoy-i-prihozhey/ «Ванная и прихожая» (генерируется)
 ```
 
 ## Сборка
@@ -25,9 +30,15 @@ python build.py
 
 Скрипт перезаписывает `index.html`, `portfolio.html`, `articles.html`,
 `standards.html`, `requirements.html`, `about.html`, `warranty.html`,
-`partners.html`, `404.html`, страницы `portfolio/*.html`, `articles/*.html`,
-превью черновиков `preview/*.html`, а также `sitemap.xml` и `robots.txt`.
+`partners.html`, `contacts.html`, `404.html`, страницы `portfolio/*.html`,
+`articles/*.html`, превью черновиков `preview/*.html`, коммерческие категории
+`kuhni/index.html`, `shkafy-i-garderobnye/index.html`,
+`mebel-dlya-vannoy-i-prihozhey/index.html`, а также `sitemap.xml` и `robots.txt`.
 Устаревшие сгенерированные страницы удаляются автоматически.
+
+Категории описаны списком `CATEGORY_PAGES` в `build.py`: заголовки, тексты
+блоков, таблица цен, FAQ, набор проектов и текст CTA. Чтобы добавить категорию,
+достаточно добавить элемент в этот список.
 
 Python 3.10+, сторонних библиотек не требуется.
 
@@ -151,12 +162,27 @@ slug: skolko-stoit-kuhnya-na-zakaz-2026
 
 ## Дизайн-система
 
-- **Заголовки — Cormorant Garamond.** Архитектурная антиква с контрастом толщин,
-  крупный кегль, настоящий курсив для акцентных слов («живут», «под ключ»).
-- **Текст и интерфейс — Manrope.** Наклон — синтетический курсив для акцентов.
+Типографика зафиксирована по брендбуку:
+
+| Элемент | Шрифт | Начертание |
+| --- | --- | --- |
+| Главные заголовки (H1) | Cormorant Garamond | 400 |
+| Заголовки блоков (H2/H3) | Manrope | 400–500 |
+| Основной текст | Manrope | 400 |
+| Кнопки | Manrope | 500 |
+| Цены | Manrope | 400–500 |
+| Мелкие подписи | Manrope | 400 |
+
+- **Cormorant Garamond** остаётся только у H1 и фирменных акцентов — крупная
+  антиква с настоящим курсивом для акцентных слов.
+- **Manrope** — заголовки блоков, цены, интерфейс и весь текст.
 - **Палитра:** тёмный фон `#0d0c0d`, золото `#c8a572`, зелёный `#0c160e`.
 - **Логотип:** фавикон-эмблема (`images/brand-mark-128.png`, вырезана из
   `web-app-manifest-512x512.png`) + текстовая часть «40/60».
+- **Навигация в шапке:** О нас · Портфолио · Стандарты · Статьи · Гарантия · Партнёрам.
+- **Мобильная версия:** на главной фоновое фото и вторая CTA-кнопка скрыты,
+  плавающая кнопка связи увеличена, у модальных окон кнопка закрытия
+  закреплена и не уезжает при прокрутке формы.
 - Шапка и подвал — общие функции `header()` / `footer()` в `build.py`,
   поэтому физически не могут отличаться на разных страницах.
 - Блок «Отправьте размеры» идёт с фоновым фото (`images/cta-bg.jpg`),
@@ -171,5 +197,7 @@ slug: skolko-stoit-kuhnya-na-zakaz-2026
 
 `index.html`, `portfolio.html`, `articles.html`, `standards.html`,
 `requirements.html`, `about.html`, `warranty.html`, `partners.html`,
-`404.html`, `portfolio/*.html`, `articles/*.html`, `preview/**`,
+`contacts.html`, `404.html`, `kuhni/index.html`,
+`shkafy-i-garderobnye/index.html`, `mebel-dlya-vannoy-i-prihozhey/index.html`,
+`portfolio/*.html`, `articles/*.html`, `preview/**`,
 `sitemap.xml`, `robots.txt` — генерируются. Правьте источники и запускайте сборку.

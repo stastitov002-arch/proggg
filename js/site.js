@@ -40,6 +40,8 @@
     m.setAttribute('aria-hidden', 'false');
     document.body.classList.add('is-locked');
     openModalEl = m;
+    var body = m.querySelector('.modal__body');
+    if (body) body.scrollTop = 0;
     var first = m.querySelector('input:not([type=hidden]),textarea,select,button');
     if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }, 60);
   }
@@ -59,11 +61,12 @@
         e.preventDefault();
         var name = opener.getAttribute('data-modal-open');
         var project = opener.getAttribute('data-project');
+        var projectSlug = opener.getAttribute('data-project-slug');
         if (name === 'lead' && project) {
           var inp = document.getElementById('lead-project');
           var lbl = document.getElementById('lead-project-label');
           var box = document.getElementById('lead-project-box');
-          if (inp) inp.value = project;
+          if (inp) inp.value = projectSlug || project;
           if (lbl) lbl.textContent = project;
           if (box) box.hidden = false;
         }
@@ -144,9 +147,11 @@
         if (errBox) { errBox.hidden = true; errBox.textContent = ''; }
 
         sendLead(payload).then(function () {
+          var scrollBox = form.closest('.modal__body');
           if (success) {
             form.style.display = 'none';
             success.classList.add('is-on');
+            if (scrollBox) scrollBox.scrollTop = 0;
           } else {
             form.reset();
             if (btn) { btn.disabled = false; btn.textContent = 'Отправлено ✓'; }
@@ -344,6 +349,32 @@
     apply();
   }
 
+  /* --------------------------------------------------- рубрики журнала */
+  function initBlogFilter() {
+    var bar = document.querySelector('[data-blog-filter]');
+    if (!bar) return;
+    var chips = $$('.fchip', bar);
+    var items = $$('.acard-block');
+    var empty = $('#blog-empty');
+    if (!chips.length || !items.length) return;
+
+    chips.forEach(function (chip) {
+      on(chip, 'click', function (e) {
+        e.preventDefault();
+        var cat = chip.getAttribute('data-blog-filter') || '';
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+        chip.setAttribute('aria-pressed', 'true');
+        var shown = 0;
+        items.forEach(function (li) {
+          var ok = !cat || li.getAttribute('data-cat') === cat;
+          li.hidden = !ok;
+          if (ok) shown++;
+        });
+        if (empty) empty.hidden = shown > 0;
+      });
+    });
+  }
+
   /* --------------------------------------------------- возврат к фильтрам */
   function initBackLinks() {
     $$('[data-back]').forEach(function (link) {
@@ -420,6 +451,7 @@
     initFaq();
     initGallery();
     initPortfolioFilter();
+    initBlogFilter();
     initBackLinks();
     initCookie();
     initHero();

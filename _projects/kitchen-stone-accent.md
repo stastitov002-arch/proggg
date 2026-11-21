@@ -1,6 +1,6 @@
 ---
 slug: kitchen-stone-accent
-title: Кухня пленка 2
+title: Угловая кухня в дымчатой плёнке ПВХ с панелью из керамогранита
 featured: false
 style: ''
 layout: Угловая

@@ -73,10 +73,10 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
     </a>
     <nav class="nav" aria-label="Основная навигация">
       <ul class="nav__list">
-          <li><a class="nav__link" href="portfolio.html">Портфолио</a></li>
-          <li><a class="nav__link" href="articles.html">Статьи</a></li>
-          <li><a class="nav__link" href="standards.html">Стандарты</a></li>
           <li><a class="nav__link" href="about.html">О нас</a></li>
+          <li><a class="nav__link" href="portfolio.html">Портфолио</a></li>
+          <li><a class="nav__link" href="standards.html">Стандарты</a></li>
+          <li><a class="nav__link" href="articles.html">Статьи</a></li>
           <li><a class="nav__link" href="warranty.html">Гарантия</a></li>
           <li><a class="nav__link" href="partners.html">Партнёрам</a></li>
       </ul>
@@ -94,10 +94,10 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
   </div>
   <div class="drawer" id="drawer">
     <ul class="drawer__list">
-            <li><a class="drawer__link" href="portfolio.html">Портфолио</a></li>
-            <li><a class="drawer__link" href="articles.html">Статьи</a></li>
-            <li><a class="drawer__link" href="standards.html">Стандарты</a></li>
             <li><a class="drawer__link" href="about.html">О нас</a></li>
+            <li><a class="drawer__link" href="portfolio.html">Портфолио</a></li>
+            <li><a class="drawer__link" href="standards.html">Стандарты</a></li>
+            <li><a class="drawer__link" href="articles.html">Статьи</a></li>
             <li><a class="drawer__link" href="warranty.html">Гарантия</a></li>
             <li><a class="drawer__link" href="partners.html">Партнёрам</a></li>
     </ul>
@@ -154,6 +154,9 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
     <div>
       <p class="ftr__col-title">Разделы</p>
       <ul class="ftr__links">
+        <li><a href="kuhni/">Кухни на заказ</a></li>
+        <li><a href="shkafy-i-garderobnye/">Шкафы и гардеробные</a></li>
+        <li><a href="mebel-dlya-vannoy-i-prihozhey/">Ванная и прихожая</a></li>
         <li><a href="portfolio.html">Портфолио</a></li>
         <li><a href="articles.html">Статьи</a></li>
         <li><a href="standards.html">Стандарты</a></li>
@@ -166,6 +169,7 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
         <li><a href="requirements.html">Требования к мебели</a></li>
         <li><a href="warranty.html">Гарантия</a></li>
         <li><a href="partners.html">Партнёрам</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
         <li><button type="button" data-modal-open="lead">Записаться на замер</button></li>
       </ul>
     </div>
@@ -189,8 +193,9 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
   <div class="modal__bd" data-modal-close></div>
   <div class="modal__dlg">
     <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">✕</button>
+    <div class="modal__body">
     <p class="modal__eyebrow">Заявка</p>
-    <h2 class="modal__title" id="lead-title">Рассчитаем стоимость кухни</h2>
+    <h2 class="modal__title" id="lead-title">Рассчитаем ваш проект</h2>
     <p class="modal__sub">Оставьте контакт — дизайнер свяжется в течение 15 минут, уточнит размеры и пришлёт смету. Замер и расчёт бесплатны.</p>
     <div class="form-success">
       <div class="form-success__icon">✓</div>
@@ -225,6 +230,7 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
       <button type="submit" class="btn btn--solid btn--block">Отправить заявку</button>
       <p class="form-note">Или позвоните: <a href="tel:+79015861488" style="color:var(--c-gold)">+7 901 586-14-88</a></p>
     </form>
+    </div>
   </div>
 </div>
 
@@ -232,6 +238,7 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
   <div class="modal__bd" data-modal-close></div>
   <div class="modal__dlg">
     <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">✕</button>
+    <div class="modal__body">
     <p class="modal__eyebrow">Связаться</p>
     <h2 class="modal__title" id="contact-title">Напишите нам</h2>
     <p class="modal__sub">Ответим в рабочее время — пн–сб с 10:00 до 21:00.</p>
@@ -267,6 +274,7 @@ img,svg,video{max-width:100%;height:auto}/* Шапка */
       <p class="form-error" hidden style="color:var(--c-error);font-size:12px;margin:0 0 12px"></p>
       <button type="submit" class="btn btn--solid btn--block">Отправить</button>
     </form>
+    </div>
   </div>
 </div>
 

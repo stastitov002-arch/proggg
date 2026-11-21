@@ -1,6 +1,6 @@
 ---
 slug: room-own-worlds
-title: Шкаф Эмаль 2
+title: Шкаф в матовой эмали с жёлтыми нишами и местом у окна
 featured: false
 style: ''
 layout: Линейная

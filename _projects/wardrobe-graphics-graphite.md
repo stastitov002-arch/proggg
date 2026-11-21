@@ -1,6 +1,6 @@
 ---
 slug: wardrobe-graphics-graphite
-title: Шкаф ЛДСП 2
+title: Шкаф-купе из ЛДСП Egger с графикой дерева и графита
 featured: false
 style: ''
 layout: Шкаф

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-green-minimalism
-title: Кухня пленка ПВХ 7
+title: Зелёная угловая кухня в плёнке ПВХ с фактурой дерева
 featured: false
 style: ''
 layout: Угловая

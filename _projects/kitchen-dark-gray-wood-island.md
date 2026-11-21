@@ -1,6 +1,6 @@
 ---
 slug: kitchen-dark-gray-wood-island
-title: Кухня пленка ПВХ 6
+title: Тёмно-серая угловая кухня с островом в плёнке ПВХ и деревом
 featured: false
 style: ''
 layout: Угловая С островом

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-denim-formula
-title: Кухня пленка ПВХ 4
+title: Угловая кухня в плёнке ПВХ джинсово-синего оттенка
 featured: false
 style: ''
 layout: Угловая

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-loft-brick-black
-title: Кухня пленка 3
+title: Угловая кухня в графитовой плёнке ПВХ с витринами
 featured: false
 style: ''
 layout: Угловая

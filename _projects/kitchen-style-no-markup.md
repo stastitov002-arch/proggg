@@ -1,6 +1,6 @@
 ---
 slug: kitchen-style-no-markup
-title: Кухня пленка + ЛДСП
+title: Угловая кухня с барной стойкой в плёнке ПВХ и Egger
 featured: false
 style: ''
 layout: Угловая

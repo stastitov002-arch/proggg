@@ -1,6 +1,6 @@
 ---
 slug: kitchen-luxury-details
-title: Кухня Эмаль 2
+title: Угловая кухня в матовой эмали с витринами и винной зоной
 featured: false
 style: ''
 layout: Угловая

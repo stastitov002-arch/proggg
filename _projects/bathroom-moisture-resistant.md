@@ -1,6 +1,6 @@
 ---
 slug: bathroom-moisture-resistant
-title: Тумба TSS
+title: Подвесная тумба для ванной из пластика TSS Cleaf
 featured: false
 style: ''
 layout: Тумба

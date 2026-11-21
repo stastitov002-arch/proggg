@@ -1,6 +1,6 @@
 ---
 slug: wardrobe-milan-boutique
-title: Гардеробная TSS + Egger
+title: Гардеробная с островом из пластика TSS Cleaf и Egger
 featured: false
 style: ''
 layout: гардеробная

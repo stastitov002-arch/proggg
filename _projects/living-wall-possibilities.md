@@ -1,6 +1,6 @@
 ---
 slug: living-wall-possibilities
-title: Стена ЛДСП
+title: Многофункциональная стена для гостиной из ЛДСП с ТВ-зоной
 featured: true
 style: ''
 layout: Линейная

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-smart-economy
-title: Кухня ЛДСП 5
+title: Угловая кухня из ЛДСП Egger с верхом под дерево
 featured: false
 style: ''
 layout: Угловая

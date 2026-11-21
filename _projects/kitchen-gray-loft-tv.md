@@ -1,6 +1,6 @@
 ---
 slug: kitchen-gray-loft-tv
-title: Кухня ALVIC 2
+title: Угловая кухня из пластика ALVIC с чёрной столешницей
 featured: false
 style: ''
 layout: Угловая

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-for-dancing
-title: Кухня Эмаль
+title: Белая угловая кухня в матовой эмали с геометрической фрезеровкой
 featured: false
 style: ''
 layout: Угловая

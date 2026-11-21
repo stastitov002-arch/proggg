@@ -1,6 +1,6 @@
 ---
 slug: kitchen-graphite-wood-loft
-title: кухня пленка ПВХ + ЛДСП
+title: Угловая кухня в плёнке ПВХ с графитом и фактурой дерева
 featured: false
 style: ''
 layout: Угловая
