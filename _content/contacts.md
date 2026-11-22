@@ -6,6 +6,7 @@ description: "Связаться со студией 40/60 Design в Москв�
 eyebrow: "Контакты"
 lead: "Работаем по Москве и ближнему Подмосковью. Отвечаем в Telegram и по телефону в течение 15 минут в рабочее время."
 date: 2026-11-21
+hero_image: "images/showroom.jpg"
 ---
 
 <div class="contact-grid">

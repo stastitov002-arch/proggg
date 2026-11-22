@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    40/60 Design — единая дизайн-система сайта
    Типографика: два семейства —
      Cormorant Garamond — заголовки (архитектурная антиква с контрастом толщин,
@@ -183,7 +183,7 @@ ul,ol{margin:0;padding:0}
 
 .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--c-gold);min-width:0}
 .brand__mark{width:44px;height:44px;flex:0 0 auto;transition:transform .5s var(--ease)}
-.brand:hover .brand__mark{transform:rotate(-6deg) scale(1.04)}
+.brand:hover .brand__mark{transform:scale(1.06)}
 .brand__txt{display:flex;flex-direction:column;line-height:1;min-width:0}
 .brand__name{font-family:var(--font-display);font-size:23px;font-weight:600;letter-spacing:.005em;white-space:nowrap;line-height:1}
 .brand__sub{font-family:var(--font-sans);font-size:9px;letter-spacing:.34em;text-transform:uppercase;opacity:.55;margin-top:6px;white-space:nowrap}
@@ -1051,15 +1051,15 @@ h3,
    ========================================================================== */
 
 /* FAB крупнее */
-.fab{width:60px;height:60px;right:20px;bottom:20px}
-.fab svg{width:26px;height:26px}
+.fab{width:68px;height:68px;right:20px;bottom:20px}
+.fab svg{width:30px;height:30px}
 @media(max-width:600px){
-  .fab{width:66px;height:66px;right:16px;bottom:16px;border-width:1px}
-  .fab svg{width:30px;height:30px}
-  body.cookie-open .fab{bottom:186px}
+  .fab{width:76px;height:76px;right:16px;bottom:16px;border-width:1px}
+  .fab svg{width:34px;height:34px}
+  body.cookie-open .fab{bottom:196px}
 }
 @media(max-width:380px){
-  .fab{width:62px;height:62px;right:12px;bottom:12px}
+  .fab{width:70px;height:70px;right:12px;bottom:12px}
 }
 
 /* модалка: кнопка закрытия не уезжает при прокрутке формы */
@@ -1141,4 +1141,104 @@ h3,
   .price-table th, .price-table td,
   .term-table th, .term-table td{padding:10px 8px}
   .price-table td:last-child, .term-table td:last-child{white-space:normal}
+}
+
+/* ==========================================================================
+   Версия 5 — фото в шапке внутренних страниц, широкие документы, мобильные формы
+   ========================================================================== */
+
+/* первый блок внутренних страниц с фотографией */
+.phero--photo{
+  position:relative; overflow:hidden; isolation:isolate;
+  display:flex; align-items:flex-end;
+  min-height:clamp(300px, 38vh, 460px);
+  padding:clamp(58px, 8vw, 108px) 0 clamp(36px, 5vw, 58px);
+  background:#0a0a0b; border-bottom:1px solid var(--c-line);
+}
+.phero__bg{position:absolute;inset:0;z-index:0}
+.phero__bg img{width:100%;height:100%;object-fit:cover;object-position:center 48%}
+.phero--photo::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(8,8,10,.95) 0%, rgba(8,8,10,.78) 46%, rgba(8,8,10,.34) 100%),
+    linear-gradient(180deg, rgba(8,8,10,.28) 0%, rgba(8,8,10,.5) 52%, rgba(8,8,10,.92) 100%);
+}
+.phero--photo .phero__in{position:relative;z-index:2;width:100%}
+.phero--photo .phero__sub{color:rgba(245,239,228,.82)}
+.phero--photo .crumbs{color:rgba(245,239,228,.6)}
+.phero--photo .crumbs a{color:rgba(245,239,228,.6)}
+.phero--photo .crumbs a:hover{color:var(--c-gold-hi)}
+@media(max-width:640px){
+  .phero--photo{min-height:clamp(260px, 34vh, 360px);padding:clamp(42px,7vw,72px) 0 clamp(28px,5vw,42px)}
+  .phero__bg img{object-position:center 52%}
+}
+
+/* документы на всю ширину верхнего блока */
+.prose--wide{max-width:var(--w)}
+.prose--wide > p,
+.prose--wide > ul,
+.prose--wide > ol,
+.prose--wide > blockquote{max-width:82ch}
+.prose--wide > table,
+.prose--wide > .info-grid,
+.prose--wide > .journey,
+.prose--wide > .price-table,
+.prose--wide > .lead-cta{max-width:none}
+
+/* мобильные формы: диалог прижат к верху, крестик всегда на месте */
+@media(max-width:600px){
+  .modal{align-items:flex-start;padding:8px}
+  .modal__dlg{max-height:calc(100svh - 16px);max-height:calc(100dvh - 16px);margin-top:0}
+  .modal__close{top:8px;right:8px}
+}
+
+/* ==========================================================================
+   Типографика 40/60 — финальные правила по брендбуку
+   H1 — Cormorant Garamond 400
+   Заголовки блоков (H2/H3) — Manrope 500
+   Текст — Manrope 400 · Кнопки — Manrope 500
+   Цены — Manrope 500 · Мелкие подписи — Manrope 400
+   ========================================================================== */
+
+body, p, li, td, th, label,
+input, textarea, select,
+.lead, .hero__sub, .phero__sub, .cover-hero__sub, .article__lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+h1, h1.display, .hero__title, .phero__title, .cover-hero__title,
+.article__title, .page-404__title, .proj__head h1 {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+}
+
+h2, h2.display, .display, .sec__head h2,
+.cta-band__title, .modal__title, .faq__title, .spec__title, .form-success__title {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+}
+
+h3, .info-card h3, .tpk-card__title, .std-card__title, .pcard__title,
+.acard__title, .journey__title, .flow__title, .dir-card__title {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+}
+
+.btn, .ab-hero__btn, .wt-cta__btn, .nav__link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+.pcard__price, .spec__price, .term-table td:last-child, .price-table td:last-child,
+.stat__num, .dir-card__price, .hero__trust-n, .wt-terms__num, .wt-hero__badge-num {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+}
+
+.std-card__num, .tpk-card__num, .steps__num, .flow__num,
+.info-card__kicker, .pcard__badge, .tag, .eyebrow, .field__label,
+.ftr__col-title, .dir-card__more, .pcard__more, .acard__more, .hero__trust-t {
+  font-family: var(--font-sans) !important;
+  font-weight: 400 !important;
 }

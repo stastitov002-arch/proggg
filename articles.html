@@ -51,7 +51,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preload" href="css/site.css" as="style">
 <link rel="stylesheet" href="css/site.css">
 
@@ -61,15 +61,15 @@
 <header class="hdr">
   <div class="hdr__in">
     <a class="brand" href="index.html" aria-label="40/60 Design — на главную">
-      <img class="brand__mark" src="images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="favicon.svg" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">Мебель на заказ</span></span>
     </a>
     <nav class="nav" aria-label="Основная навигация">
       <ul class="nav__list">
           <li><a class="nav__link" href="about.html">О нас</a></li>
           <li><a class="nav__link" href="portfolio.html">Портфолио</a></li>
-          <li><a class="nav__link" href="standards.html">Стандарты</a></li>
           <li><a class="nav__link" href="articles.html" aria-current="page">Статьи</a></li>
+          <li><a class="nav__link" href="standards.html">Стандарты</a></li>
           <li><a class="nav__link" href="warranty.html">Гарантия</a></li>
           <li><a class="nav__link" href="partners.html">Партнёрам</a></li>
       </ul>
@@ -89,8 +89,8 @@
     <ul class="drawer__list">
             <li><a class="drawer__link" href="about.html">О нас</a></li>
             <li><a class="drawer__link" href="portfolio.html">Портфолио</a></li>
-            <li><a class="drawer__link" href="standards.html">Стандарты</a></li>
             <li><a class="drawer__link" href="articles.html" aria-current="page">Статьи</a></li>
+            <li><a class="drawer__link" href="standards.html">Стандарты</a></li>
             <li><a class="drawer__link" href="warranty.html">Гарантия</a></li>
             <li><a class="drawer__link" href="partners.html">Партнёрам</a></li>
     </ul>
@@ -103,11 +103,14 @@
   </div>
 </header>
 
-<section class="phero">
+<section class="phero phero--photo">
+  <div class="phero__bg" aria-hidden="true"><img src="images/hero.jpg" alt="" loading="eager"></div>
   <div class="phero__in">
+    
     <p class="eyebrow">Журнал</p>
     <h1 class="phero__title">Журнал о проектировании мебели, ценах и материалах</h1>
     <p class="phero__sub">Пишем без рекламной воды — только сметы из реальных проектов, инженерные расчёты и честные сравнения материалов и фурнитуры.</p>
+    
   </div>
 </section>
 
@@ -122,6 +125,39 @@
       <a class="fchip" href="#articles" data-blog-filter="Монтаж" aria-pressed="false">Монтаж</a>
     </div>
     <ul class="pgrid" style="list-style:none">
+<li class="acard-block" data-cat="Материалы">
+  <a class="acard" href="articles/furnitura-dlya-kuhni.html">
+    <div class="acard__media"><img src="images/uploads/5294162704543196354.jpg" alt="Фурнитура для кухни: что ставить и почему" loading="lazy" width="640" height="400" data-fallback></div>
+    <div class="acard__body">
+      <div class="acard__meta"><span>Материалы</span><time datetime="2026-11-22">22.11.2026</time></div>
+      <h3 class="acard__title">Фурнитура для кухни: что ставить и почему</h3>
+      <p class="acard__text">Петли, направляющие и подъёмники определяют, как кухня работает через три года. Разбираем нагрузку, регулировку, замену и фурнитуру в реальных проектах.</p>
+      <span class="acard__more">Читать →</span>
+    </div>
+  </a>
+</li>
+<li class="acard-block" data-cat="Проектирование и эргономика">
+  <a class="acard" href="articles/shkaf-ili-garderobnaya-planirovka.html">
+    <div class="acard__media"><img src="images/uploads/5296685284865026074.jpg" alt="Встроенный шкаф или гардеробная: что выбрать и как спланировать хранение" loading="lazy" width="640" height="400" data-fallback></div>
+    <div class="acard__body">
+      <div class="acard__meta"><span>Проектирование и эргономика</span><time datetime="2026-11-22">22.11.2026</time></div>
+      <h3 class="acard__title">Встроенный шкаф или гардеробная: что выбрать и как спланировать хранение</h3>
+      <p class="acard__text">Сравниваем встроенный шкаф и гардеробную: доступ, объём хранения, зонирование, свет и реальные цены проектов в Москве — от 280 000 до 890 000 ₽.</p>
+      <span class="acard__more">Читать →</span>
+    </div>
+  </a>
+</li>
+<li class="acard-block" data-cat="Материалы">
+  <a class="acard" href="articles/stoleshnitsa-dlya-kuhni-kvarts-hpl-kamen.html">
+    <div class="acard__media"><img src="images/uploads/5296685284865025943.jpg" alt="Столешница для кухни: кварц, HPL или натуральный камень" loading="lazy" width="640" height="400" data-fallback></div>
+    <div class="acard__body">
+      <div class="acard__meta"><span>Материалы</span><time datetime="2026-11-22">22.11.2026</time></div>
+      <h3 class="acard__title">Столешница для кухни: кварц, HPL или натуральный камень</h3>
+      <p class="acard__text">Сравниваем кварцевый агломерат, HPL и натуральный камень для кухни: свойства, стыки, выпилы, уход и реальные цены каменной части в наших проектах.</p>
+      <span class="acard__more">Читать →</span>
+    </div>
+  </a>
+</li>
 <li class="acard-block" data-cat="Цены">
   <a class="acard" href="articles/skolko-stoit-kuhnya-na-zakaz-2026.html">
     <div class="acard__media"><img src="images/uploads/photo_5368659676796495163_y.jpg" alt="Сколько стоит кухня на заказ в Москве в 2026 году" loading="lazy" width="640" height="400" data-fallback></div>
@@ -156,7 +192,7 @@
   <div class="ftr__in">
     <div class="ftr__brand">
           <a class="brand" href="index.html" aria-label="40/60 Design — на главную">
-      <img class="brand__mark" src="images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="favicon.svg" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">Мебель на заказ</span></span>
     </a>
       <p class="ftr__tag" data-cms="common.tagline">Студия интерьерной мебели. Кухни и корпусная мебель на заказ в Москве и области: проектирование, комплектация, производство и монтаж.</p>

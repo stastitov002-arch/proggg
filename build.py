@@ -49,8 +49,8 @@ TG_NAME = "@design4060"
 NAV = [
     ("about.html", "О нас"),
     ("portfolio.html", "Портфолио"),
-    ("standards.html", "Стандарты"),
     ("articles.html", "Статьи"),
+    ("standards.html", "Стандарты"),
     ("warranty.html", "Гарантия"),
     ("partners.html", "Партнёрам"),
 ]
@@ -420,8 +420,8 @@ def fonts_link() -> str:
         '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '<link href="https://fonts.googleapis.com/css2?'
-        'family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&'
-        'family=Manrope:wght@300..800&display=swap" rel="stylesheet">'
+        'family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&'
+        'family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">'
     )
 
 
@@ -503,7 +503,7 @@ def head(
 
 def brand_block(base: str = "", href: str = "index.html", sub: str = "Мебель на заказ") -> str:
     return f"""    <a class="brand" href="{base}{href}" aria-label="{BRAND} — на главную">
-      <img class="brand__mark" src="{base}images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="{base}favicon.svg" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">{esc(sub)}</span></span>
     </a>"""
 
@@ -948,6 +948,32 @@ def breadcrumbs(items: list[tuple[str, str]]) -> str:
     return '<nav class="crumbs" aria-label="Хлебные крошки">' + "".join(parts) + "</nav>"
 
 
+DEFAULT_INNER_HERO = "images/hero.jpg"
+
+
+def phero_block(
+    eyebrow: str,
+    h1: str,
+    lead: str,
+    image: str = "",
+    crumbs: str = "",
+    extra: str = "",
+    base: str = "",
+) -> str:
+    """Первый блок внутренней страницы — с фотографией из портфолио."""
+    img = norm_path(image) or DEFAULT_INNER_HERO
+    return f"""<section class="phero phero--photo">
+  <div class="phero__bg" aria-hidden="true"><img src="{base}{esc(img)}" alt="" loading="eager"></div>
+  <div class="phero__in">
+    {crumbs}
+    <p class="eyebrow">{esc(eyebrow)}</p>
+    <h1 class="phero__title">{esc(h1)}</h1>
+    <p class="phero__sub">{esc(lead)}</p>
+    {extra}
+  </div>
+</section>"""
+
+
 # --------------------------------------------------------------------------
 # страницы
 # --------------------------------------------------------------------------
@@ -1275,6 +1301,7 @@ CATEGORY_PAGES: list[dict] = [
         "description": "Изготовление кухонь на заказ в Москве и МО под ключ: угловые, прямые и с островом. Корпус 18 мм Egger, фасады ALVIC Luxe и эмаль, фурнитура Blum. Срок от 21 дня, гарантия 3 года.",
         "h1": "Кухни на заказ в Москве по индивидуальным размерам",
         "lead": "Проектируем и устанавливаем кухни под ключ — от практичных угловых решений на базе ЛДСП Egger до кухонь с островом, матовой эмалью и кварцевым агломератом. В смету сразу входят корпус, фасады, фурнитура, столешница, доставка и монтаж.",
+        "hero_image": "images/portfolio-hero.jpg",
         "cta": "Рассчитать стоимость моей кухни",
         "anchors": [("#ceny", "Посмотреть цены 2026")],
         "slugs": [
@@ -1374,6 +1401,7 @@ CATEGORY_PAGES: list[dict] = [
         "description": "Проектируем и изготавливаем встроенные шкафы-купе, шкафы со стеклом и подсветкой, гардеробные с островом в Москве. Egger, TSS Cleaf, Blum, пантографы. Гарантия 3 года.",
         "h1": "Встроенные шкафы и гардеробные на заказ в Москве",
         "lead": "Проектируем системы хранения точно под геометрию ниши или комнаты: от встроенных шкафов-купе из ЛДСП Egger и витрин в чёрном алюминиевом профиле до гардеробных с островом и итальянскими пантографами.",
+        "hero_image": "images/uploads/photo_5368659676796495158_y.jpg",
         "cta": "Рассчитать шкаф или гардеробную",
         "anchors": [("#proekty", "Смотреть проекты")],
         "slugs": ["wardrobe-display-glass-black", "wardrobe-graphics-graphite", "wardrobe-milan-boutique"],
@@ -1444,6 +1472,7 @@ CATEGORY_PAGES: list[dict] = [
         "description": "Изготовление влагостойких тумб под раковину в ванную (TSS Cleaf, HPL, влагостойкая эмаль) и консольных тумб в прихожую на заказ в Москве. Фурнитура Blum и GTV. От 85 000 ₽.",
         "h1": "Тумбы в ванную и мебель для прихожей на заказ в Москве",
         "lead": "Делаем индивидуальную мебель для влажных зон и входных групп по точным размерам: подвесные и напольные тумбы под накладную раковину, консоли с фрезеровкой и скрытой механикой.",
+        "hero_image": "images/uploads/5296685284865026031.jpg",
         "cta": "Рассчитать тумбу по размерам",
         "anchors": [("#proekty", "Смотреть проекты")],
         "slugs": ["bathroom-moisture-resistant", "bathroom-neoclassic-vanity", "hallway-console-first-impression"],
@@ -1518,6 +1547,13 @@ def build_category(cat: dict, projects: list[dict]) -> str:
     anchor_btns = "".join(
         f'<a class="btn btn--ghost" href="{esc(href)}">{esc(label)}</a>' for href, label in cat.get("anchors", [])
     )
+    cta_row = (
+        '<div class="btn-row">'
+        f'<button class="btn btn--solid" type="button" data-modal-open="lead">{esc(cat["cta"])}</button>'
+        + anchor_btns
+        + "</div>"
+    )
+    hero_img = cat.get("hero_image") or (selected[0]["cover"] if selected else DEFAULT_INNER_HERO)
 
     faq_items = cat.get("faq") or []
     faq_html = "\n".join(
@@ -1550,18 +1586,7 @@ def build_category(cat: dict, projects: list[dict]) -> str:
             ],
         }
 
-    body = f"""<section class="phero">
-  <div class="phero__in">
-    {breadcrumbs([('../index.html', 'Главная'), ('../portfolio.html', 'Проекты'), ('', cat['eyebrow'])])}
-    <p class="eyebrow">{esc(cat['eyebrow'])}</p>
-    <h1 class="phero__title">{esc(cat['h1'])}</h1>
-    <p class="phero__sub">{esc(cat['lead'])}</p>
-    <div class="btn-row">
-      <button class="btn btn--solid" type="button" data-modal-open="lead">{esc(cat['cta'])}</button>
-      {anchor_btns}
-    </div>
-  </div>
-</section>
+    body = f"""{phero_block(cat['eyebrow'], cat['h1'], cat['lead'], hero_img, breadcrumbs([('../index.html', 'Главная'), ('../portfolio.html', 'Проекты'), ('', cat['eyebrow'])]), extra=cta_row, base='../')}
 
 <section class="sec sec--tight" id="proekty">
   <div class="wrap">
@@ -1742,7 +1767,7 @@ def build_project(p: dict, all_projects: list[dict], base: str = "../", noindex:
     body = f"""<section class="proj__head">
   <div class="wrap">
     {breadcrumbs([("../index.html", "Главная"), ("../portfolio.html", "Проекты"), ("../portfolio.html?type=" + quote(p["type"]), p["type"]), ("", p["title"])])}
-    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back>← Ко всем проектам</a></p>
+    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back aria-label="Вернуться к списку проектов">← Вернуться</a></p>
     <h1 class="display display--xl">{esc(p["title"])}</h1>
     <div class="proj__layout">
       <div class="gallery">
@@ -1810,13 +1835,7 @@ def build_articles_index(articles: list[dict]) -> str:
         for i, r in enumerate(rubrics)
     )
 
-    body = f"""<section class="phero">
-  <div class="phero__in">
-    <p class="eyebrow">Журнал</p>
-    <h1 class="phero__title">Журнал о проектировании мебели, ценах и материалах</h1>
-    <p class="phero__sub">Пишем без рекламной воды — только сметы из реальных проектов, инженерные расчёты и честные сравнения материалов и фурнитуры.</p>
-  </div>
-</section>
+    body = f"""{phero_block("Журнал", "Журнал о проектировании мебели, ценах и материалах", "Пишем без рекламной воды — только сметы из реальных проектов, инженерные расчёты и честные сравнения материалов и фурнитуры.", DEFAULT_INNER_HERO)}
 
 <section class="sec sec--tight" id="articles">
   <div class="wrap">
@@ -1947,6 +1966,167 @@ def insert_project_cards(html_text: str, projects: list[dict]) -> str:
     return re.sub(r"\{\{projects:([^}]+)\}\}", repl, html_text)
 
 
+def strip_md_sections(text: str, titles: set[str]) -> str:
+    """Убирает из Markdown разделы ## с указанными заголовками."""
+    out: list[str] = []
+    skip = False
+    for line in text.split("\n"):
+        match = re.match(r"^##\s+(.+?)\s*$", line)
+        if match:
+            skip = match.group(1).strip() in titles
+        if not skip:
+            out.append(line)
+    return "\n".join(out)
+
+
+def strip_html_block(html_text: str, class_name: str) -> str:
+    """Удаляет <div class="...">…</div> с учётом вложенных div."""
+    marker = f'<div class="{class_name}">'
+    start = html_text.find(marker)
+    while start != -1:
+        i = start + len(marker)
+        depth = 1
+        while i < len(html_text) and depth:
+            next_open = html_text.find("<div", i)
+            next_close = html_text.find("</div>", i)
+            if next_close == -1:
+                break
+            if next_open != -1 and next_open < next_close:
+                depth += 1
+                i = next_open + 4
+            else:
+                depth -= 1
+                i = next_close + 6
+        html_text = html_text[:start] + html_text[i:]
+        start = html_text.find(marker)
+    return html_text
+
+
+LEGACY_TYPO_CSS = """
+.hd-block, .ft-block { display: none !important; }
+.ab-hero__inner, .ab-adv__inner, .ab-partners__inner,
+.wt-hero__inner, .wt-sec__inner {
+  max-width: var(--w);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* H1 — антиква 400 */
+.ab-hero__title, .wt-hero__title {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.012em !important;
+  line-height: 1.04 !important;
+}
+.ab-hero__title em, .wt-hero__title em { font-style: italic; color: var(--c-gold-hi); }
+.ab-hero__title-sub{
+  display: block; margin-top: 14px;
+  font-family: var(--font-sans); font-size: clamp(15px, 1.45vw, 21px);
+  font-weight: 400; line-height: 1.35; letter-spacing: -.01em; color: #d8d2c5;
+}
+
+/* H2/H3 — Manrope */
+.ab-hero__right-title, .ab-partners__title, .wt-sec__title, .wt-cta__title {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+  line-height: 1.14 !important;
+}
+.ab-adv__title, .wt-cover__title, .wt-terms__title, .wt-how__title {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.01em !important;
+}
+.wt-hero__badge-num, .wt-terms__num {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+}
+.ab-hero__eyebrow, .ab-partners__eyebrow, .wt-sec__eyebrow { font-family: var(--font-sans) !important; font-weight: 400 !important; }
+
+/* новые секции, вставленные в старый дизайн */
+.doc-merge { padding: 0; }
+.doc-merge__in{
+  max-width: var(--w); margin: 0 auto;
+  padding: clamp(48px, 7vw, 96px) var(--gutter);
+  font-size: clamp(15.5px, 1.12vw, 17.5px);
+  line-height: 1.74; color: var(--c-text-soft);
+}
+.doc-merge__in > p,
+.doc-merge__in > ul,
+.doc-merge__in > ol,
+.doc-merge__in > blockquote { max-width: 82ch; }
+.doc-merge__in .lead-cta { max-width: none; }
+.wt-terms__note{ margin:18px 0 0; font-size:14px; line-height:1.55; color:#a8a294; }
+.wt-cta__btn{ font-family:var(--font-sans) !important; font-weight:500 !important; }
+.wt-terms__num small{ font-family:var(--font-sans) !important; font-weight:400 !important; }
+.ab-hero__btn{ font-family:var(--font-sans) !important; font-weight:500 !important; }
+"""
+
+
+def build_composed_doc(
+    name: str,
+    strip_titles: set[str] | None = None,
+    drop_classes: tuple[str, ...] = (),
+) -> str:
+    """Страница из старого HTML-дизайна + новых Markdown-разделов."""
+    doc = load_doc(name)
+    meta = doc.get("meta", {})
+    legacy = load_content_page(name)
+    shell = legacy.get("body") or ""
+    if not shell:
+        return build_doc_page(doc, name)
+
+    md_text = doc.get("body_md", "")
+    if strip_titles:
+        md_text = strip_md_sections(md_text, strip_titles)
+    new_html = md(md_text)
+    for cls in drop_classes:
+        new_html = strip_html_block(new_html, cls)
+
+    new_section = (
+        '<section class="sec sec--line doc-merge"><div class="doc-merge__in prose prose--wide">'
+        + new_html
+        + "</div></section>"
+    )
+    if "<!-- NEW_CONTENT -->" in shell:
+        shell = shell.replace("<!-- NEW_CONTENT -->", new_section)
+    else:
+        shell += "\n" + new_section
+
+    h1 = str(meta.get("h1") or meta.get("title") or name)
+    description = str(meta.get("description") or "")
+
+    ld_blocks = [{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": h1,
+        "description": description,
+        "publisher": {"@type": "Organization", "name": BRAND},
+    }]
+    faq_file = ROOT / "_content" / "faq" / f"{name}.json"
+    if faq_file.exists():
+        ld_blocks.append({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {"@type": "Question", "name": item["q"], "acceptedAnswer": {"@type": "Answer", "text": item["a"]}}
+                for item in json.loads(read(faq_file))
+            ],
+        })
+
+    return page(
+        title=str(meta.get("seo_title") or (h1 + " | " + BRAND)),
+        description=description,
+        canonical=f"{SITE}/{name}.html",
+        body=shell,
+        active=f"{name}.html",
+        page_css=legacy.get("css", "") + LEGACY_TYPO_CSS,
+        ld=ld_blocks,
+        og_image=str(meta.get("hero_image") or "images/portfolio-hero.jpg"),
+    )
+
+
 def build_doc_page(doc: dict, name: str, projects: list[dict] | None = None) -> str:
     meta = doc.get("meta", {})
     body_html = insert_project_cards(doc.get("body_html", ""), projects or [])
@@ -1957,18 +2137,12 @@ def build_doc_page(doc: dict, name: str, projects: list[dict] | None = None) -> 
     lead = str(meta.get("lead") or "")
 
     extra = partner_form() if str(meta.get("form", "")).strip() == "partner" else cta_band()
+    hero_image = str(meta.get("hero_image") or "").strip()
 
-    body = f"""<section class="phero">
-  <div class="phero__in">
-    {breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])}
-    <p class="eyebrow">{esc(eyebrow)}</p>
-    <h1 class="phero__title">{esc(h1)}</h1>
-    <p class="phero__sub">{esc(lead)}</p>
-  </div>
-</section>
+    body = f"""{phero_block(eyebrow, h1, lead, hero_image, breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)]))}
 
 <section class="sec sec--tight">
-  <div class="prose">
+  <div class="prose prose--wide">
     {body_html}
   </div>
 </section>
@@ -2202,7 +2376,17 @@ def main() -> int:
                 stale.unlink()
                 print("удалена устаревшая страница:", stale.relative_to(ROOT))
 
-    for doc_name in ("about", "warranty", "partners", "contacts"):
+    write(ROOT / "about.html", build_composed_doc("about"))
+    write(
+        ROOT / "warranty.html",
+        build_composed_doc(
+            "warranty",
+            strip_titles={"На что распространяется гарантия", "Гарантийные сроки", "Как обратиться по гарантии"},
+            drop_classes=("lead-cta", "stat-row"),
+        ),
+    )
+
+    for doc_name in ("partners", "contacts"):
         doc = load_doc(doc_name)
         if doc:
             write(ROOT / f"{doc_name}.html", build_doc_page(doc, doc_name, projects))
