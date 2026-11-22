@@ -1,6 +1,6 @@
 ---
 slug: hallway-console-first-impression
-title: Тумба в матовой эмали с вертикальной волной и фрезеровкой
+title: Тумба Эмаль
 featured: false
 style: ''
 layout: Тумба

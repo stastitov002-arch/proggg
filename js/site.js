@@ -40,16 +40,12 @@
     m.setAttribute('aria-hidden', 'false');
     document.body.classList.add('is-locked');
     openModalEl = m;
-    var body = m.querySelector('.modal__body');
-    if (body) body.scrollTop = 0;
     var first = m.querySelector('input:not([type=hidden]),textarea,select,button');
     if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }, 60);
   }
 
   function closeModal() {
     if (!openModalEl) return;
-    var form = openModalEl.querySelector('form[data-lead-form]');
-    if (form) sendDraft(form);
     openModalEl.classList.remove('is-open');
     openModalEl.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('is-locked');
@@ -63,12 +59,11 @@
         e.preventDefault();
         var name = opener.getAttribute('data-modal-open');
         var project = opener.getAttribute('data-project');
-        var projectSlug = opener.getAttribute('data-project-slug');
         if (name === 'lead' && project) {
           var inp = document.getElementById('lead-project');
           var lbl = document.getElementById('lead-project-label');
           var box = document.getElementById('lead-project-box');
-          if (inp) inp.value = projectSlug || project;
+          if (inp) inp.value = project;
           if (lbl) lbl.textContent = project;
           if (box) box.hidden = false;
         }
@@ -93,61 +88,6 @@
         try { var j = JSON.parse(t); if (j && j.error) msg = j.error; } catch (e) {}
         throw new Error(msg);
       });
-    });
-  }
-
-  /* Черновик формы: клиент заполнил, но не нажал «Отправить».
-     Отправляем только если стоит галочка согласия и есть контакт. */
-  function formDraftPayload(form) {
-    var data = new FormData(form);
-    var get = function (k) { return String(data.get(k) || '').trim(); };
-    var name = get('name');
-    var phone = get('phone');
-    var tg = get('tg');
-    var contact = get('contact');
-    var sphere = get('sphere');
-    var message = get('message');
-    var project = get('project');
-
-    var digits = phone.replace(/\D/g, '');
-    var hasContact = digits.length >= 6 || tg.length > 0 || contact.length > 0;
-    if (!hasContact) return null;
-
-    var consent = form.querySelector('.consent input[type=checkbox]') || form.querySelector('input[type=checkbox]');
-    if (consent && !consent.checked) return null;
-
-    return {
-      source: (form.getAttribute('data-source') || 'Заявка с сайта') + ' — НЕ ОТПРАВЛЕНО (черновик)',
-      page: document.body.getAttribute('data-page') || '',
-      name: name,
-      phone: phone,
-      tg: tg,
-      contact: contact,
-      sphere: sphere,
-      message: '[Клиент заполнил форму, но не нажал «Отправить»]' + (message ? '\n' + message : ''),
-      project: project
-    };
-  }
-
-  function sendDraft(form) {
-    if (!form || form.dataset.draftSent === '1' || form.dataset.sent === '1') return;
-    if (form.style.display === 'none') return;
-    var payload = formDraftPayload(form);
-    if (!payload) return;
-    form.dataset.draftSent = '1';
-    try {
-      fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        keepalive: true
-      }).catch(function () {});
-    } catch (e) {}
-  }
-
-  function initDraftSaves() {
-    on(window, 'pagehide', function () {
-      $$('form[data-lead-form]').forEach(sendDraft);
     });
   }
 
@@ -204,12 +144,9 @@
         if (errBox) { errBox.hidden = true; errBox.textContent = ''; }
 
         sendLead(payload).then(function () {
-          var scrollBox = form.closest('.modal__body');
-          form.dataset.sent = '1';
           if (success) {
             form.style.display = 'none';
             success.classList.add('is-on');
-            if (scrollBox) scrollBox.scrollTop = 0;
           } else {
             form.reset();
             if (btn) { btn.disabled = false; btn.textContent = 'Отправлено ✓'; }
@@ -407,86 +344,16 @@
     apply();
   }
 
-  /* --------------------------------------------------- рубрики журнала */
-  function initBlogFilter() {
-    var bar = document.querySelector('[data-blog-filter]');
-    if (!bar) return;
-    var chips = $$('.fchip', bar);
-    var items = $$('.acard-block');
-    var empty = $('#blog-empty');
-    if (!chips.length || !items.length) return;
-
-    chips.forEach(function (chip) {
-      on(chip, 'click', function (e) {
-        e.preventDefault();
-        var cat = chip.getAttribute('data-blog-filter') || '';
-        chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
-        chip.setAttribute('aria-pressed', 'true');
-        var shown = 0;
-        items.forEach(function (li) {
-          var ok = !cat || li.getAttribute('data-cat') === cat;
-          li.hidden = !ok;
-          if (ok) shown++;
-        });
-        if (empty) empty.hidden = shown > 0;
-      });
-    });
-  }
-
   /* --------------------------------------------------- возврат к фильтрам */
   function initBackLinks() {
     $$('[data-back]').forEach(function (link) {
       on(link, 'click', function (e) {
         var ref = document.referrer || '';
-        var sameSite = false;
-        try { sameSite = !!ref && new URL(ref).origin === location.origin; } catch (err) { sameSite = false; }
-        if (sameSite && window.history.length > 1) {
+        if (ref.indexOf('portfolio') !== -1 && window.history.length > 1) {
           e.preventDefault();
           window.history.back();
         }
       });
-    });
-  }
-
-  /* ------------------------------------- запоминание места в портфолио */
-  function initPortfolioScrollMemory() {
-    var grid = document.getElementById('pf-grid');
-    if (!grid) return;
-    var KEY = 'pf-scroll-pos';
-
-    $$('.pcard', grid).forEach(function (card) {
-      on(card, 'click', function () {
-        try {
-          sessionStorage.setItem(KEY, JSON.stringify({ y: window.scrollY, t: Date.now() }));
-        } catch (e) {}
-      });
-    });
-
-    var raw = null;
-    try { raw = sessionStorage.getItem(KEY); } catch (e) {}
-    if (!raw) return;
-
-    var saved;
-    try { saved = JSON.parse(raw); } catch (e) { saved = null; }
-    if (!saved || typeof saved.y !== 'number') return;
-    if (Date.now() - Number(saved.t || 0) > 10 * 60 * 1000) {
-      try { sessionStorage.removeItem(KEY); } catch (e) {}
-      return;
-    }
-
-    var ref = document.referrer || '';
-    var fromProject = ref.indexOf('/portfolio/') !== -1 || ref.indexOf('portfolio/') !== -1;
-    if (!fromProject) return;
-
-    requestAnimationFrame(function () {
-      var html = document.documentElement;
-      var prev = html.style.scrollBehavior;
-      html.style.scrollBehavior = 'auto';
-      window.scrollTo(0, saved.y);
-      html.style.scrollBehavior = prev;
-      setTimeout(function () {
-        try { sessionStorage.removeItem(KEY); } catch (e) {}
-      }, 600);
     });
   }
 
@@ -553,10 +420,7 @@
     initFaq();
     initGallery();
     initPortfolioFilter();
-    initBlogFilter();
     initBackLinks();
-    initPortfolioScrollMemory();
-    initDraftSaves();
     initCookie();
     initHero();
     initImgFallback();

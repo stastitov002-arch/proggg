@@ -1,6 +1,6 @@
 ---
 slug: wardrobe-architecture
-title: Встроенный шкаф до потолка в матовой эмали с подсветкой
+title: Шкаф Эмаль
 featured: false
 style: ''
 layout: Шкаф

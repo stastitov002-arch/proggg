@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 40/60 Design — статический генератор сайта.
 
@@ -28,7 +28,6 @@ import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
-from urllib.parse import quote
 
 try:  # консоль Windows часто в cp1251 — принудительно UTF-8
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -47,10 +46,10 @@ TG = "https://t.me/design4060"
 TG_NAME = "@design4060"
 
 NAV = [
-    ("about.html", "О нас"),
     ("portfolio.html", "Портфолио"),
     ("articles.html", "Статьи"),
     ("standards.html", "Стандарты"),
+    ("about.html", "О нас"),
     ("warranty.html", "Гарантия"),
     ("partners.html", "Партнёрам"),
 ]
@@ -420,8 +419,8 @@ def fonts_link() -> str:
         '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '<link href="https://fonts.googleapis.com/css2?'
-        'family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&'
-        'family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">'
+        'family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&'
+        'family=Manrope:wght@300..800&display=swap" rel="stylesheet">'
     )
 
 
@@ -503,7 +502,7 @@ def head(
 
 def brand_block(base: str = "", href: str = "index.html", sub: str = "Мебель на заказ") -> str:
     return f"""    <a class="brand" href="{base}{href}" aria-label="{BRAND} — на главную">
-      <img class="brand__mark" src="{base}favicon.svg" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="{base}images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">{esc(sub)}</span></span>
     </a>"""
 
@@ -564,9 +563,6 @@ def footer(base: str = "") -> str:
     <div>
       <p class="ftr__col-title">Разделы</p>
       <ul class="ftr__links">
-        <li><a href="{base}kuhni/">Кухни на заказ</a></li>
-        <li><a href="{base}shkafy-i-garderobnye/">Шкафы и гардеробные</a></li>
-        <li><a href="{base}mebel-dlya-vannoy-i-prihozhey/">Ванная и прихожая</a></li>
         <li><a href="{base}portfolio.html">Портфолио</a></li>
         <li><a href="{base}articles.html">Статьи</a></li>
         <li><a href="{base}standards.html">Стандарты</a></li>
@@ -579,7 +575,6 @@ def footer(base: str = "") -> str:
         <li><a href="{base}requirements.html">Требования к мебели</a></li>
         <li><a href="{base}warranty.html">Гарантия</a></li>
         <li><a href="{base}partners.html">Партнёрам</a></li>
-        <li><a href="{base}contacts.html">Контакты</a></li>
         <li><button type="button" data-modal-open="lead">Записаться на замер</button></li>
       </ul>
     </div>
@@ -606,9 +601,8 @@ def modals(base: str = "") -> str:
   <div class="modal__bd" data-modal-close></div>
   <div class="modal__dlg">
     <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">✕</button>
-    <div class="modal__body">
     <p class="modal__eyebrow">Заявка</p>
-    <h2 class="modal__title" id="lead-title">Рассчитаем ваш проект</h2>
+    <h2 class="modal__title" id="lead-title">Рассчитаем стоимость кухни</h2>
     <p class="modal__sub">Оставьте контакт — дизайнер свяжется в течение 15 минут, уточнит размеры и пришлёт смету. Замер и расчёт бесплатны.</p>
     <div class="form-success">
       <div class="form-success__icon">✓</div>
@@ -643,7 +637,6 @@ def modals(base: str = "") -> str:
       <button type="submit" class="btn btn--solid btn--block">Отправить заявку</button>
       <p class="form-note">Или позвоните: <a href="{PHONE1_HREF}" style="color:var(--c-gold)">{PHONE1}</a></p>
     </form>
-    </div>
   </div>
 </div>
 
@@ -651,7 +644,6 @@ def modals(base: str = "") -> str:
   <div class="modal__bd" data-modal-close></div>
   <div class="modal__dlg">
     <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">✕</button>
-    <div class="modal__body">
     <p class="modal__eyebrow">Связаться</p>
     <h2 class="modal__title" id="contact-title">Напишите нам</h2>
     <p class="modal__sub">Ответим в рабочее время — пн–сб с 10:00 до 21:00.</p>
@@ -687,7 +679,6 @@ def modals(base: str = "") -> str:
       <p class="form-error" hidden style="color:var(--c-error);font-size:12px;margin:0 0 12px"></p>
       <button type="submit" class="btn btn--solid btn--block">Отправить</button>
     </form>
-    </div>
   </div>
 </div>
 
@@ -749,7 +740,7 @@ def cta_band(title: str = "", sub: str = "", button: str = "", base: str = "", _
     cta = (_site or {}).get("cta") or {}
     title = title or cta.get("title") or "Отправьте размеры или дизайн-проект — <em>рассчитаем стоимость</em>"
     sub = sub or cta.get("sub") or "Смета с реальными ценами на материалы и фурнитуру. Замер и расчёт — бесплатно, по Москве и ближнему МО."
-    button = button or cta.get("button") or "Рассчитать проект"
+    button = button or cta.get("button") or "Рассчитать кухню"
     second = cta.get("button2") or "Написать в Telegram"
     bg = norm_path(cta.get("image") or "images/cta-bg.jpg")
     return f"""<section class="cta-band">
@@ -923,7 +914,7 @@ def article_card(a: dict, base: str = "") -> str:
              if a["cover"] else '<div class="img-fallback"></div>')
     lead = esc(a["description"])[:180]
     date_html = f'<time datetime="{iso_date(a["date"])}">{ru_date(a["date"])}</time>' if a["date"] else ""
-    return f"""<li class="acard-block" data-cat="{esc(a['category'])}">
+    return f"""<li>
   <a class="acard" href="{base}articles/{esc(a['slug'])}.html">
     <div class="acard__media">{cover}</div>
     <div class="acard__body">
@@ -948,32 +939,6 @@ def breadcrumbs(items: list[tuple[str, str]]) -> str:
     return '<nav class="crumbs" aria-label="Хлебные крошки">' + "".join(parts) + "</nav>"
 
 
-DEFAULT_INNER_HERO = "images/hero.jpg"
-
-
-def phero_block(
-    eyebrow: str,
-    h1: str,
-    lead: str,
-    image: str = "",
-    crumbs: str = "",
-    extra: str = "",
-    base: str = "",
-) -> str:
-    """Первый блок внутренней страницы — с фотографией из портфолио."""
-    img = norm_path(image) or DEFAULT_INNER_HERO
-    return f"""<section class="phero phero--photo">
-  <div class="phero__bg" aria-hidden="true"><img src="{base}{esc(img)}" alt="" loading="eager"></div>
-  <div class="phero__in">
-    {crumbs}
-    <p class="eyebrow">{esc(eyebrow)}</p>
-    <h1 class="phero__title">{esc(h1)}</h1>
-    <p class="phero__sub">{esc(lead)}</p>
-    {extra}
-  </div>
-</section>"""
-
-
 # --------------------------------------------------------------------------
 # страницы
 # --------------------------------------------------------------------------
@@ -985,7 +950,7 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
         featured += extra
     cards = "\n".join(project_card(p) for p in featured)
 
-    published = [a for a in articles if not a["draft"]][:2]
+    published = [a for a in articles if not a["draft"]][:3]
     article_cards = "\n".join(article_card(a) for a in published) if published else ""
     articles_block = ""
     if article_cards:
@@ -995,18 +960,44 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
     <div class="sec__head">
       <div>
         <p class="eyebrow" data-cms="articlesBlock.eyebrow">{esc(art_head.get('eyebrow') or 'Журнал 40/60')}</p>
-        <h2 class="display display--xl" data-cms="articlesBlock.title">{art_head.get('title') or 'Разбираем цены, материалы и конструктив <em>без маркетинга</em>'}</h2>
+        <h2 class="display display--xl" data-cms="articlesBlock.title">{art_head.get('title') or 'Статьи о кухнях <em>и материалах</em>'}</h2>
       </div>
       <div>
-        <p class="lead" data-cms="articlesBlock.lead">{esc(art_head.get('lead') or 'Пишем о том, что проверяем на собственных объектах: сметы, фурнитура, материалы и ошибки, которые дорого стоят.')}</p>
-        <p style="margin-top:18px"><a class="sec__link" href="articles.html">Все статьи журнала →</a></p>
+        <p class="lead" data-cms="articlesBlock.lead">{esc(art_head.get('lead') or 'Разбираем реальные цены, материалы и ошибки — на основе наших проектов, а не чужих статей.')}</p>
+        <p style="margin-top:18px"><a class="sec__link" href="articles.html">Все статьи →</a></p>
       </div>
     </div>
     <ul class="pgrid pgrid--4" style="list-style:none">{article_cards}</ul>
   </div>
 </section>"""
 
-    # ---- «Инженерный подход»: 4 карточки (раньше — «Проект под ключ»)
+    std_head = site.get("standardsBlock") or {}
+    standards_block = f"""<section class="sec" id="standards">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <p class="eyebrow" data-cms="standardsBlock.eyebrow">{esc(std_head.get('eyebrow') or 'Стандарты')}</p>
+        <h2 class="display display--xl" data-cms="standardsBlock.title">{std_head.get('title') or 'Как мы производим <em>мебель</em>'}</h2>
+      </div>
+      <div>
+        <p class="lead" data-cms="standardsBlock.lead">{esc(std_head.get('lead') or 'Правила, по которым проектируем, собираем и сдаём мебель: материалы, фурнитура, допуски, контроль и гарантия.')}</p>
+        <p style="margin-top:18px"><a class="sec__link" href="standards.html">Все стандарты →</a></p>
+      </div>
+    </div>
+    <ul class="std-grid">
+      <li class="std-card"><span class="std-card__num">01</span><h3 class="std-card__title">Материалы</h3><p class="std-card__text">ЛДСП E1, МДФ, эмаль по RAL, натуральный шпон, кварцевый агломерат. Что допускаем в производство — и почему.</p></li>
+      <li class="std-card"><span class="std-card__num">02</span><h3 class="std-card__title">Фурнитура</h3><p class="std-card__text">Blum, Hettich — петли, ящики, механизмы. Подбор под вес и сценарий эксплуатации, а не «что дешевле».</p></li>
+      <li class="std-card"><span class="std-card__num">03</span><h3 class="std-card__title">Допуски и эргономика</h3><p class="std-card__text">Зазоры 2–3 мм, отклонения до ±2 мм на погонный метр, рабочая высота 890 мм, эргономические коридоры.</p></li>
+      <li class="std-card"><span class="std-card__num">04</span><h3 class="std-card__title">Контроль и сдача</h3><p class="std-card__text">Три этапа проверки, фотоотчёт перед монтажом и итоговая приёмка по чек-листу вместе с клиентом.</p></li>
+    </ul>
+    <div style="margin-top:clamp(20px,3vw,32px);display:flex;flex-wrap:wrap;gap:14px">
+      <a class="btn" href="standards.html">Стандарты производства</a>
+      <a class="btn btn--ghost" href="requirements.html">Требования к мебели</a>
+    </div>
+  </div>
+</section>"""
+
+    # ---- «Проект под ключ»
     tpk = site.get("tpk") or {}
     tpk_cards = tpk.get("cards") if isinstance(tpk.get("cards"), list) and tpk["cards"] else DEFAULT_TPK
     tpk_items = "\n".join(
@@ -1016,26 +1007,22 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
         f'<p class="tpk-card__text">{esc(c.get("text", ""))}</p></li>'
         for i, c in enumerate(tpk_cards)
     )
-    tpk_block = f"""<section class="sec sec--tight" id="engineering">
+    tpk_block = f"""<section class="sec sec--tight" id="turnkey">
   <div class="wrap">
     <div class="sec__head">
       <div>
-        <p class="eyebrow" data-cms="tpk.eyebrow">{esc(tpk.get('eyebrow') or 'Инженерный подход')}</p>
-        <h2 class="display display--xl" data-cms="tpk.title">{tpk.get('title') or 'Сначала расчёт и инженерия, <em>потом раскрой</em>'}</h2>
+        <p class="eyebrow" data-cms="tpk.eyebrow">{esc(tpk.get('eyebrow') or 'Комплексный подход')}</p>
+        <h2 class="display display--xl" data-cms="tpk.title">{tpk.get('title') or 'Проект <em>под ключ</em>'}</h2>
       </div>
       <div>
-        <p class="lead" data-cms="tpk.subtitle">{esc(tpk.get('subtitle') or '40/60 — проектная студия: замер, чертежи, спецификацию и контроль качества делаем мы, а раскрой и покраску выполняет партнёрская производственная площадка по нашим стандартам. Один ответственный за весь объект — мы.')}</p>
+        <p class="lead" data-cms="tpk.subtitle">{esc(tpk.get('subtitle') or 'Берём на себя весь путь: от первой консультации до подключённой техники. Вам не нужно искать отдельных подрядчиков на замер, камень, доставку и сборку.')}</p>
       </div>
     </div>
     <ol class="tpk__grid" style="counter-reset:none">{tpk_items}</ol>
-    <div class="btn-row" style="margin-top:clamp(20px,3vw,32px)">
-      <a class="btn" href="standards.html">Стандарты 40/60</a>
-      <a class="btn btn--ghost" href="requirements.html">Требования к мебели</a>
-    </div>
   </div>
 </section>"""
 
-    # ---- «Этапы работы»: 6 шагов
+    # ---- «Этапы работы»
     steps = site.get("steps") or {}
     step_items = steps.get("items") if isinstance(steps.get("items"), list) and steps["items"] else DEFAULT_STEPS
     flow_items = "\n".join(
@@ -1049,91 +1036,37 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
     <div class="sec__head">
       <div>
         <p class="eyebrow">Процесс</p>
-        <h2 class="display display--xl" data-cms="steps.title">{steps.get('title') or 'Как проходит заказ мебели: <em>от замера до приёмки</em>'}</h2>
+        <h2 class="display display--xl" data-cms="steps.title">{steps.get('title') or 'Этапы <em>работы</em>'}</h2>
       </div>
       <div>
-        <p class="lead" data-cms="steps.lead">{esc(steps.get('lead') or 'Шесть шагов, на каждом из которых вы понимаете, что происходит сейчас и что будет дальше.')}</p>
+        <p class="lead" data-cms="steps.lead">{esc(steps.get('lead') or 'От первой встречи до подписанных актов — десять понятных шагов. На каждом этапе вы понимаете, что происходит и что будет дальше.')}</p>
       </div>
     </div>
     <ol class="journey is-ready" id="journey">{flow_items}</ol>
   </div>
 </section>"""
 
-    # ---- «Направления»
-    directions = """<section class="sec sec--line" id="directions">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Направления</p>
-        <h2 class="display display--xl">Что мы проектируем <em>и делаем на заказ</em></h2>
-      </div>
-      <div>
-        <p class="lead">Три направления — один инженерный стандарт. В каждом проекте фиксируем материалы, фурнитуру и смету до запуска, а не «уточняем по ходу».</p>
-      </div>
+    # ---- «Производство» (две колонки; на мобилке фото уходит под текст)
+    prod = site.get("production") or {}
+    prod_items = prod.get("items") if isinstance(prod.get("items"), list) and prod["items"] else DEFAULT_PROD_ITEMS
+    prod_steps = "\n".join(
+        f'<li class="steps__item"><span class="steps__num">{esc(p.get("num", f"{i + 1:02d}"))}</span>'
+        f'<div><p class="steps__title">{esc(p.get("title", ""))}</p>'
+        f'<p class="steps__text">{esc(p.get("text", ""))}</p></div></li>'
+        for i, p in enumerate(prod_items)
+    )
+    production_block = f"""<section class="sec sec--line" id="production">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow" data-cms="production.eyebrow">{esc(prod.get('eyebrow') or 'Производство')}</p>
+      <h2 class="display display--l" data-cms="production.title">{prod.get('title') or 'Свой цех — значит <em>свои сроки</em>'}</h2>
+      <p class="lead" style="margin-top:18px" data-cms="production.text">{esc(prod.get('text') or 'Мы не перепродаём чужие кухни. Проектируем, раскраиваем, кромкуем и собираем сами: поэтому отвечаем за каждый зазор и не зависим от подрядчиков.')}</p>
+      <ul class="steps" style="margin-top:26px;grid-template-columns:1fr 1fr">{prod_steps}</ul>
     </div>
-    <ul class="dir-grid" style="list-style:none">
-      <li>
-        <a class="dir-card" href="kuhni/">
-          <p class="dir-card__kicker">01 · Кухни</p>
-          <h3 class="dir-card__title">Кухни на заказ</h3>
-          <p class="dir-card__text">Прямые, угловые, П-образные и с островом. Влагостойкий корпус 18 мм, фасады от ЛДСП Egger и ALVIC Luxe до эмали по RAL, кварцевые столешницы и фурнитура Blum.</p>
-          <div class="dir-card__foot"><span class="dir-card__price">от 275 000 ₽</span><span class="dir-card__more">Подробнее →</span></div>
-        </a>
-      </li>
-      <li>
-        <a class="dir-card" href="shkafy-i-garderobnye/">
-          <p class="dir-card__kicker">02 · Хранение</p>
-          <h3 class="dir-card__title">Шкафы и гардеробные</h3>
-          <p class="dir-card__text">Встроенные шкафы-купе, распашные шкафы со стеклянными витринами и подсветкой, гардеробные комнаты с островом и пантографами.</p>
-          <div class="dir-card__foot"><span class="dir-card__price">от 280 000 ₽</span><span class="dir-card__more">Подробнее →</span></div>
-        </a>
-      </li>
-      <li>
-        <a class="dir-card" href="mebel-dlya-vannoy-i-prihozhey/">
-          <p class="dir-card__kicker">03 · Ванная и прихожая</p>
-          <h3 class="dir-card__title">Мебель для ванной и прихожей</h3>
-          <p class="dir-card__text">Подвесные и напольные тумбы под раковину из влагостойких плит TSS Cleaf, HPL и эмали, консольные тумбы с фрезеровкой.</p>
-          <div class="dir-card__foot"><span class="dir-card__price">от 85 000 ₽</span><span class="dir-card__more">Подробнее →</span></div>
-        </a>
-      </li>
-    </ul>
-  </div>
-</section>"""
-
-    # ---- «Материалы и бренды»
-    materials_block = """<section class="sec sec--alt sec--line" id="materials">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Материалы</p>
-        <h2 class="display display--xl">С какими материалами <em>и фурнитурой работаем</em></h2>
-      </div>
-      <div>
-        <p class="lead">Подбираем комплектацию под задачу и бюджет, а не привязываем к одному бренду. В спецификации фиксируем точные серии плит, кромки и фурнитуры.</p>
-      </div>
-    </div>
-    <div class="brand-groups">
-      <div class="brand-group">
-        <p class="brand-group__t">Корпуса и плиты</p>
-        <ul class="brand-tags"><li class="brand-tag">Egger</li><li class="brand-tag">TSS Cleaf</li><li class="brand-tag">Влагостойкая плита 18 мм</li><li class="brand-tag">Класс эмиссии E1</li></ul>
-      </div>
-      <div class="brand-group">
-        <p class="brand-group__t">Фасады</p>
-        <ul class="brand-tags"><li class="brand-tag">ALVIC Luxe</li><li class="brand-tag">AGT</li><li class="brand-tag">МДФ в плёнке ПВХ</li><li class="brand-tag">Эмаль по RAL</li><li class="brand-tag">Шпон</li><li class="brand-tag">Массив</li></ul>
-      </div>
-      <div class="brand-group">
-        <p class="brand-group__t">Столешницы</p>
-        <ul class="brand-tags"><li class="brand-tag">Кварцевый агломерат 20 мм</li><li class="brand-tag">HPL / компакт-ламинат</li><li class="brand-tag">Натуральный камень</li></ul>
-      </div>
-      <div class="brand-group">
-        <p class="brand-group__t">Фурнитура</p>
-        <ul class="brand-tags"><li class="brand-tag">Blum</li><li class="brand-tag">Hettich</li><li class="brand-tag">GTV</li><li class="brand-tag">Петли с доводчиком</li><li class="brand-tag">LEGRABOX</li><li class="brand-tag">AVENTOS</li></ul>
-      </div>
-    </div>
-    <div class="btn-row" style="margin-top:clamp(22px,3vw,34px)">
-      <a class="btn" href="portfolio.html">Проекты с материалами и ценами</a>
-      <a class="btn btn--ghost" href="standards.html">Стандарты 40/60</a>
-    </div>
+    <figure class="split__media">
+      <img src="{esc(norm_path(prod.get('image') or 'images/showroom.jpg'))}" alt="{esc(prod.get('caption') or 'Шоурум 40/60 Design: образцы фасадов и камня')}" width="900" height="700" loading="lazy" data-fallback>
+      <figcaption class="split__caption">{esc(prod.get('caption') or 'Шоурум: образцы фасадов, эмалей и кварцевого камня — можно потрогать до заказа.')}</figcaption>
+    </figure>
   </div>
 </section>"""
 
@@ -1156,38 +1089,36 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
 
     hero = site.get("hero") or {}
     body = f"""<section class="hero" id="top">
-  <div class="hero__media" aria-hidden="true">
-    <img class="hero__img" src="images/hero.jpg" alt="" width="1920" height="1080">
+  <div class="hero__media">
+    <img class="hero__img" src="images/hero.jpg" alt="Кухня на заказ в тёмном орехе с каменным островом" width="1920" height="1080">
     <div class="hero__veil"></div>
   </div>
   <div class="hero__in">
-    <p class="hero__eyebrow" data-cms="hero.eyebrow">{esc(hero.get('eyebrow') or 'Мебель на заказ · Москва и МО')}</p>
-    <h1 class="hero__title" data-cms="hero.title">{hero.get('title') or 'Кухни и корпусная мебель на заказ в Москве <em>по инженерным стандартам</em>'}</h1>
-    <p class="hero__sub" data-cms="hero.subtitle">{esc(hero.get('subtitle') or 'Проектируем, комплектуем и устанавливаем индивидуальную мебель для жилых интерьеров: кухни, шкафы, гардеробные и тумбы в ванную. Фиксируем материалы и смету до запуска, изготавливаем от 21 дня, даём 3 года гарантии.')}</p>
-    <div class="hero__actions">
-      <button class="btn btn--solid" type="button" data-modal-open="lead" data-cms="hero.btn1">{esc(hero.get('btn1') or 'Рассчитать проект')}</button>
-      <a class="btn btn--ghost" href="portfolio.html" data-cms="hero.btn2">{esc(hero.get('btn2') or 'Смотреть реализованные проекты')}</a>
+    <p class="hero__eyebrow" data-cms="hero.eyebrow">{esc(hero.get('eyebrow') or 'Производство мебели · Москва')}</p>
+    <h1 class="hero__title" data-cms="hero.title">{hero.get('title') or 'Кухни, которые <em>живут</em> дольше ремонта<span style="color:var(--c-gold-hi)">.</span>'}</h1>
+    <p class="hero__sub" data-cms="hero.subtitle">{esc(hero.get('subtitle') or 'Проектируем и производим кухни и корпусную мебель по индивидуальным размерам. Своё производство, срок 21 день, гарантия 3 года.')}</p>
+    <div class="hero__badges">
+      <span class="hero__badge" data-cms="hero.badge1">{esc(hero.get('badge1') or '21 день')}</span>
+      <span class="hero__badge" data-cms="hero.badge2">{esc(hero.get('badge2') or 'Гарантия 3 года')}</span>
+      <span class="hero__badge" data-cms="hero.badge3">{esc(hero.get('badge3') or 'От 150 000 ₽')}</span>
+      <span class="hero__badge" data-cms="hero.badge4">{esc(hero.get('badge4') or 'Замер бесплатно')}</span>
     </div>
-    <div class="hero__trust">
-      <div class="hero__trust-i"><span class="hero__trust-n">от 275 000 ₽</span><span class="hero__trust-t">кухня 3 м «под ключ» с доставкой и монтажом</span></div>
-      <div class="hero__trust-i"><span class="hero__trust-n">21 день</span><span class="hero__trust-t">стандартный срок изготовления</span></div>
-      <div class="hero__trust-i"><span class="hero__trust-n">3 года</span><span class="hero__trust-t">гарантия на корпус, фасады и фурнитуру</span></div>
-      <div class="hero__trust-i"><span class="hero__trust-n">2–3 мм</span><span class="hero__trust-t">стандарт допуска зазоров между фасадами</span></div>
+    <div class="hero__actions">
+      <a class="btn btn--solid" href="portfolio.html" data-cms="hero.btn1">{esc(hero.get('btn1') or 'Смотреть проекты')}</a>
+      <button class="btn btn--ghost" type="button" data-modal-open="lead" data-cms="hero.btn2">{esc(hero.get('btn2') or 'Получить расчёт')}</button>
     </div>
   </div>
 </section>
-
-{directions}
 
 <section class="sec" id="portfolio">
   <div class="wrap">
     <div class="sec__head">
       <div>
         <p class="eyebrow">Портфолио</p>
-        <h2 class="display display--xl">Реализованные проекты в Москве — <em>с материалами и итоговой ценой</em></h2>
+        <h2 class="display display--xl">Реализованные <em>проекты</em></h2>
       </div>
       <div>
-        <p class="lead">Показываем не 3D-рендеры из каталогов, а установленные объекты с честной сметой «под ключ»: фасады, столешница, фурнитура и итоговая стоимость.</p>
+        <p class="lead">Реальные объекты с ценами, материалами и фурнитурой. Откройте проект, чтобы увидеть комплектацию и фотографии.</p>
         <p style="margin-top:18px"><a class="sec__link" href="portfolio.html">Все проекты →</a></p>
       </div>
     </div>
@@ -1201,9 +1132,11 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
 
 {steps_block}
 
-{materials_block}
+{production_block}
 
 {articles_block}
+
+{standards_block}
 
 <section class="sec sec--line" id="faq">
   <div class="wrap">
@@ -1222,57 +1155,11 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
   </div>
 </section>
 
-<section class="sec" id="lead">
-  <div class="wrap split">
-    <div>
-      <p class="eyebrow">Расчёт</p>
-      <h2 class="display display--l">Пришлите план помещения или эскиз — <em>посчитаем точную смету</em></h2>
-      <p class="lead" style="margin-top:18px">Отвечаем в течение 15 минут в рабочее время. Назовём реальный бюджет в 2–3 вариантах материалов и покажем, на чём можно сэкономить без потери ресурса.</p>
-      <div class="btn-row">
-        <a class="btn btn--ghost" href="{TG}" target="_blank" rel="noopener">Написать в Telegram</a>
-        <a class="btn" href="{PHONE1_HREF}">{PHONE1}</a>
-      </div>
-      <p style="font-size:12px;color:var(--c-muted);margin-top:14px;line-height:1.6">План БТИ, чертёж дизайнера или фото стены с размерами можно отправить сразу в Telegram — так быстрее всего.</p>
-    </div>
-    <div class="spec" style="position:static">
-      <div class="form-success">
-        <div class="form-success__icon">✓</div>
-        <p class="form-success__title">Заявка отправлена</p>
-        <p class="form-success__text">Спасибо! Свяжемся с вами в течение 15 минут в рабочее время.</p>
-      </div>
-      <form class="lead-form" data-lead-form data-source="Расчёт по плану — главная" novalidate>
-        <div class="field">
-          <label class="field__label" for="idx-name">Имя</label>
-          <input class="field__input" id="idx-name" name="name" type="text" placeholder="Например, Андрей Белов" required autocomplete="name">
-        </div>
-        <div class="field">
-          <label class="field__label" for="idx-phone">Телефон</label>
-          <input class="field__input" id="idx-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required autocomplete="tel">
-        </div>
-        <div class="field">
-          <label class="field__label" for="idx-tg">Telegram — не обязательно</label>
-          <input class="field__input" id="idx-tg" name="tg" type="text" placeholder="nickname">
-        </div>
-        <div class="field">
-          <label class="field__label" for="idx-msg">Размеры, задача или ссылка на план</label>
-          <textarea class="field__textarea" id="idx-msg" name="message" placeholder="Кухня 3,2 м, угловая, нужен остров. План во вложении в Telegram."></textarea>
-        </div>
-        <label class="consent">
-          <input type="checkbox">
-          <span class="consent__box">✓</span>
-          <span>Я согласен на обработку персональных данных</span>
-        </label>
-        <p class="consent__err">Поставьте галочку — без согласия мы не можем принять заявку</p>
-        <p class="form-error" hidden style="color:var(--c-error);font-size:12px;margin:0 0 12px"></p>
-        <button type="submit" class="btn btn--solid btn--block">Получить расчёт</button>
-      </form>
-    </div>
-  </div>
-</section>"""
+{cta_band(_site=site)}"""
 
     return page(
-        title="Мебель и кухни на заказ в Москве по индивидуальным размерам — 40/60 Design",
-        description="Проектируем и изготавливаем кухни, шкафы, гардеробные и мебель для ванной на заказ в Москве и МО. Фиксированная смета, срок от 21 дня, гарантия 3 года.",
+        title="Кухни и корпусная мебель на заказ в Москве — 40/60 Design",
+        description="Производство кухонь и корпусной мебели на заказ в Москве и области. Своё производство, срок 21 день, гарантия 3 года, бесплатный замер и расчёт.",
         canonical=SITE + "/",
         body=body,
         active="index.html",
@@ -1286,357 +1173,6 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
             "address": {"@type": "PostalAddress", "addressLocality": "Москва", "addressCountry": "RU"},
             "sameAs": [TG],
         }],
-    )
-
-
-# --------------------------------------------------------------------------
-# коммерческие категории: кухни, шкафы, ванная и прихожая
-# --------------------------------------------------------------------------
-
-CATEGORY_PAGES: list[dict] = [
-    {
-        "folder": "kuhni",
-        "eyebrow": "Кухни на заказ",
-        "seo_title": "Кухни на заказ в Москве от производителя по размерам — цены от 275 000 ₽ | 40/60 Design",
-        "description": "Изготовление кухонь на заказ в Москве и МО под ключ: угловые, прямые и с островом. Корпус 18 мм Egger, фасады ALVIC Luxe и эмаль, фурнитура Blum. Срок от 21 дня, гарантия 3 года.",
-        "h1": "Кухни на заказ в Москве по индивидуальным размерам",
-        "lead": "Проектируем и устанавливаем кухни под ключ — от практичных угловых решений на базе ЛДСП Egger до кухонь с островом, матовой эмалью и кварцевым агломератом. В смету сразу входят корпус, фасады, фурнитура, столешница, доставка и монтаж.",
-        "hero_image": "images/portfolio-hero.jpg",
-        "cta": "Рассчитать стоимость моей кухни",
-        "anchors": [("#ceny", "Посмотреть цены 2026")],
-        "slugs": [
-            "kitchen-smart-economy",
-            "kitchen-graphite-wood-loft",
-            "kitchen-harmony-details",
-            "kitchen-luxury-details",
-        ],
-        "grid_title": "Реализованные кухни 40/60 Design",
-        "grid_lead": "Установленные объекты с материалами, фурнитурой и итоговой ценой. Откройте проект, чтобы увидеть спецификацию и фотографии.",
-        "chips": [
-            ("Все", "../portfolio.html?type=Кухня"),
-            ("Угловые", "../portfolio.html?type=Кухня&layout=Угловая"),
-            ("С островом", "../portfolio.html?type=Кухня&island=1"),
-            ("ЛДСП / ПВХ", "../portfolio.html?material=ЛДСП"),
-            ("Пластик ALVIC", "../portfolio.html?material=ALVIC%20Luxe"),
-            ("Эмаль", "../portfolio.html?material=Эмаль"),
-        ],
-        "sections": """<section class="sec sec--line" id="ceny">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Цены</p>
-        <h2 class="display display--xl">Сколько стоит кухня на заказ в 2026 году</h2>
-      </div>
-      <div>
-        <p class="lead">Мы не считаем кухни «погонным метром» — итоговая смета зависит от набора модулей, фасадов, столешницы и механики. Ниже — реальные диапазоны по нашим проектам под ключ (без бытовой техники, мойки и подъёма без лифта).</p>
-      </div>
-    </div>
-    <table class="price-table">
-      <thead><tr><th>Размер и конфигурация</th><th>Материалы</th><th>Стоимость «под ключ»</th></tr></thead>
-      <tbody>
-        <tr><td>2,5–3 м, прямая</td><td>ЛДСП / плёнка ПВХ</td><td>270 000 – 350 000 ₽</td></tr>
-        <tr><td>3–3,5 м, угловая</td><td>Плёнка ПВХ / пластик</td><td>350 000 – 480 000 ₽</td></tr>
-        <tr><td>4 м, угловая</td><td>Эмаль</td><td>520 000 – 700 000 ₽</td></tr>
-        <tr><td>4–5 м с островом</td><td>Эмаль, шпон, камень</td><td>700 000 – 1 500 000 ₽</td></tr>
-      </tbody>
-    </table>
-    <p class="lead">Подробный разбор сметы на 4 живых примерах — в статье <a class="sec__link" style="display:inline-flex;margin-top:6px" href="../articles/skolko-stoit-kuhnya-na-zakaz-2026.html">«Сколько стоит кухня на заказ в Москве в 2026 году»</a>.</p>
-  </div>
-</section>
-
-<section class="sec" id="materialy">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Материалы</p>
-        <h2 class="display display--xl">Из чего мы собираем кухни: <em>материалы и конструктив</em></h2>
-      </div>
-      <div>
-        <p class="lead">Каждую позицию фиксируем в спецификации: плиту, толщину, кромку, серию фурнитуры. По ней изготавливают кухню и по ней мы принимаем работу.</p>
-      </div>
-    </div>
-    <div class="info-grid">
-      <div class="info-card"><p class="info-card__kicker">01 · Корпус</p><h3>Корпус 18 мм (Egger)</h3><p>Для кухонь используем влагостойкую плиту класса эмиссии E1 толщиной 18 мм — в отличие от 16 мм её не ведёт под весом столешницы. Все торцы в зонах влаги закрыты кромкой.</p></div>
-      <div class="info-card"><p class="info-card__kicker">02 · Фасады</p><h3>Фасады под задачу и бюджет</h3><p>ЛДСП Egger (от 12 000 ₽/м.п.), матовая плёнка ПВХ на МДФ (от 18 000 ₽), испанский пластик ALVIC Luxe и AGT (от 26 000 ₽), эмаль по RAL с фрезеровкой (от 34 000 ₽), шпон (от 55 000 ₽), массив (от 70 000 ₽).</p></div>
-      <div class="info-card"><p class="info-card__kicker">03 · Столешницы</p><h3>Столешницы</h3><p>Влагостойкий ЛДСП (от 6 000 ₽/м.п.), компакт-ламинат (от 12 000 ₽), кварцевый агломерат 20 мм (от 18 000 ₽) или натуральный камень (от 30 000 ₽) с обязательной герметизацией выпилов и стыков.</p></div>
-      <div class="info-card"><p class="info-card__kicker">04 · Фурнитура</p><h3>Фурнитура по паспортной нагрузке</h3><p>Петли с доводчиком, ящики полного выдвижения 30–50 кг (включая Blum LEGRABOX), подъёмники AVENTOS. Работаем с Blum, Hettich и GTV — серия фиксируется в договоре.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec--alt sec--line" id="standarty">
-  <div class="wrap split">
-    <div>
-      <p class="eyebrow">Стандарты</p>
-      <h2 class="display display--l">Что проверяем на каждой кухне <em>до запуска в работу</em></h2>
-      <p class="lead" style="margin-top:16px">Инженерия начинается до раскроя. Эти пункты — не пожелания, а обязательные проверки по нашим стандартам.</p>
-      <div class="btn-row">
-        <a class="btn" href="../standards.html">Стандарты 40/60</a>
-        <a class="btn btn--ghost" href="../requirements.html">Требования к мебели</a>
-      </div>
-    </div>
-    <ul class="tick-list">
-      <li>Навесные шкафы анкерим только в несущую стену — гипсокартон без закладной не считаем основанием.</li>
-      <li>Выдерживаем вентиляционные зазоры для встроенной техники и решётки в цоколе.</li>
-      <li>Оставляем свободный доступ к сифонам, фильтрам, счётчикам и вентилям без демонтажа корпусов.</li>
-      <li>Фиксируем перепады стен и углов в акте контрольного замера до раскроя.</li>
-    </ul>
-  </div>
-</section>""",
-        "faq_title": "Частые вопросы о заказе кухни",
-        "faq": [
-            ("Сколько изготавливается кухня?", "Стандартный срок — 21 день с момента утверждения проекта; кухни с эмалью и каменной столешницей — 25–35 дней из-за технологии покраски и замера камня по шаблону."),
-            ("Входит ли доставка и монтаж в цену?", "Да, смета включает доставку, сборку, установку, герметизацию стыков, регулировку фасадов и вынос упаковки. Отдельно оплачиваются подъём без лифта и демонтаж старой кухни."),
-            ("Можно ли заказать кухню со своей техникой?", "Да. Мы не накручиваем на бытовую технику — достаточно передать нам точные модели и паспорта приборов на этапе проектирования, чтобы заложить правильные ниши и вентиляцию."),
-            ("Какая гарантия на кухню?", "3 года на корпус, фасады и фурнитуру, 1 год на монтажные работы. Подробнее — на странице «Гарантия»."),
-        ],
-        "cta_title": "Закажите бесплатный расчёт кухни <em>по вашим размерам</em>",
-        "cta_sub": "Отправьте план БТИ, чертёж дизайнера или фото стены с размерами — подготовим спецификацию и точную смету без скрытых доплат.",
-        "cta_button": "Рассчитать кухню",
-    },
-    {
-        "folder": "shkafy-i-garderobnye",
-        "eyebrow": "Шкафы и гардеробные",
-        "seo_title": "Встроенные шкафы и гардеробные на заказ в Москве по размерам — 40/60 Design",
-        "description": "Проектируем и изготавливаем встроенные шкафы-купе, шкафы со стеклом и подсветкой, гардеробные с островом в Москве. Egger, TSS Cleaf, Blum, пантографы. Гарантия 3 года.",
-        "h1": "Встроенные шкафы и гардеробные на заказ в Москве",
-        "lead": "Проектируем системы хранения точно под геометрию ниши или комнаты: от встроенных шкафов-купе из ЛДСП Egger и витрин в чёрном алюминиевом профиле до гардеробных с островом и итальянскими пантографами.",
-        "hero_image": "images/uploads/photo_5368659676796495158_y.jpg",
-        "cta": "Рассчитать шкаф или гардеробную",
-        "anchors": [("#proekty", "Смотреть проекты")],
-        "slugs": ["wardrobe-display-glass-black", "wardrobe-graphics-graphite", "wardrobe-milan-boutique"],
-        "grid_title": "Выполненные шкафы и гардеробные с ценами",
-        "grid_lead": "Материалы, фурнитура и итоговая стоимость — по каждому объекту. Откройте проект, чтобы увидеть планировку и фотографии.",
-        "chips": [
-            ("Все проекты", "../portfolio.html"),
-            ("Шкафы", "../portfolio.html?type=Гардеробная"),
-            ("С островом", "../portfolio.html?island=1"),
-            ("Эмаль", "../portfolio.html?material=Эмаль"),
-            ("ЛДСП Egger", "../portfolio.html?material=ЛДСП"),
-        ],
-        "sections": """<section class="sec sec--line" id="resheniya">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Решения</p>
-        <h2 class="display display--xl">Какие решения <em>мы изготавливаем</em></h2>
-      </div>
-      <div>
-        <p class="lead">Сначала разбираем, что и как вы храните, потом считаем секции, штанги и ящики. Наполнение проектируем под вещи, а не под красивую картинку.</p>
-      </div>
-    </div>
-    <div class="info-grid">
-      <div class="info-card"><p class="info-card__kicker">01 · Шкафы</p><h3>Встроенные и корпусные шкафы</h3><p>Точная подгонка в нишу и до потолка, комбинированные фасады (ЛДСП Egger, матовая эмаль, стекло в алюминиевом профиле), встроенная LED-подсветка полок и доводчики.</p></div>
-      <div class="info-card"><p class="info-card__kicker">02 · Гардеробные</p><h3>Гардеробные комнаты</h3><p>Зонирование под ваш гардероб: штанги для длинной и короткой одежды, скрытые выдвижные ящики полного выдвижения, центральный остров и пантографы, которые задействуют верхний ярус без стремянки.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec--alt sec--line" id="nadezhnost">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Конструктив</p>
-        <h2 class="display display--xl">Как мы делаем шкафы <em>надёжными и безопасными</em></h2>
-      </div>
-      <div>
-        <p class="lead">Высокий шкаф — это конструкция, а не просто коробка. Проверяем крепление, полки и геометрию до монтажа.</p>
-      </div>
-    </div>
-    <div class="info-grid">
-      <div class="info-card"><p class="info-card__kicker">01</p><h3>Крепление к стене</h3><p>Каждый высокий шкаф от 1 800 мм обязательно крепится к стене независимо от устойчивости корпуса — это требование безопасности.</p></div>
-      <div class="info-card"><p class="info-card__kicker">02</p><h3>Жёсткие полки без прогиба</h3><p>Рассчитываем нагрузку до 15 кг на пролёт 900 мм; более длинные полки усиливаем дополнительной стойкой или профилем.</p></div>
-      <div class="info-card"><p class="info-card__kicker">03</p><h3>Экологичность для спальни и детской</h3><p>Используем плиты класса эмиссии E1, а по запросу для спален и детских комнат — E0,5 с подтверждением сертификатом партии.</p></div>
-      <div class="info-card"><p class="info-card__kicker">04</p><h3>Геометрия и тихий ход</h3><p>Разница диагоналей корпуса — не более 2 мм, ящики — на направляющих полного выдвижения с паспортной нагрузкой 30–50 кг.</p></div>
-    </div>
-    <div class="btn-row">
-      <a class="btn" href="../standards.html">Стандарты 40/60</a>
-      <a class="btn btn--ghost" href="../requirements.html">Требования к мебели</a>
-    </div>
-  </div>
-</section>""",
-        "faq_title": "Вопросы по заказу шкафов и гардеробных",
-        "faq": [
-            ("Учитываете ли вы неровности стен и пола при встройке?", "Да. На контрольном замере фиксируем отклонения стен (норма до 15 мм на 1 м), углов и перепад пола, после чего закладываем доборные планки и регулируемые опоры в проект."),
-            ("Сколько стоит встроенный шкаф на заказ?", "Реализованные шкафы из ЛДСП Egger и со стеклянными фасадами в профиле с подсветкой начинаются от 280 000 ₽, индивидуальные гардеробные с островом из TSS Cleaf и фурнитурой Blum — от 890 000 ₽. Точную цену считаем по вашим габаритам и наполнению."),
-            ("Сколько времени занимает изготовление?", "Стандартный срок — 21 день с момента согласования чертежей и спецификации."),
-        ],
-        "cta_title": "Получите планировку наполнения <em>и расчёт шкафа</em>",
-        "cta_sub": "Пришлите ширину, высоту и глубину ниши — подберём удобную компоновку полок, штанг и ящиков и назовём точную стоимость с установкой.",
-        "cta_button": "Рассчитать шкаф",
-    },
-    {
-        "folder": "mebel-dlya-vannoy-i-prihozhey",
-        "eyebrow": "Ванная и прихожая",
-        "seo_title": "Тумбы в ванную и мебель для прихожей на заказ в Москве — 40/60 Design",
-        "description": "Изготовление влагостойких тумб под раковину в ванную (TSS Cleaf, HPL, влагостойкая эмаль) и консольных тумб в прихожую на заказ в Москве. Фурнитура Blum и GTV. От 85 000 ₽.",
-        "h1": "Тумбы в ванную и мебель для прихожей на заказ в Москве",
-        "lead": "Делаем индивидуальную мебель для влажных зон и входных групп по точным размерам: подвесные и напольные тумбы под накладную раковину, консоли с фрезеровкой и скрытой механикой.",
-        "hero_image": "images/uploads/5296685284865026031.jpg",
-        "cta": "Рассчитать тумбу по размерам",
-        "anchors": [("#proekty", "Смотреть проекты")],
-        "slugs": ["bathroom-moisture-resistant", "bathroom-neoclassic-vanity", "hallway-console-first-impression"],
-        "grid_title": "Наши проекты для ванной и прихожей",
-        "grid_lead": "Реальные тумбы с материалами, фурнитурой и ценой. Обратите внимание на влагостойкие решения и закрытые торцы.",
-        "chips": [
-            ("Все проекты", "../portfolio.html"),
-            ("Ванная", "../portfolio.html?type=Санузел"),
-            ("Прихожая", "../portfolio.html?type=Прихожая"),
-            ("Пластик TSS", "../portfolio.html?material=Пластик"),
-        ],
-        "sections": """<section class="sec sec--line" id="vlaga">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Влагостойкость</p>
-        <h2 class="display display--xl">Почему обычная мебель в ванной разбухает, <em>а наша служит годами</em></h2>
-      </div>
-      <div>
-        <p class="lead">В санузле мебель работает в другом режиме, чем на кухне: постоянная влажность, брызги и перепады температуры. Здесь решают материал, кромка и герметизация, а не декор.</p>
-      </div>
-    </div>
-    <div class="info-grid">
-      <div class="info-card"><p class="info-card__kicker">01 · База</p><h3>Влагостойкая база и HPL</h3><p>Обычная ЛДСП в санузле разбухает по торцу за один сезон. Мы используем влагостойкие плиты, итальянский пластик TSS Cleaf, HPL-плиту без основы и влагостойкую матовую эмаль на МДФ.</p></div>
-      <div class="info-card"><p class="info-card__kicker">02 · Торцы</p><h3>Ноль открытых торцов</h3><p>По стандарту 40/60-ST-021 в санузлах категорически запрещены открытые срезы плиты — все торцы полностью закрываются кромкой, а стыки и выпилы герметизируются.</p></div>
-      <div class="info-card"><p class="info-card__kicker">03 · Сантехника</p><h3>Точная привязка к сантехнике</h3><p>Проектируем вырезы под сифон и трубы под конкретную модель накладной или встроенной раковины, сохраняя свободный доступ к коммуникациям и счётчикам.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec--alt sec--line" id="prihozhaya">
-  <div class="wrap split">
-    <div>
-      <p class="eyebrow">Прихожая</p>
-      <h2 class="display display--l">Консоли и тумбы <em>в прихожую</em></h2>
-      <p class="lead" style="margin-top:16px">Входная зона задаёт первое впечатление и часто имеет нестандартную глубину. Изготавливаем узкие консольные тумбы, шкафы и системы хранения с открыванием от нажатия (Blum Tip-On), рельефной фрезеровкой и износостойкими покрытиями, которые не боятся уличной влаги.</p>
-      <div class="btn-row">
-        <a class="btn" href="../portfolio.html?type=Прихожая">Проекты прихожих</a>
-        <a class="btn btn--ghost" href="../standards.html">Стандарты 40/60</a>
-      </div>
-    </div>
-    <ul class="tick-list">
-      <li>Подвесные тумбы под накладную раковину с вырезом под сифон.</li>
-      <li>Влагостойкие плиты TSS Cleaf, HPL и эмаль на МДФ.</li>
-      <li>Открывание Tip-On и доводчики Blum.</li>
-      <li>Скрытый доступ к трубам, счётчикам и вентилям.</li>
-    </ul>
-  </div>
-</section>""",
-        "faq_title": "Вопросы по мебели для ванной и прихожей",
-        "faq": [
-            ("Почему обычная мебель в ванной разбухает?", "Обычная ЛДСП не рассчитана на постоянную влажность: открытые срезы и торцы впитывают воду и разбухают за один сезон. Мы используем влагостойкие плиты, пластик TSS Cleaf, HPL и закрываем все торцы кромкой с герметизацией стыков."),
-            ("Делаете ли вы тумбу под конкретную раковину?", "Да. Под накладную или встроенную раковину проектируем вырез под сифон и трубы по точной модели, сохраняя доступ к коммуникациям и счётчикам."),
-            ("Сколько стоит тумба в ванную на заказ?", "Реализованные подвесные тумбы из TSS Cleaf начинаются от 85 000 ₽, неоклассические модели в матовой эмали — от 200 000 ₽. Точную цену считаем по габаритам, материалу и наполнению."),
-        ],
-        "cta_title": "Пришлите размеры ниши или модель раковины — <em>рассчитаем тумбу</em>",
-        "cta_sub": "Подберём влагостойкие материалы, фурнитуру и сделаем расчёт с доставкой и подвесным монтажом в Москве и МО.",
-        "cta_button": "Рассчитать тумбу",
-    },
-]
-
-
-def build_category(cat: dict, projects: list[dict]) -> str:
-    by_slug = {p["slug"]: p for p in projects}
-    selected = [by_slug[s] for s in cat["slugs"] if s in by_slug]
-    if len(selected) < len(cat["slugs"]):
-        warnings.append("категория " + cat["folder"] + ": нет проектов " + ", ".join(s for s in cat["slugs"] if s not in by_slug))
-    cards = "\n".join(project_card(p, base="../") for p in selected)
-    chips = "\n      ".join(
-        f'<a class="fchip" href="{esc(href)}">{esc(label)}</a>' for label, href in cat["chips"]
-    )
-    anchor_btns = "".join(
-        f'<a class="btn btn--ghost" href="{esc(href)}">{esc(label)}</a>' for href, label in cat.get("anchors", [])
-    )
-    cta_row = (
-        '<div class="btn-row">'
-        f'<button class="btn btn--solid" type="button" data-modal-open="lead">{esc(cat["cta"])}</button>'
-        + anchor_btns
-        + "</div>"
-    )
-    hero_img = cat.get("hero_image") or (selected[0]["cover"] if selected else DEFAULT_INNER_HERO)
-
-    faq_items = cat.get("faq") or []
-    faq_html = "\n".join(
-        f'<li class="faq__item"><button class="faq__q" type="button" aria-expanded="false">{esc(q)}<span class="faq__icon" aria-hidden="true"></span></button>'
-        f'<div class="faq__a"><div class="faq__a-in"><p>{esc(a)}</p></div></div></li>'
-        for q, a in faq_items
-    )
-    faq_block = ""
-    faq_ld = None
-    if faq_items:
-        faq_block = f"""<section class="sec sec--line" id="faq">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Вопросы</p>
-        <h2 class="display display--xl">{esc(cat.get('faq_title') or 'Частые вопросы')}</h2>
-      </div>
-      <div><p class="lead">Отвечаем на то, что спрашивают чаще всего на замере и в переписке.</p></div>
-    </div>
-    <ul style="list-style:none;border-top:1px solid var(--c-line);max-width:900px">
-{faq_html}
-    </ul>
-  </div>
-</section>"""
-        faq_ld = {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq_items
-            ],
-        }
-
-    body = f"""{phero_block(cat['eyebrow'], cat['h1'], cat['lead'], hero_img, breadcrumbs([('../index.html', 'Главная'), ('../portfolio.html', 'Проекты'), ('', cat['eyebrow'])]), extra=cta_row, base='../')}
-
-<section class="sec sec--tight" id="proekty">
-  <div class="wrap">
-    <div class="sec__head">
-      <div>
-        <p class="eyebrow">Портфолио</p>
-        <h2 class="display display--xl">{esc(cat['grid_title'])}</h2>
-      </div>
-      <div>
-        <p class="lead">{esc(cat['grid_lead'])}</p>
-        <p style="margin-top:18px"><a class="sec__link" href="../portfolio.html">Все проекты →</a></p>
-      </div>
-    </div>
-    <div class="cat-chips"><span class="cat-chips__label">Фильтр</span>
-      {chips}
-    </div>
-    <ul class="pgrid" style="list-style:none">
-{cards}
-    </ul>
-  </div>
-</section>
-
-{cat['sections']}
-
-{faq_block}
-
-{cta_band(cat['cta_title'], cat['cta_sub'], cat['cta_button'], base='../')}"""
-
-    ld = [{
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": cat["h1"],
-        "description": cat["description"],
-        "url": f"{SITE}/{cat['folder']}/",
-        "hasPart": [
-            {"@type": "CreativeWork", "name": p["title"], "url": f"{SITE}/portfolio/{p['slug']}.html"} for p in selected
-        ],
-    }]
-    if faq_ld:
-        ld.append(faq_ld)
-
-    return page(
-        title=cat["seo_title"],
-        description=cat["description"],
-        canonical=f"{SITE}/{cat['folder']}/",
-        body=body,
-        page_css="",
-        ld=ld,
-        base="../",
-        og_image=(selected[0]["cover"] if selected else "images/og-cover.jpg"),
     )
 
 
@@ -1684,8 +1220,8 @@ def build_portfolio(projects: list[dict]) -> str:
   <img class="cover-hero__img" src="images/portfolio-hero.jpg" alt="Кухня на заказ с каменным островом — реализованный проект 40/60 Design" width="1920" height="1080">
   <div class="cover-hero__in">
     <p class="eyebrow" style="color:var(--c-gold-hi)">Портфолио</p>
-    <h1 class="cover-hero__title">Реализованные проекты мебели на заказ в Москве</h1>
-    <p class="cover-hero__sub">Каждый объект в каталоге — реальная установленная мебель с указанием фасадов, столешницы, фурнитуры и итоговой цены. Используйте фильтры, чтобы посмотреть решения в вашем материале и бюджете.</p>
+    <h1 class="cover-hero__title">Реализованные проекты мебели</h1>
+    <p class="cover-hero__sub">Полный каталог работ — от компактных кухонь до гардеробных и санузлов. Выберите материал фасадов, планировку или бюджет, чтобы найти подходящее.</p>
   </div>
 </section>
 
@@ -1699,7 +1235,7 @@ def build_portfolio(projects: list[dict]) -> str:
   </div>
 </section>
 
-{cta_band('Хочу похожий проект по моим размерам',
+{cta_band('Не нашли похожий проект? <em>Сделаем ваш</em>',
           'Расскажите размеры и задачу — подберём материалы, покажем близкие по бюджету проекты и посчитаем смету.')}"""
 
     ld = {
@@ -1713,8 +1249,8 @@ def build_portfolio(projects: list[dict]) -> str:
     }
 
     return page(
-        title="Портфолио 40/60 Design: реализованные кухни, шкафы и мебель на заказ в Москве",
-        description="10+ реализованных проектов 40/60 Design в Москве с реальными ценами, материалами и фурнитурой: кухни от 275 000 ₽, шкафы от 280 000 ₽, тумбы от 85 000 ₽.",
+        title="Портфолио — реализованные проекты кухонь и мебели | 40/60 Design",
+        description="Реализованные проекты кухонь, гардеробных и корпусной мебели на заказ в Москве: фотографии, материалы фасадов, фурнитура и реальные цены.",
         canonical=SITE + "/portfolio.html",
         body=body,
         active="portfolio.html",
@@ -1766,8 +1302,8 @@ def build_project(p: dict, all_projects: list[dict], base: str = "../", noindex:
 
     body = f"""<section class="proj__head">
   <div class="wrap">
-    {breadcrumbs([("../index.html", "Главная"), ("../portfolio.html", "Проекты"), ("../portfolio.html?type=" + quote(p["type"]), p["type"]), ("", p["title"])])}
-    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back aria-label="Вернуться к списку проектов">← Вернуться</a></p>
+    {breadcrumbs([("../index.html", "Главная"), ("../portfolio.html", "Портфолио"), ("", p["title"])])}
+    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back>← Ко всем проектам</a></p>
     <h1 class="display display--xl">{esc(p["title"])}</h1>
     <div class="proj__layout">
       <div class="gallery">
@@ -1778,20 +1314,18 @@ def build_project(p: dict, all_projects: list[dict], base: str = "../", noindex:
         <p class="spec__kicker">{esc(p['type'])} · проект под ключ</p>
         {price_block}
         <ul class="spec__list" style="list-style:none">{spec_rows}</ul>
-        <button type="button" class="btn btn--solid btn--block" data-modal-open="lead" data-project="{esc(p['title'])}" data-project-slug="{esc(p['slug'])}">Хочу похожий проект по моим размерам</button>
+        <button type="button" class="btn btn--solid btn--block" data-modal-open="lead" data-project="{esc(p['title'])}">Рассчитать похожую кухню</button>
         <p style="font-size:11px;color:var(--c-muted);margin:10px 0 0">Замер и расчёт — бесплатно. Ответим в течение 15 минут.</p>
-        <p style="font-size:12px;color:var(--c-muted);margin:14px 0 0;line-height:1.6">Как мы проверяем конструкцию — в <a href="../standards.html" style="color:var(--c-gold)">стандартах 40/60</a>. Условия — на странице <a href="../warranty.html" style="color:var(--c-gold)">гарантии 3 года</a>.</p>
       </aside>
     </div>
     <div class="proj__desc">
-      <h2 class="display display--l">О проекте</h2>
       <p>{esc(p['description'])}</p>
       {p['body'].replace('src="images/', 'src="' + base + 'images/')}
     </div>
   </div>
 </section>
 
-{cta_band('Хочу похожий проект по моим размерам',
+{cta_band('Хотите такую же кухню? <em>Посчитаем</em>',
           'Пришлите размеры помещения или дизайн-проект — вернёмся со сметой и вариантами материалов в рамках бюджета.',
           'Обсудить проект', base=base)}
 
@@ -1829,34 +1363,28 @@ def build_articles_index(articles: list[dict]) -> str:
     if not cards:
         cards = '<li class="empty-state">Статьи скоро появятся.</li>'
 
-    rubrics = ["Все статьи", "Цены", "Материалы", "Проектирование и эргономика", "Монтаж"]
-    chips = "\n      ".join(
-        f'<a class="fchip" href="#articles" data-blog-filter="{esc(r if r != "Все статьи" else "")}" aria-pressed="{"true" if i == 0 else "false"}">{esc(r)}</a>'
-        for i, r in enumerate(rubrics)
-    )
+    body = f"""<section class="phero">
+  <div class="phero__in">
+    <p class="eyebrow">Журнал</p>
+    <h1 class="phero__title">Статьи о кухнях, материалах и ценах</h1>
+    <p class="phero__sub">Пишем на основе собственных проектов: реальные сметы, комплектации и ошибки, которые видим на объектах. Без пересказа чужих статей.</p>
+  </div>
+</section>
 
-    body = f"""{phero_block("Журнал", "Журнал о проектировании мебели, ценах и материалах", "Пишем без рекламной воды — только сметы из реальных проектов, инженерные расчёты и честные сравнения материалов и фурнитуры.", DEFAULT_INNER_HERO)}
-
-<section class="sec sec--tight" id="articles">
+<section class="sec sec--tight">
   <div class="wrap">
-    <div class="cat-chips" data-blog-filter>
-      <span class="cat-chips__label">Рубрики</span>
-      {chips}
-    </div>
     <ul class="pgrid" style="list-style:none">
 {cards}
-      <li class="empty-state" id="blog-empty" hidden>В этой рубрике пока нет статей — загляните позже или посмотрите все материалы журнала.</li>
     </ul>
   </div>
 </section>
 
-{cta_band('Нужен расчёт под ваш проект, <em>а не средние цифры?</em>',
-          'Пришлите план помещения — посчитаем точную смету и подскажем оптимальную комплектацию материалов и фурнитуры.',
-          'Получить расчёт')}"""
+{cta_band('Ищете цену под свой проект? <em>Посчитаем</em>',
+          'Пришлите размеры или дизайн-проект — ответим со сметой, а не «от 100 000 рублей».')}"""
 
     return page(
-        title="Журнал 40/60 Design: статьи о ценах на кухни, материалах и фурнитуре",
-        description="Практические разборы от технологов 40/60 Design: сколько стоит кухня на заказ в Москве, как выбрать фурнитуру Blum и Hettich, на чём можно и нельзя экономить.",
+        title="Статьи о кухнях и мебели на заказ | 40/60 Design",
+        description="Статьи о том, сколько стоит кухня на заказ в Москве, из чего складывается цена, какие материалы и фурнитуру мы используем и на чём не стоит экономить.",
         canonical=SITE + "/articles.html",
         body=body,
         active="articles.html",
@@ -1952,184 +1480,9 @@ def build_article(a: dict, articles: list[dict], preview: bool = False) -> str:
     return html_page
 
 
-def insert_project_cards(html_text: str, projects: list[dict]) -> str:
-    """Подставляет карточки проектов по маркеру {{projects:slug1,slug2}}."""
-    by_slug = {p["slug"]: p for p in projects}
-
-    def repl(match):
-        slugs = [s.strip() for s in match.group(1).split(",") if s.strip()]
-        cards = "".join(project_card(by_slug[s]) for s in slugs if s in by_slug)
-        if not cards:
-            return ""
-        return f'<ul class="pgrid" style="list-style:none">{cards}</ul>'
-
-    return re.sub(r"\{\{projects:([^}]+)\}\}", repl, html_text)
-
-
-def strip_md_sections(text: str, titles: set[str]) -> str:
-    """Убирает из Markdown разделы ## с указанными заголовками."""
-    out: list[str] = []
-    skip = False
-    for line in text.split("\n"):
-        match = re.match(r"^##\s+(.+?)\s*$", line)
-        if match:
-            skip = match.group(1).strip() in titles
-        if not skip:
-            out.append(line)
-    return "\n".join(out)
-
-
-def strip_html_block(html_text: str, class_name: str) -> str:
-    """Удаляет <div class="...">…</div> с учётом вложенных div."""
-    marker = f'<div class="{class_name}">'
-    start = html_text.find(marker)
-    while start != -1:
-        i = start + len(marker)
-        depth = 1
-        while i < len(html_text) and depth:
-            next_open = html_text.find("<div", i)
-            next_close = html_text.find("</div>", i)
-            if next_close == -1:
-                break
-            if next_open != -1 and next_open < next_close:
-                depth += 1
-                i = next_open + 4
-            else:
-                depth -= 1
-                i = next_close + 6
-        html_text = html_text[:start] + html_text[i:]
-        start = html_text.find(marker)
-    return html_text
-
-
-LEGACY_TYPO_CSS = """
-.hd-block, .ft-block { display: none !important; }
-.ab-hero__inner, .ab-adv__inner, .ab-partners__inner,
-.wt-hero__inner, .wt-sec__inner {
-  max-width: var(--w);
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
-}
-
-/* H1 — антиква 400 */
-.ab-hero__title, .wt-hero__title {
-  font-family: var(--font-display) !important;
-  font-weight: 400 !important;
-  letter-spacing: -.012em !important;
-  line-height: 1.04 !important;
-}
-.ab-hero__title em, .wt-hero__title em { font-style: italic; color: var(--c-gold-hi); }
-.ab-hero__title-sub{
-  display: block; margin-top: 14px;
-  font-family: var(--font-sans); font-size: clamp(15px, 1.45vw, 21px);
-  font-weight: 400; line-height: 1.35; letter-spacing: -.01em; color: #d8d2c5;
-}
-
-/* H2/H3 — Manrope */
-.ab-hero__right-title, .ab-partners__title, .wt-sec__title, .wt-cta__title {
-  font-family: var(--font-sans) !important;
-  font-weight: 500 !important;
-  letter-spacing: -.02em !important;
-  line-height: 1.14 !important;
-}
-.ab-adv__title, .wt-cover__title, .wt-terms__title, .wt-how__title {
-  font-family: var(--font-sans) !important;
-  font-weight: 500 !important;
-  letter-spacing: -.01em !important;
-}
-.wt-hero__badge-num, .wt-terms__num {
-  font-family: var(--font-sans) !important;
-  font-weight: 500 !important;
-  letter-spacing: -.02em !important;
-}
-.ab-hero__eyebrow, .ab-partners__eyebrow, .wt-sec__eyebrow { font-family: var(--font-sans) !important; font-weight: 400 !important; }
-
-/* новые секции, вставленные в старый дизайн */
-.doc-merge { padding: 0; }
-.doc-merge__in{
-  max-width: var(--w); margin: 0 auto;
-  padding: clamp(48px, 7vw, 96px) var(--gutter);
-  font-size: clamp(15.5px, 1.12vw, 17.5px);
-  line-height: 1.74; color: var(--c-text-soft);
-}
-.doc-merge__in > p,
-.doc-merge__in > ul,
-.doc-merge__in > ol,
-.doc-merge__in > blockquote { max-width: 82ch; }
-.doc-merge__in .lead-cta { max-width: none; }
-.wt-terms__note{ margin:18px 0 0; font-size:14px; line-height:1.55; color:#a8a294; }
-.wt-cta__btn{ font-family:var(--font-sans) !important; font-weight:500 !important; }
-.wt-terms__num small{ font-family:var(--font-sans) !important; font-weight:400 !important; }
-.ab-hero__btn{ font-family:var(--font-sans) !important; font-weight:500 !important; }
-"""
-
-
-def build_composed_doc(
-    name: str,
-    strip_titles: set[str] | None = None,
-    drop_classes: tuple[str, ...] = (),
-) -> str:
-    """Страница из старого HTML-дизайна + новых Markdown-разделов."""
-    doc = load_doc(name)
+def build_doc_page(doc: dict, name: str) -> str:
     meta = doc.get("meta", {})
-    legacy = load_content_page(name)
-    shell = legacy.get("body") or ""
-    if not shell:
-        return build_doc_page(doc, name)
-
-    md_text = doc.get("body_md", "")
-    if strip_titles:
-        md_text = strip_md_sections(md_text, strip_titles)
-    new_html = md(md_text)
-    for cls in drop_classes:
-        new_html = strip_html_block(new_html, cls)
-
-    new_section = (
-        '<section class="sec sec--line doc-merge"><div class="doc-merge__in prose prose--wide">'
-        + new_html
-        + "</div></section>"
-    )
-    if "<!-- NEW_CONTENT -->" in shell:
-        shell = shell.replace("<!-- NEW_CONTENT -->", new_section)
-    else:
-        shell += "\n" + new_section
-
-    h1 = str(meta.get("h1") or meta.get("title") or name)
-    description = str(meta.get("description") or "")
-
-    ld_blocks = [{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": h1,
-        "description": description,
-        "publisher": {"@type": "Organization", "name": BRAND},
-    }]
-    faq_file = ROOT / "_content" / "faq" / f"{name}.json"
-    if faq_file.exists():
-        ld_blocks.append({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {"@type": "Question", "name": item["q"], "acceptedAnswer": {"@type": "Answer", "text": item["a"]}}
-                for item in json.loads(read(faq_file))
-            ],
-        })
-
-    return page(
-        title=str(meta.get("seo_title") or (h1 + " | " + BRAND)),
-        description=description,
-        canonical=f"{SITE}/{name}.html",
-        body=shell,
-        active=f"{name}.html",
-        page_css=legacy.get("css", "") + LEGACY_TYPO_CSS,
-        ld=ld_blocks,
-        og_image=str(meta.get("hero_image") or "images/portfolio-hero.jpg"),
-    )
-
-
-def build_doc_page(doc: dict, name: str, projects: list[dict] | None = None) -> str:
-    meta = doc.get("meta", {})
-    body_html = insert_project_cards(doc.get("body_html", ""), projects or [])
+    body_html = doc.get("body_html", "")
     title = str(meta.get("title") or name)
     h1 = str(meta.get("h1") or title)
     description = str(meta.get("description") or "")
@@ -2137,35 +1490,23 @@ def build_doc_page(doc: dict, name: str, projects: list[dict] | None = None) -> 
     lead = str(meta.get("lead") or "")
 
     extra = partner_form() if str(meta.get("form", "")).strip() == "partner" else cta_band()
-    hero_image = str(meta.get("hero_image") or "").strip()
 
-    body = f"""{phero_block(eyebrow, h1, lead, hero_image, breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)]))}
+    body = f"""<section class="phero">
+  <div class="phero__in">
+    {breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])}
+    <p class="eyebrow">{esc(eyebrow)}</p>
+    <h1 class="phero__title">{esc(h1)}</h1>
+    <p class="phero__sub">{esc(lead)}</p>
+  </div>
+</section>
 
 <section class="sec sec--tight">
-  <div class="prose prose--wide">
+  <div class="prose">
     {body_html}
   </div>
 </section>
 
 {extra}"""
-
-    ld_blocks = [{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": h1,
-        "description": description,
-        "publisher": {"@type": "Organization", "name": BRAND},
-    }]
-    faq_file = ROOT / "_content" / "faq" / f"{name}.json"
-    if faq_file.exists():
-        ld_blocks.append({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {"@type": "Question", "name": item["q"], "acceptedAnswer": {"@type": "Answer", "text": item["a"]}}
-                for item in json.loads(read(faq_file))
-            ],
-        })
 
     return page(
         title=str(meta.get("seo_title") or (h1 + " | 40/60 Design")),
@@ -2173,7 +1514,13 @@ def build_doc_page(doc: dict, name: str, projects: list[dict] | None = None) -> 
         canonical=f"{SITE}/{name}.html",
         body=body,
         active=f"{name}.html",
-        ld=ld_blocks,
+        ld=[{
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": h1,
+            "description": description,
+            "publisher": {"@type": "Organization", "name": BRAND},
+        }],
     )
 
 
@@ -2185,8 +1532,8 @@ def partner_form() -> str:
   <div class="wrap split">
     <div>
       <p class="eyebrow">Заявка</p>
-      <h2 class="display display--l">Получите условия партнёрской программы <em>и прайс</em></h2>
-      <p class="lead" style="margin-top:16px">Оставьте контакты или напишите в Telegram — ответим в течение 15 минут в рабочее время и обсудим ваш текущий проект.</p>
+      <h2 class="display display--l">Стать <em>партнёром</em></h2>
+      <p class="lead" style="margin-top:16px">Заполните форму — менеджер свяжется, расскажет об условиях, вознаграждении и ответит на вопросы. Или напишите напрямую в Telegram.</p>
       <div class="btn-row">
         <a class="btn btn--ghost" href="{TG}" target="_blank" rel="noopener">Написать в Telegram</a>
         <a class="btn" href="{PHONE1_HREF}">{PHONE1}</a>
@@ -2299,14 +1646,12 @@ def build_404() -> str:
 # --------------------------------------------------------------------------
 
 def build_sitemap(paths: list[tuple[str, str]]) -> str:
-    category_paths = {cat["folder"] + "/" for cat in CATEGORY_PAGES}
     rows = []
     for loc, lastmod in paths:
-        hot = loc in ("", "portfolio.html", "articles.html") or loc in category_paths
         rows.append(
             f"  <url>\n    <loc>{SITE}/{loc}</loc>\n    <lastmod>{lastmod}</lastmod>\n"
-            f"    <changefreq>{'weekly' if hot else 'monthly'}</changefreq>\n"
-            f"    <priority>{'1.0' if loc == '' else '0.9' if hot else '0.7'}</priority>\n  </url>"
+            f"    <changefreq>{'weekly' if loc in ('', 'portfolio.html', 'articles.html') else 'monthly'}</changefreq>\n"
+            f"    <priority>{'1.0' if loc == '' else '0.9' if loc in ('portfolio.html', 'articles.html') else '0.7'}</priority>\n  </url>"
         )
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -2376,40 +1721,25 @@ def main() -> int:
                 stale.unlink()
                 print("удалена устаревшая страница:", stale.relative_to(ROOT))
 
-    write(ROOT / "about.html", build_composed_doc("about"))
-    write(
-        ROOT / "warranty.html",
-        build_composed_doc(
-            "warranty",
-            strip_titles={"На что распространяется гарантия", "Гарантийные сроки", "Как обратиться по гарантии"},
-            drop_classes=("lead-cta", "stat-row"),
-        ),
-    )
-
-    for doc_name in ("partners", "contacts"):
+    for doc_name in ("about", "warranty", "partners"):
         doc = load_doc(doc_name)
         if doc:
-            write(ROOT / f"{doc_name}.html", build_doc_page(doc, doc_name, projects))
+            write(ROOT / f"{doc_name}.html", build_doc_page(doc, doc_name))
         else:
             warnings.append(f"нет _content/{doc_name}.md — страница не создана")
-
-    for cat in CATEGORY_PAGES:
-        write(ROOT / cat["folder"] / "index.html", build_category(cat, projects))
 
     write(ROOT / "404.html", build_404())
 
     for doc_name in ("standards", "requirements"):
         doc = load_doc(doc_name)
         if doc:
-            write(ROOT / f"{doc_name}.html", build_doc_page(doc, doc_name, projects))
+            write(ROOT / f"{doc_name}.html", build_doc_page(doc, doc_name))
         else:
             warnings.append(f"нет _content/{doc_name}.md — страница не создана")
 
     paths = [("", today), ("portfolio.html", today), ("articles.html", today),
              ("standards.html", today), ("requirements.html", today),
-             ("about.html", today), ("warranty.html", today), ("partners.html", today),
-             ("contacts.html", today)]
-    paths += [(f"{cat['folder']}/", today) for cat in CATEGORY_PAGES]
+             ("about.html", today), ("warranty.html", today), ("partners.html", today)]
     paths += [(f"portfolio/{p['slug']}.html", today) for p in projects]
     paths += [(f"articles/{a['slug']}.html", iso_date(a["updated"] or a["date"])) for a in published]
     write(ROOT / "sitemap.xml", build_sitemap(paths))

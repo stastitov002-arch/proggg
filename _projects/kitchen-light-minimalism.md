@@ -1,6 +1,6 @@
 ---
 slug: kitchen-light-minimalism
-title: Кухня из ЛДСП с верхом в плёнке ПВХ и акриловой столешницей
+title: Кухня пленка ПВХ + ЛДСП 3
 featured: false
 style: Угловая
 layout: ''

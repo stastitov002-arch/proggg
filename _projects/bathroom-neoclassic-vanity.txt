@@ -1,6 +1,6 @@
 ---
 slug: bathroom-neoclassic-vanity
-title: Неоклассическая тумба для ванной в матовой эмали
+title: Тумба Эмаль 2
 featured: false
 style: ''
 layout: Тумба

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-living-in-unison
-title: Линейная кухня-гостиная из пластика ALVIC с витринами
+title: Комплексный проект ALVIC
 featured: true
 style: ''
 layout: Линейная

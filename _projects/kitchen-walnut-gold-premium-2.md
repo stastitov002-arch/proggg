@@ -1,6 +1,6 @@
 ---
 slug: kitchen-walnut-gold-premium
-title: Угловая кухня с островом из натурального шпона и потали
+title: Кухня из шпона
 featured: true
 style: ''
 layout: Угловая, С островом

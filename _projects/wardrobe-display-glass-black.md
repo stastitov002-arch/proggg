@@ -1,6 +1,6 @@
 ---
 slug: wardrobe-display-glass-black
-title: Шкаф из ЛДСП со стеклом в чёрном профиле и подсветкой
+title: Шкаф ЛДСП
 featured: false
 style: ''
 layout: Шкаф

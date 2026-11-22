@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Стандарты производства корпусной мебели 40/60 Design — допуски и контроль качества</title>
-<meta name="description" content="Технические стандарты изготовления мебели на заказ в 40/60 Design: 12 направлений, коды 40/60-ST-XXX, рабочие допуски зазоров (2–3 мм) и чек-листы контроля по ролям.">
+<title>Стандарты производства мебели 40/60 Design — правила, допуски, контроль</title>
+<meta name="description" content="Как устроены стандарты 40/60 Design: направления, статусы, коды требований, контроль на этапах и чек-листы по ролям. Правила, по которым проектируем и принимаем мебель.">
 <link rel="canonical" href="https://4060design.ru/standards.html">
 <meta name="lead-endpoint" content="https://hidden-bar-8272form-to-telegram.stas-titov-002.workers.dev">
 
@@ -40,8 +40,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="40/60 Design">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Стандарты производства корпусной мебели 40/60 Design — допуски и контроль качества">
-<meta property="og:description" content="Технические стандарты изготовления мебели на заказ в 40/60 Design: 12 направлений, коды 40/60-ST-XXX, рабочие допуски зазоров (2–3 мм) и чек-листы контроля по ролям.">
+<meta property="og:title" content="Стандарты производства мебели 40/60 Design — правила, допуски, контроль">
+<meta property="og:description" content="Как устроены стандарты 40/60 Design: направления, статусы, коды требований, контроль на этапах и чек-листы по ролям. Правила, по которым проектируем и принимаем мебель.">
 <meta property="og:url" content="https://4060design.ru/standards.html">
 <meta property="og:image" content="https://4060design.ru/images/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -51,7 +51,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
 <link rel="preload" href="css/site.css" as="style">
 <link rel="stylesheet" href="css/site.css">
 
@@ -59,8 +59,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Стандарты проектирования и производства мебели 40/60 Design",
-  "description": "Технические стандарты изготовления мебели на заказ в 40/60 Design: 12 направлений, коды 40/60-ST-XXX, рабочие допуски зазоров (2–3 мм) и чек-листы контроля по ролям.",
+  "headline": "Стандарты 40/60",
+  "description": "Как устроены стандарты 40/60 Design: направления, статусы, коды требований, контроль на этапах и чек-листы по ролям. Правила, по которым проектируем и принимаем мебель.",
   "publisher": {
     "@type": "Organization",
     "name": "40/60 Design"
@@ -71,15 +71,15 @@
 <header class="hdr">
   <div class="hdr__in">
     <a class="brand" href="index.html" aria-label="40/60 Design — на главную">
-      <img class="brand__mark" src="favicon.svg" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">Мебель на заказ</span></span>
     </a>
     <nav class="nav" aria-label="Основная навигация">
       <ul class="nav__list">
-          <li><a class="nav__link" href="about.html">О нас</a></li>
           <li><a class="nav__link" href="portfolio.html">Портфолио</a></li>
           <li><a class="nav__link" href="articles.html">Статьи</a></li>
           <li><a class="nav__link" href="standards.html" aria-current="page">Стандарты</a></li>
+          <li><a class="nav__link" href="about.html">О нас</a></li>
           <li><a class="nav__link" href="warranty.html">Гарантия</a></li>
           <li><a class="nav__link" href="partners.html">Партнёрам</a></li>
       </ul>
@@ -97,10 +97,10 @@
   </div>
   <div class="drawer" id="drawer">
     <ul class="drawer__list">
-            <li><a class="drawer__link" href="about.html">О нас</a></li>
             <li><a class="drawer__link" href="portfolio.html">Портфолио</a></li>
             <li><a class="drawer__link" href="articles.html">Статьи</a></li>
             <li><a class="drawer__link" href="standards.html" aria-current="page">Стандарты</a></li>
+            <li><a class="drawer__link" href="about.html">О нас</a></li>
             <li><a class="drawer__link" href="warranty.html">Гарантия</a></li>
             <li><a class="drawer__link" href="partners.html">Партнёрам</a></li>
     </ul>
@@ -113,19 +113,17 @@
   </div>
 </header>
 
-<section class="phero phero--photo">
-  <div class="phero__bg" aria-hidden="true"><img src="images/portfolio-hero.jpg" alt="" loading="eager"></div>
+<section class="phero">
   <div class="phero__in">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a><span>/</span><span aria-current="page">Правила работы</span></nav>
     <p class="eyebrow">Правила работы</p>
-    <h1 class="phero__title">Стандарты проектирования и производства мебели 40/60 Design</h1>
+    <h1 class="phero__title">Стандарты 40/60</h1>
     <p class="phero__sub">Стандарты — это не рекламный текст, а рабочий документ: по этим правилам проектировщик считает конструкцию, технолог проверяет документацию, а бригада принимает объект. Если проект выходит за рамки стандарта, мы говорим об этом до подписания договора.</p>
-    
   </div>
 </section>
 
 <section class="sec sec--tight">
-  <div class="prose prose--wide">
+  <div class="prose">
     <h2 id="как-устроены-стандарты">Как устроены стандарты</h2>
 <p>Каждое требование имеет код, область применения и метод контроля. Это позволяет не спорить о вкусах, а проверять соответствие.</p>
 <div class="info-grid">
@@ -207,15 +205,6 @@
 <h2 id="как-мы-обновляем-стандарты">Как мы обновляем стандарты</h2>
 <p>Стандарт не появляется из мнения в интернете. Сначала — источник: документация производителя, инженерный расчёт или наблюдение с объектов. Затем — проверка на практике и фиксация формулировки. Если практика показывает, что правило неверно, оно пересматривается с записью в истории изменений.</p>
 <p>Часть требований к конструкции и помещениям вынесена на отдельную страницу — <a href="requirements.html">«Требования к мебели»</a>. Там же — нормативная база: ГОСТ, ТР ТС и условия эксплуатации.</p>
-<div class="lead-cta">
-<p class="eyebrow" style="justify-content:flex-start">Дальше</p>
-<h2>Рассчитать мебель <em>по стандартам 40/60</em></h2>
-<p class="lead">Пришлите размеры помещения или план — проверим конструктив по нашим стандартам и посчитаем смету с точной спецификацией материалов и фурнитуры.</p>
-<div class="btn-row">
-<button class="btn btn--solid" type="button" data-modal-open="lead">Рассчитать мебель по стандартам 40/60</button>
-<a class="btn btn--ghost" href="warranty.html">Условия гарантии 3 года</a>
-</div>
-</div>
   </div>
 </section>
 
@@ -227,7 +216,7 @@
       <p class="cta-band__sub">Смета с реальными ценами на материалы и фурнитуру. Замер и расчёт — бесплатно, по Москве и ближнему МО.</p>
     </div>
     <div class="btn-row">
-      <button type="button" class="btn btn--solid" data-modal-open="lead">Рассчитать проект</button>
+      <button type="button" class="btn btn--solid" data-modal-open="lead">Рассчитать кухню</button>
       <a class="btn btn--ghost" href="https://t.me/design4060" target="_blank" rel="noopener">Написать в Telegram</a>
     </div>
   </div>
@@ -237,7 +226,7 @@
   <div class="ftr__in">
     <div class="ftr__brand">
           <a class="brand" href="index.html" aria-label="40/60 Design — на главную">
-      <img class="brand__mark" src="favicon.svg" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">Мебель на заказ</span></span>
     </a>
       <p class="ftr__tag" data-cms="common.tagline">Студия интерьерной мебели. Кухни и корпусная мебель на заказ в Москве и области: проектирование, комплектация, производство и монтаж.</p>
@@ -245,9 +234,6 @@
     <div>
       <p class="ftr__col-title">Разделы</p>
       <ul class="ftr__links">
-        <li><a href="kuhni/">Кухни на заказ</a></li>
-        <li><a href="shkafy-i-garderobnye/">Шкафы и гардеробные</a></li>
-        <li><a href="mebel-dlya-vannoy-i-prihozhey/">Ванная и прихожая</a></li>
         <li><a href="portfolio.html">Портфолио</a></li>
         <li><a href="articles.html">Статьи</a></li>
         <li><a href="standards.html">Стандарты</a></li>
@@ -260,7 +246,6 @@
         <li><a href="requirements.html">Требования к мебели</a></li>
         <li><a href="warranty.html">Гарантия</a></li>
         <li><a href="partners.html">Партнёрам</a></li>
-        <li><a href="contacts.html">Контакты</a></li>
         <li><button type="button" data-modal-open="lead">Записаться на замер</button></li>
       </ul>
     </div>
@@ -284,9 +269,8 @@
   <div class="modal__bd" data-modal-close></div>
   <div class="modal__dlg">
     <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">✕</button>
-    <div class="modal__body">
     <p class="modal__eyebrow">Заявка</p>
-    <h2 class="modal__title" id="lead-title">Рассчитаем ваш проект</h2>
+    <h2 class="modal__title" id="lead-title">Рассчитаем стоимость кухни</h2>
     <p class="modal__sub">Оставьте контакт — дизайнер свяжется в течение 15 минут, уточнит размеры и пришлёт смету. Замер и расчёт бесплатны.</p>
     <div class="form-success">
       <div class="form-success__icon">✓</div>
@@ -321,7 +305,6 @@
       <button type="submit" class="btn btn--solid btn--block">Отправить заявку</button>
       <p class="form-note">Или позвоните: <a href="tel:+79015861488" style="color:var(--c-gold)">+7 901 586-14-88</a></p>
     </form>
-    </div>
   </div>
 </div>
 
@@ -329,7 +312,6 @@
   <div class="modal__bd" data-modal-close></div>
   <div class="modal__dlg">
     <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">✕</button>
-    <div class="modal__body">
     <p class="modal__eyebrow">Связаться</p>
     <h2 class="modal__title" id="contact-title">Напишите нам</h2>
     <p class="modal__sub">Ответим в рабочее время — пн–сб с 10:00 до 21:00.</p>
@@ -365,7 +347,6 @@
       <p class="form-error" hidden style="color:var(--c-error);font-size:12px;margin:0 0 12px"></p>
       <button type="submit" class="btn btn--solid btn--block">Отправить</button>
     </form>
-    </div>
   </div>
 </div>
 

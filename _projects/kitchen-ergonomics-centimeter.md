@@ -1,6 +1,6 @@
 ---
 slug: kitchen-ergonomics-centimeter
-title: Светлая угловая кухня в матовой плёнке ПВХ с антресолями
+title: Кухня Пленка
 featured: false
 style: ''
 layout: Угловая

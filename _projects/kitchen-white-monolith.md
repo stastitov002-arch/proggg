@@ -1,6 +1,6 @@
 ---
 slug: kitchen-white-monolith
-title: Угловая кухня в глянцевой белой эмали с торцевой витриной
+title: Кухня Эмаль 3
 featured: false
 style: ''
 layout: Угловая

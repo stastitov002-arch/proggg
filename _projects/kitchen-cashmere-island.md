@@ -1,6 +1,6 @@
 ---
 slug: kitchen-cashmere-island
-title: Угловая кухня с островом в матовой эмали оттенка кашемир
+title: Кухня Эмаль 4
 featured: false
 style: ''
 layout: Угловая с островом

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-graphite-gloss-1
-title: Угловая кухня из пластика ALVIC Luxe с графитом и глянцем
+title: Кухня ALVIC 3
 featured: false
 style: ''
 layout: Угловая

@@ -1,6 +1,6 @@
 ---
 slug: kitchen-white-monochrome
-title: Белая угловая кухня с островом в матовой эмали и латунью
+title: Кухня эмаль
 featured: false
 style: ''
 layout: Угловая С островом

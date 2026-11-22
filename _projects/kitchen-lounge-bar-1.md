@@ -1,6 +1,6 @@
 ---
 slug: kitchen-lounge-bar
-title: П-образная кухня-гостиная с островом из глянцевого ALVIC Luxe
+title: кухня ALVIC
 featured: true
 style: ''
 layout: П-образная с островом

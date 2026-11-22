@@ -1,6 +1,6 @@
 ---
 slug: kitchen-warm-budget
-title: Угловая кухня в плёнке ПВХ с подсветкой фартука
+title: Кухня пленка ПВХ 5
 featured: false
 style: ''
 layout: Угловая

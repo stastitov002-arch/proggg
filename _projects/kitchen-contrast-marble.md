@@ -1,6 +1,6 @@
 ---
 slug: kitchen-contrast-marble
-title: Угловая кухня с островом-винотекой из пластика ALVIC Luxe
+title: Кухня ALVIC 5
 featured: false
 style: ''
 layout: Угловая с островом
