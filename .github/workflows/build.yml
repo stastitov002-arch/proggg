@@ -13,10 +13,9 @@ on:
       - ".github/workflows/build.yml"
   workflow_dispatch:
 
+# Глобальные права (нужны для пуша изменений ботом)
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: build-site
@@ -26,13 +25,12 @@ jobs:
   build:
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
+    
+    # ВАЖНО: Вот эти права нужны для деплоя на GitHub Pages
     permissions:
       contents: write
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -58,13 +56,11 @@ jobs:
           git commit -m "build: regenerate pages [skip ci]"
           git push
 
-      # 1. Загружаем артефакт с правильным именем
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./
 
-      # 2. Деплоим
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
