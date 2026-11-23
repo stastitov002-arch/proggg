@@ -419,8 +419,8 @@ def fonts_link() -> str:
         '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '<link href="https://fonts.googleapis.com/css2?'
-        'family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&'
-        'family=Manrope:wght@300..800&display=swap" rel="stylesheet">'
+        'family=Cormorant+Garamond:ital,wght@0,400;1,400&'
+        'family=Manrope:wght@400;500&display=swap" rel="stylesheet">'
     )
 
 
