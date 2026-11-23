@@ -883,3 +883,269 @@ body.cookie-open .fab{bottom:104px;transition:bottom .3s var(--ease)}
 .prose .acc details p{margin:0 0 .8em}
 .prose .acc details li{margin:.35em 0}
 .prose .muted{color:var(--c-muted)}
+
+
+/* ============================================================
+   40/60 Design — typography system
+   Display: Cormorant Garamond 400
+   Interface and text: Manrope 400 / 500
+   ============================================================ */
+
+:root {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", "Segoe UI", Arial, sans-serif;
+}
+
+/* H1 — display typography */
+h1,
+.hero__title,
+.display--giant,
+.display--xl,
+.cover-hero__title,
+.phero__title,
+.proj__head h1,
+.article__title,
+.ab-hero__title,
+.pt-hero__title,
+.wt-hero__title {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  font-size: clamp(56px, 5.2vw, 72px);
+  line-height: 1.1;
+  letter-spacing: -.018em;
+}
+
+/* H2 — section headings */
+h2,
+.display--l,
+.sec__head h2,
+.prose h2,
+.phero__title--section,
+.ab-hero__right-title,
+.pt-sec__title,
+.wt-sec__title,
+.wt-cta__title {
+  font-family: var(--font-sans) !important;
+  font-weight: 450 !important;
+  font-size: clamp(40px, 3.5vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -.015em;
+}
+
+/* H3 — cards and sub-sections */
+h3,
+.prose h3,
+.pcard__title,
+.info-card h3,
+.ab-adv__title,
+.ab-partners__title,
+.pt-who__title,
+.pt-gain__title,
+.pt-steps__title,
+.wt-cover__title,
+.wt-terms__title,
+.wt-how__title {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  font-size: clamp(24px, 2vw, 28px);
+  line-height: 1.2;
+}
+
+/* H4 */
+h4,
+.prose h4 {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  font-size: clamp(20px, 1.6vw, 22px);
+  line-height: 1.3;
+}
+
+/* Body text */
+body {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.lead,
+.hero__sub,
+.phero__sub,
+.cover-hero__sub,
+.prose,
+.ab-hero__desc,
+.ab-hero__right-text,
+.ab-adv__text,
+.wt-hero__subtitle,
+.wt-sec__lead,
+.wt-cover__text,
+.wt-terms__text,
+.wt-how__text,
+.pt-hero__subtitle,
+.pt-sec__lead,
+.pt-who__text,
+.pt-gain__text,
+.pt-steps__text {
+  font-family: var(--font-sans) !important;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Buttons and navigation */
+.btn,
+.btn--sm,
+.pt-hero__btn,
+.ab-hero__btn,
+.wt-cta__btn,
+.nav__link,
+.drawer__link {
+  font-family: var(--font-sans) !important;
+  font-size: 15px;
+  font-weight: 500 !important;
+  line-height: 1.2;
+}
+
+.nav__link {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+/* Prices */
+.pcard__price,
+.spec__price,
+.price,
+.price__value,
+.project-price,
+.term-table td:last-child {
+  font-family: var(--font-sans) !important;
+  font-weight: 450 !important;
+}
+
+/* Captions, labels and metadata */
+figcaption,
+.caption,
+.tag,
+.pcard__more,
+.ftr__bottom,
+.modal__eyebrow,
+.field__label,
+.form-hint {
+  font-family: var(--font-sans) !important;
+  font-size: 14px;
+  font-weight: 400 !important;
+  line-height: 1.45;
+}
+
+/* Small decorative eyebrow labels are intentionally compact */
+.eyebrow {
+  font-family: var(--font-sans) !important;
+  font-size: 12px;
+  font-weight: 500 !important;
+  line-height: 1.35;
+  letter-spacing: .22em;
+}
+
+/* Mobile type scale */
+@media (max-width: 900px) {
+  h1,
+  .hero__title,
+  .display--giant,
+  .display--xl,
+  .cover-hero__title,
+  .phero__title,
+  .proj__head h1,
+  .article__title,
+  .ab-hero__title,
+  .pt-hero__title,
+  .wt-hero__title {
+    font-size: clamp(34px, 8.5vw, 42px);
+    line-height: 1.1;
+  }
+
+  h2,
+  .display--l,
+  .sec__head h2,
+  .prose h2,
+  .ab-hero__right-title,
+  .pt-sec__title,
+  .wt-sec__title,
+  .wt-cta__title {
+    font-size: clamp(28px, 6.7vw, 34px);
+    line-height: 1.15;
+  }
+
+  h3,
+  .prose h3,
+  .pcard__title,
+  .info-card h3,
+  .ab-adv__title,
+  .ab-partners__title,
+  .pt-who__title,
+  .pt-gain__title,
+  .pt-steps__title,
+  .wt-cover__title,
+  .wt-terms__title,
+  .wt-how__title {
+    font-size: clamp(21px, 5.5vw, 24px);
+    line-height: 1.2;
+  }
+
+  h4,
+  .prose h4 {
+    font-size: clamp(18px, 4.8vw, 20px);
+    line-height: 1.3;
+  }
+
+  body {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .lead,
+  .hero__sub,
+  .phero__sub,
+  .cover-hero__sub,
+  .prose,
+  .ab-hero__desc,
+  .ab-hero__right-text,
+  .ab-adv__text,
+  .wt-hero__subtitle,
+  .wt-sec__lead,
+  .wt-cover__text,
+  .wt-terms__text,
+  .wt-how__text,
+  .pt-hero__subtitle,
+  .pt-sec__lead,
+  .pt-who__text,
+  .pt-gain__text,
+  .pt-steps__text {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .btn,
+  .btn--sm,
+  .pt-hero__btn,
+  .ab-hero__btn,
+  .wt-cta__btn {
+    font-size: 15px;
+  }
+
+  .nav__link,
+  .drawer__link {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  figcaption,
+  .caption,
+  .tag,
+  .pcard__more,
+  .ftr__bottom,
+  .modal__eyebrow,
+  .field__label,
+  .form-hint {
+    font-size: 13px;
+  }
+}
