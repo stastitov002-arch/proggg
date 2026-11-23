@@ -412,6 +412,74 @@
     $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
   }
 
+
+  /* Portfolio return-state: preserve filters and scroll position on project navigation. */
+  function initPortfolioReturnState() {
+    var page = document.body.getAttribute('data-page') || '';
+    var key = 'portfolio-return-state-v1';
+    if (page === 'portfolio') {
+      var saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) {}
+      if (saved) {
+        ['material','type','layout','budget'].forEach(function (name) {
+          var el = document.getElementById('pf-' + name);
+          if (el && saved.filters && saved.filters[name] != null) el.value = saved.filters[name];
+        });
+        var island = document.getElementById('pf-island');
+        if (island && saved.island != null) island.checked = !!saved.island;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            window.scrollTo({top: Math.max(0, Number(saved.y) || 0), behavior:'instant'});
+          });
+        });
+      }
+      $('a.pcard[href*="/portfolio/"]').forEach(function (link) {
+        on(link,'click',function () {
+          var state = {y:window.scrollY,filters:{},island:false};
+          ['material','type','layout','budget'].forEach(function (name) {
+            var el=document.getElementById('pf-'+name);
+            if(el) state.filters[name]=el.value;
+          });
+          var island=document.getElementById('pf-island');
+          if(island) state.island=island.checked;
+          try { sessionStorage.setItem(key,JSON.stringify(state)); } catch(e) {}
+        });
+      });
+    }
+  }
+
+  /* Abandoned lead: only transmit if the visitor has explicitly checked consent
+     and entered a contact detail. Never send an empty or unconsented form. */
+  function initAbandonedForms() {
+    $('form[data-lead-form]').forEach(function(form){
+      var sent=false, changed=false;
+      on(form,'input',function(){changed=true;});
+      on(form,'change',function(){changed=true;});
+      on(form,'submit',function(){sent=true;});
+      on(window,'pagehide',function(){
+        if(sent||!changed||!form.checkValidity()) return;
+        var consent=form.querySelector('.consent input[type=checkbox]')||form.querySelector('input[type=checkbox]');
+        if(consent && !consent.checked) return;
+        var data=new FormData(form);
+        var phone=String(data.get('phone')||'').trim();
+        var contact=String(data.get('contact')||'').trim();
+        var name=String(data.get('name')||'').trim();
+        if(!phone&&!contact) return;
+        var payload={
+          source:(form.getAttribute('data-source')||'Заявка с сайта')+' — НЕ ОТПРАВИЛ ФОРМУ',
+          page:document.body.getAttribute('data-page')||'',
+          name:name,phone:phone,tg:String(data.get('tg')||'').trim(),
+          contact:contact,sphere:String(data.get('sphere')||'').trim(),
+          message:'Пользователь заполнил форму, но не нажал отправить. '+String(data.get('message')||'').trim()
+        };
+        try {
+          fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(payload),keepalive:true});
+        } catch(e) {}
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initHeader();
     initModals();
@@ -425,6 +493,8 @@
     initHero();
     initImgFallback();
     initYear();
+    initPortfolioReturnState();
+    initAbandonedForms();
   });
 
   window.SiteUI = { openModal: openModal, closeModal: closeModal };
