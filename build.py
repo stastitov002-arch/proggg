@@ -1513,7 +1513,7 @@ def build_doc_page(doc: dict, name: str) -> str:
   </div>
 </section>
 
-{extra}""""
+{extra}"""""
 
     return page(
         title=str(meta.get("seo_title") or (h1 + " | 40/60 Design")),
