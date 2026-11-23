@@ -432,8 +432,18 @@
         });
         var island = document.getElementById('pf-island');
         if (island && saved.island != null) island.checked = !!saved.island;
-        var apply = $('#pf-apply');
-        if (apply) apply.click();
+        var reset = $('#pf-reset');
+        if (reset) reset.click();
+        ['material','type','layout','budget'].forEach(function (name) {
+          var el = document.getElementById('pf-' + name);
+          if (el && saved.filters && saved.filters[name] != null) el.value = saved.filters[name];
+        });
+        if (island && saved.island != null) island.checked = !!saved.island;
+        ['material','type','layout','budget'].forEach(function (name) {
+          var el = document.getElementById('pf-' + name);
+          if (el) el.dispatchEvent(new Event('change', {bubbles:true}));
+        });
+        if (island) island.dispatchEvent(new Event('change', {bubbles:true}));
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             window.scrollTo({top: Math.max(0, Number(saved.y) || 0), behavior:'instant'});
