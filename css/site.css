@@ -288,7 +288,8 @@ ul,ol{margin:0;padding:0}
 /* ---------- Hero внутренних страниц ---------- */
 
 .phero{position:relative;padding:clamp(48px,7vw,96px) 0 clamp(32px,4vw,56px);border-bottom:1px solid var(--c-line);background-image:var(--phero-image);background-size:cover;background-position:center 50%;background-repeat:no-repeat;background-color:var(--c-bg-2);isolation:isolate}
-.phero__in{max-width:var(--w);margin:0 auto;padding:0 var(--gutter)}
+.phero::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(8,13,10,.88) 0%,rgba(8,13,10,.66) 56%,rgba(8,13,10,.38) 100%),linear-gradient(0deg,rgba(8,13,10,.55),rgba(8,13,10,.16))}
+.phero__in{max-width:var(--w);margin:0 auto;padding:0 var(--gutter);position:relative;z-index:1}
 .phero__title{font-family:var(--font-display);font-weight:500;font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:1;letter-spacing:-.012em;margin:0;max-width:24ch}
 .phero__sub{margin-top:18px;color:var(--c-muted);max-width:62ch;font-size:clamp(15px,1.2vw,17px);line-height:1.65}
 
