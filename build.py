@@ -1491,7 +1491,14 @@ def build_doc_page(doc: dict, name: str) -> str:
 
     extra = partner_form() if str(meta.get("form", "")).strip() == "partner" else cta_band()
 
-    body = f"""<section class="phero">
+    hero_image = {
+        "about": "images/about-main.jpg",
+        "warranty": "images/uploads/5296685284865025943.jpg",
+        "partners": "images/uploads/5296685284865025943.jpg",
+        "standards": "images/portfolio-hero.jpg",
+        "requirements": "images/portfolio-hero.jpg",
+    }.get(name, "images/portfolio-hero.jpg")
+    body = f"""<section class="phero" style="--phero-image:url('{hero_image}')">
   <div class="phero__in">
     {breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])}
     <p class="eyebrow">{esc(eyebrow)}</p>
@@ -1506,7 +1513,7 @@ def build_doc_page(doc: dict, name: str) -> str:
   </div>
 </section>
 
-{extra}"""
+{extra}""""
 
     return page(
         title=str(meta.get("seo_title") or (h1 + " | 40/60 Design")),
