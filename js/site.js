@@ -423,9 +423,7 @@
   function initPortfolioReturnState() {
     var page = document.body.getAttribute('data-page') || '';
     var key = 'portfolio-return-state-v1';
-
     if (page !== 'portfolio') return;
-
     var saved = null;
     try { saved = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) {}
     if (saved) {
@@ -436,7 +434,6 @@
       var island = document.getElementById('pf-island');
       if (island && saved.island != null) island.checked = !!saved.island;
       if (typeof window.__portfolioApply === 'function') window.__portfolioApply();
-
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           window.scrollTo({top: Math.max(0, Number(saved.y) || 0), behavior:'instant'});
