@@ -349,9 +349,14 @@
     $$('[data-back]').forEach(function (link) {
       on(link, 'click', function (e) {
         var ref = document.referrer || '';
+        var state = null;
+        try { state = sessionStorage.getItem('portfolio-return-state-v1'); } catch(e) {}
         if (ref.indexOf('portfolio') !== -1 && window.history.length > 1) {
           e.preventDefault();
           window.history.back();
+        } else if (state && link.hasAttribute('data-portfolio-return')) {
+          e.preventDefault();
+          window.location.href = '../portfolio.html';
         }
       });
     });
