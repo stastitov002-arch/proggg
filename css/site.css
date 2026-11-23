@@ -1149,3 +1149,8 @@ figcaption,
     font-size: 13px;
   }
 }
+
+/* Semantic section-title corrections and header action button */
+.ab-partners__title,.wt-cta__title{font-family:var(--font-sans)!important;font-weight:450!important;font-size:clamp(40px,3.5vw,48px)!important;line-height:1.15!important}
+.hdr .btn--hdr{font-family:var(--font-sans)!important;font-size:15px!important;font-weight:500!important;line-height:1.2!important}
+@media(max-width:900px){.ab-partners__title,.wt-cta__title{font-size:clamp(28px,6.7vw,34px)!important}}
