@@ -46,10 +46,10 @@ TG = "https://t.me/design4060"
 TG_NAME = "@design4060"
 
 NAV = [
-    ("portfolio.html", "Портфолио"),
-    ("articles.html", "Статьи"),
-    ("standards.html", "Стандарты"),
     ("about.html", "О нас"),
+    ("portfolio.html", "Портфолио"),
+    ("standards.html", "Стандарты"),
+    ("articles.html", "Статьи"),
     ("warranty.html", "Гарантия"),
     ("partners.html", "Партнёрам"),
 ]
