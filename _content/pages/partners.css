@@ -7,3 +7,11 @@ input,textarea,select,button{max-width:100%;font-size:16px}img,svg,video{max-wid
 }@media(max-width:640px){.pt-who__grid{ grid-template-columns: 1fr; }.pt-gain__grid{ grid-template-columns: 1fr; }.pt-steps__list{ grid-template-columns: 1fr; }.pt-form__card{ padding: 24px 18px; }}/* --- КОНЕЦ ИСПРАВЛЕНИЯ --- */
 
 .ft-block{background:var(--c-green);color:var(--c-accent);padding:48px 20px 24px;border-top:1px solid rgba(200,165,114,0.15)}body.ft-modal-open{overflow:hidden}body.ft-call-open{overflow:hidden}@keyframes chat-modal-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}body.chat-modal-open{overflow:hidden}
+.pt-hero::before{background-image:url("images/uploads/5296685284865025943.jpg");background-position:center 55%}
+.pt-hero__title,.pt-sec__title,.pt-gain__num{font-family:var(--font-display)!important;font-weight:450!important}
+.pt-hero__title{font-size:clamp(36px,5.3vw,68px);line-height:1.06}
+.pt-sec__title{font-size:clamp(28px,3.5vw,46px);line-height:1.15}
+.pt-hero__inner,.pt-sec__inner{max-width:1280px}
+.pt-who__card,.pt-form__card,.pt-hero__btn{border-radius:2px}
+@media(max-width:800px){.pt-who__grid,.pt-gain__grid,.pt-steps__list{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.pt-hero{min-height:auto;padding:48px 0 42px}.pt-hero__title{font-size:clamp(34px,9vw,42px)}.pt-who__grid,.pt-gain__grid,.pt-steps__list{grid-template-columns:1fr}.pt-form__wrap{grid-template-columns:1fr}}
