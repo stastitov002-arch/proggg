@@ -497,8 +497,8 @@
     initHero();
     initImgFallback();
     initYear();
-    initPortfolioReturnState();
     initAbandonedForms();
+    initPortfolioReturnState();
   });
 
   window.SiteUI = { openModal: openModal, closeModal: closeModal };
