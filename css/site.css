@@ -1005,3 +1005,8 @@ h3,.pcard__title,.prose h3,.ab-adv__title,.ab-partners__title,.wt-cover__title,.
  h3,.pcard__title,.acard__title,.prose h3,.ab-adv__title,.ab-partners__title,.wt-cover__title,.wt-terms__title,.wt-how__title,.pt-who__title,.pt-gain__title,.pt-steps__title,.info-card h3{font-size:clamp(21px,5.7vw,24px)!important}
  h4,.prose h4{font-size:clamp(18px,5vw,20px)!important}
 }
+
+/* Desktop H1 is 56–72px, mobile H1 is 34–42px */
+@media(min-width:901px){
+ h1,.display--giant,.display--xl,.hero__title,.cover-hero__title,.phero__title,.ab-hero__title,.wt-hero__title,.pt-hero__title{font-size:clamp(56px,5.2vw,72px)!important;line-height:1.08}
+}
