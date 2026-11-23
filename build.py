@@ -1600,16 +1600,11 @@ def build_legacy_page(name: str) -> str:
     css = data.get("css", "")
     # подтягиваем типографику к общему стилю: крупные заголовки — засечный шрифт бренда
     css += """
-/* единая типографика для внутренних страниц */
+/* Internal-page type overrides */
 .hd-block, .ft-block { display: none !important; }
-.ab-hero__title, .ab-adv__title, .ab-partners__title,
-.pt-hero__title, .pt-sec__title,
-.wt-hero__title, .wt-sec__title, .wt-cover__title, .wt-terms__title, .wt-how__title, .wt-cta__title {
-  font-family: var(--font-display) !important;
-  font-weight: 500 !important;
-  letter-spacing: -.02em !important;
-}
-.ab-hero__title em, .pt-hero__title em, .wt-hero__title em, .wt-cta__title em { font-style: italic; }
+.ab-hero__title,.pt-hero__title,.wt-hero__title,.wt-cta__title{font-family:var(--font-display)!important;font-weight:400!important;letter-spacing:-.018em!important}
+.ab-adv__title,.ab-partners__title,.pt-sec__title,.wt-sec__title,.wt-cover__title,.wt-terms__title,.wt-how__title,.pt-who__title,.pt-gain__title,.pt-steps__title{font-family:var(--font-sans)!important;font-weight:450!important}
+.ab-hero__title em,.pt-hero__title em,.wt-hero__title em,.wt-cta__title em{font-style:italic}
 """
     return page(
         title=data.get("title") or name,
