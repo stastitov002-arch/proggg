@@ -1622,14 +1622,14 @@ def build_legacy_page(name: str) -> str:
   line-height: 1.65 !important;
 }
 @media (max-width: 900px) {
-  .ab-hero__title, .pt-hero__title, .wt-hero__title, .wt-cta__title {
+   .ab-hero__title, .pt-hero__title, .wt-hero__title {
     font-size: clamp(34px, 8.5vw, 42px) !important;
     line-height: 1.1 !important;
   }
   .ab-hero__right-title, .ab-partners__title, .pt-sec__title, .wt-sec__title, .wt-cta__title {
     font-size: clamp(28px, 6.7vw, 34px) !important;
   }
-  .ab-adv__title, .ab-partners__title, .pt-who__title, .pt-gain__title,
+  .ab-adv__title, .pt-who__title, .pt-gain__title,
   .pt-steps__title, .wt-cover__title, .wt-terms__title, .wt-how__title {
     font-size: clamp(21px, 5.5vw, 24px) !important;
   }
