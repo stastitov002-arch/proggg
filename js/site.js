@@ -423,51 +423,37 @@
   function initPortfolioReturnState() {
     var page = document.body.getAttribute('data-page') || '';
     var key = 'portfolio-return-state-v1';
-    if (page === 'portfolio') {
-      var saved = null;
-      try { saved = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) {}
-      if (saved) {
-        ['material','type','layout','budget'].forEach(function (name) {
-          var el = document.getElementById('pf-' + name);
-          if (el && saved.filters && saved.filters[name] != null) el.value = saved.filters[name];
-        });
-        var island = document.getElementById('pf-island');
-        if (island && saved.island != null) island.checked = !!saved.island;
-        var reset = $('#pf-reset');
-        if (reset) reset.click();
-        ['material','type','layout','budget'].forEach(function (name) {
-          var el = document.getElementById('pf-' + name);
-          if (el && saved.filters && saved.filters[name] != null) el.value = saved.filters[name];
-        });
-        if (island && saved.island != null) island.checked = !!saved.island;
-        ['material','type','layout','budget'].forEach(function (name) {
-          var el = document.getElementById('pf-' + name);
-          if (el) el.dispatchEvent(new Event('change', {bubbles:true}));
-        });
-        if (island) island.dispatchEvent(new Event('change', {bubbles:true}));
+    if (page !== 'portfolio') return;
+    var saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) {}
+    if (saved) {
+      ['material','type','layout','budget'].forEach(function (name) {
+        var el = document.getElementById('pf-' + name);
+        if (el && saved.filters && saved.filters[name] != null) el.value = saved.filters[name];
+      });
+      var island = document.getElementById('pf-island');
+      if (island && saved.island != null) island.checked = !!saved.island;
+      if (typeof window.__portfolioApply === 'function') window.__portfolioApply();
+      requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            window.scrollTo({top: Math.max(0, Number(saved.y) || 0), behavior:'instant'});
-          });
-        });
-      }
-      $('.pcard[href*="/portfolio/"]').forEach(function (link) {
-        on(link,'click',function () {
-          var state = {y:window.scrollY,filters:{},island:false};
-          ['material','type','layout','budget'].forEach(function (name) {
-            var el=document.getElementById('pf-'+name);
-            if(el) state.filters[name]=el.value;
-          });
-          var island=document.getElementById('pf-island');
-          if(island) state.island=island.checked;
-          try { sessionStorage.setItem(key,JSON.stringify(state)); } catch(e) {}
+          window.scrollTo({top: Math.max(0, Number(saved.y) || 0), behavior:'instant'});
         });
       });
     }
+    $$('.pcard[href*="/portfolio/"]').forEach(function (link) {
+      on(link,'click',function () {
+        var state = {y:window.scrollY,filters:{},island:false};
+        ['material','type','layout','budget'].forEach(function (name) {
+          var el=document.getElementById('pf-'+name);
+          if(el) state.filters[name]=el.value;
+        });
+        var island=document.getElementById('pf-island');
+        if(island) state.island=island.checked;
+        try { sessionStorage.setItem(key,JSON.stringify(state)); } catch(e) {}
+      });
+    });
   }
 
-  /* Abandoned lead: only transmit if the visitor has explicitly checked consent
-     and entered a contact detail. Never send an empty or unconsented form. */
   function initAbandonedForms() {
     $('form[data-lead-form]').forEach(function(form){
       var sent=false, changed=false;
