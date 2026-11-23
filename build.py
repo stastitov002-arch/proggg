@@ -417,10 +417,10 @@ def md(text: str) -> str:
 def fonts_link() -> str:
     return (
         '<link rel="preconnect" href="https://fonts.googleapis.com">\\n'
-        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\\n'
+        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '<link href="https://fonts.googleapis.com/css2?'
         'family=Cormorant+Garamond:ital,wght@0,400;1,400&'
-        'family=Manrope:wght@400;500&display=swap" rel="stylesheet">'
+        'family=Manrope:wght@400..500&display=swap" rel="stylesheet">'
     )
 
 
