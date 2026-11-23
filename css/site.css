@@ -986,3 +986,6 @@ h3,.pcard__title,.prose h3,.ab-adv__title,.ab-partners__title,.wt-cover__title,.
 
 /* Final typography overrides */
 .display--giant,.display--xl,.display--l,.hero__title,.cover-hero__title,.phero__title,.ab-hero__title,.wt-hero__title,.pt-hero__title{font-family:var(--font-display)!important;font-weight:400!important}
+
+/* Display font weight reset for branded headings */
+.display,.display em,.display i,.hero__title em,.cover-hero__title em,.phero__title em{font-weight:400!important}
