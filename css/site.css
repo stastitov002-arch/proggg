@@ -952,3 +952,7 @@ body,.lead,.hero__sub,.phero__sub,.cover-hero__sub,.prose,.ab-hero__desc,.ab-her
 .caption,.tag,.pcard__more,.ftr__bottom,.modal__eyebrow,.field__label{font-size:13px}
 }
 
+
+/* Cormorant is used only for display titles; section and card headings use Manrope. */
+.display--l,.prose h2,.wt-sec__title,.pt-sec__title,.sec__title{font-family:var(--font-sans)!important;font-weight:450!important}
+.pcard__title,.info-card h3,.prose .info-card h3{font-family:var(--font-sans)!important;font-weight:500!important}
