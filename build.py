@@ -1594,19 +1594,19 @@ def build_legacy_page(name: str) -> str:
     # Единая типографика для legacy-страниц: этот inline-блок загружается после site.css.
     css += """
 .hd-block, .ft-block { display: none !important; }
-.ab-hero__title, .pt-hero__title, .wt-hero__title, .wt-cta__title {
+.ab-hero__title, .pt-hero__title, .wt-hero__title {
   font-family: var(--font-display) !important;
   font-weight: 400 !important;
   font-size: clamp(56px, 5.2vw, 72px) !important;
   line-height: 1.1 !important;
 }
-.ab-hero__right-title, .pt-sec__title, .wt-sec__title {
+.ab-hero__right-title, .ab-partners__title, .pt-sec__title, .wt-sec__title, .wt-cta__title {
   font-family: var(--font-sans) !important;
   font-weight: 450 !important;
   font-size: clamp(40px, 3.5vw, 48px) !important;
   line-height: 1.15 !important;
 }
-.ab-adv__title, .ab-partners__title, .pt-who__title, .pt-gain__title,
+.ab-adv__title, .pt-who__title, .pt-gain__title,
 .pt-steps__title, .wt-cover__title, .wt-terms__title, .wt-how__title {
   font-family: var(--font-sans) !important;
   font-weight: 500 !important;
@@ -1626,7 +1626,7 @@ def build_legacy_page(name: str) -> str:
     font-size: clamp(34px, 8.5vw, 42px) !important;
     line-height: 1.1 !important;
   }
-  .ab-hero__right-title, .pt-sec__title, .wt-sec__title {
+  .ab-hero__right-title, .ab-partners__title, .pt-sec__title, .wt-sec__title, .wt-cta__title {
     font-size: clamp(28px, 6.7vw, 34px) !important;
   }
   .ab-adv__title, .ab-partners__title, .pt-who__title, .pt-gain__title,
