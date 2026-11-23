@@ -1303,7 +1303,7 @@ def build_project(p: dict, all_projects: list[dict], base: str = "../", noindex:
     body = f"""<section class="proj__head">
   <div class="wrap">
     {breadcrumbs([("../index.html", "Главная"), ("../portfolio.html", "Портфолио"), ("", p["title"])])}
-    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back>← Вернуться</a></p>
+    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back data-portfolio-return>← Вернуться</a></p>
     <h1 class="display display--xl">{esc(p["title"])}</h1>
     <div class="proj__layout">
       <div class="gallery">
