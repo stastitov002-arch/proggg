@@ -432,6 +432,8 @@
         });
         var island = document.getElementById('pf-island');
         if (island && saved.island != null) island.checked = !!saved.island;
+        var apply = $('#pf-apply');
+        if (apply) apply.click();
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             window.scrollTo({top: Math.max(0, Number(saved.y) || 0), behavior:'instant'});
