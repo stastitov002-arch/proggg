@@ -989,3 +989,8 @@ h3,.pcard__title,.prose h3,.ab-adv__title,.ab-partners__title,.wt-cover__title,.
 
 /* Display font weight reset for branded headings */
 .display,.display em,.display i,.hero__title em,.cover-hero__title em,.phero__title em{font-weight:400!important}
+
+/* Display font-weight 400 and Manrope section heading weights */
+h1,.display--giant,.display--xl,.display--l,.hero__title,.cover-hero__title,.phero__title,.ab-hero__title,.wt-hero__title,.pt-hero__title{font-family:var(--font-display)!important;font-weight:400!important}
+h2,.sec__title,.prose h2,.wt-sec__title,.pt-sec__title,.ab-hero__right-title{font-family:var(--font-sans)!important;font-weight:450!important}
+h3,.pcard__title,.prose h3,.ab-adv__title,.ab-partners__title,.wt-cover__title,.wt-terms__title,.wt-how__title,.pt-who__title,.pt-gain__title,.pt-steps__title,.info-card h3{font-family:var(--font-sans)!important;font-weight:500!important}
