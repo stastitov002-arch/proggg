@@ -957,3 +957,8 @@ body,.lead,.hero__sub,.phero__sub,.cover-hero__sub,.prose,.ab-hero__desc,.ab-her
  font-family:var(--font-display)!important;font-weight:400!important;
 }
 .display em,.display i,.hero__title em,.cover-hero__title em,.phero__title em{font-weight:400!important}
+
+/* Correct price typography (override card display styles) */
+.pcard__price,.spec__price,.price,.price__value,.project-price,.term-table td:last-child{
+ font-family:var(--font-sans)!important;font-weight:450!important;
+}
