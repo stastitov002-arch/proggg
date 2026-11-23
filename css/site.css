@@ -979,3 +979,7 @@ body,.lead,.hero__sub,.phero__sub,.cover-hero__sub,.prose,.ab-hero__desc,.ab-her
 .drawer__link{font-size:15px!important}
 .btn,.btn--sm,.pt-hero__btn,.ab-hero__btn,.wt-cta__btn{font-size:15px!important}
 .pcard__price,.spec__price,.price,.price__value,.project-price,.term-table td:last-child{font-family:var(--font-sans)!important;font-weight:450!important}
+
+/* Headings are Manrope, while display titles remain Cormorant */
+h2,.sec__title,.display--l,.prose h2,.wt-sec__title,.pt-sec__title,.ab-hero__right-title{font-family:var(--font-sans)!important;font-weight:450!important}
+h3,.pcard__title,.prose h3,.ab-adv__title,.ab-partners__title,.wt-cover__title,.wt-terms__title,.wt-how__title,.pt-who__title,.pt-gain__title,.pt-steps__title,.info-card h3{font-family:var(--font-sans)!important;font-weight:500!important}
