@@ -952,14 +952,3 @@ body,.lead,.hero__sub,.phero__sub,.cover-hero__sub,.prose,.ab-hero__desc,.ab-her
 .caption,.tag,.pcard__more,.ftr__bottom,.modal__eyebrow,.field__label{font-size:13px}
 }
 
-/* Force the requested 400 weight for Cormorant display titles */
-.hero__title,.display,.display--giant,.display--xl,.display--l,.cover-hero__title,.phero__title,
-.ab-hero__title,.wt-hero__title,.pt-hero__title,.pcard__title,.pcard__price,.stat__num{
- font-family:var(--font-display)!important;font-weight:400!important;
-}
-.display em,.display i,.hero__title em,.cover-hero__title em,.phero__title em{font-weight:400!important}
-
-/* Correct price typography (override card display styles) */
-.pcard__price,.spec__price,.price,.price__value,.project-price,.term-table td:last-child{
- font-family:var(--font-sans)!important;font-weight:450!important;
-}
