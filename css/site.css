@@ -1193,3 +1193,52 @@ body.cookie-open .fab{bottom:112px}
   .fab svg{width:27px;height:27px}
   body.cookie-open .fab{bottom:112px}
 }
+
+
+/* Circular controls: keep their contents optically centered at every state. */
+.modal__close,
+.fab {
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  line-height:0;
+  transform:none;
+  transform-origin:center center;
+}
+.modal__close:hover,
+.modal__close:focus-visible,
+.modal__close:active,
+.fab:hover,
+.fab:focus-visible,
+.fab:active {
+  transform:none !important;
+}
+.modal__close svg,
+.fab svg {
+  display:block;
+  position:static;
+  flex:0 0 auto;
+  margin:0;
+  transform:none !important;
+  transform-origin:center center;
+}
+.modal__close svg {
+  width:18px;
+  height:18px;
+}
+.fab svg {
+  width:27px;
+  height:27px;
+}
+
+/* The numbered round markers should not scale on hover either. */
+.journey__dot {
+  transform:none !important;
+  transition:background-color .25s ease,border-color .25s ease,color .25s ease;
+}
+.journey__step:hover .journey__dot,
+.journey__step.is-current .journey__dot {
+  transform:none !important;
+}
