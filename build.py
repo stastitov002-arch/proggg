@@ -46,10 +46,10 @@ TG = "https://t.me/design4060"
 TG_NAME = "@design4060"
 
 NAV = [
+    ("about.html", "О нас"),
     ("portfolio.html", "Портфолио"),
     ("articles.html", "Статьи"),
     ("standards.html", "Стандарты"),
-    ("about.html", "О нас"),
     ("warranty.html", "Гарантия"),
     ("partners.html", "Партнёрам"),
 ]
@@ -502,7 +502,7 @@ def head(
 
 def brand_block(base: str = "", href: str = "index.html", sub: str = "Мебель на заказ") -> str:
     return f"""    <a class="brand" href="{base}{href}" aria-label="{BRAND} — на главную">
-      <img class="brand__mark" src="{base}images/brand-mark-128.png" width="44" height="44" alt="" aria-hidden="true">
+      <img class="brand__mark" src="{base}favicon.svg" width="44" height="44" alt="" aria-hidden="true">
       <span class="brand__txt"><span class="brand__name">40/60</span><span class="brand__sub">{esc(sub)}</span></span>
     </a>"""
 
@@ -1303,7 +1303,7 @@ def build_project(p: dict, all_projects: list[dict], base: str = "../", noindex:
     body = f"""<section class="proj__head">
   <div class="wrap">
     {breadcrumbs([("../index.html", "Главная"), ("../portfolio.html", "Портфолио"), ("", p["title"])])}
-    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back>← Ко всем проектам</a></p>
+    <p class="proj__back"><a class="btn btn--sm btn--ghost" href="../portfolio.html" data-back>← Вернуться</a></p>
     <h1 class="display display--xl">{esc(p["title"])}</h1>
     <div class="proj__layout">
       <div class="gallery">
