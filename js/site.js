@@ -433,7 +433,7 @@
           });
         });
       }
-      $('a.pcard[href*="/portfolio/"]').forEach(function (link) {
+      $('.pcard[href*="/portfolio/"]').forEach(function (link) {
         on(link,'click',function () {
           var state = {y:window.scrollY,filters:{},island:false};
           ['material','type','layout','budget'].forEach(function (name) {
