@@ -963,3 +963,13 @@ body,.lead,.hero__sub,.phero__sub,.cover-hero__sub,.prose,.ab-hero__desc,.ab-her
   .ab-hero__right-title{font-size:clamp(21px,5.7vw,24px)!important}
   .ab-adv__title,.ab-partners__title,.wt-cover__title,.wt-terms__title,.wt-how__title,.pt-who__title,.pt-gain__title,.pt-steps__title{font-size:clamp(21px,5.7vw,24px)!important}
 }
+
+/* Explicit responsive H1/H2/H3 sizing for hero components */
+@media(min-width:901px){
+ .hero__title{font-size:clamp(56px,5.2vw,72px)!important}
+ .cover-hero__title,.phero__title{font-size:clamp(56px,5.2vw,72px)!important}
+ .ab-hero__title,.wt-hero__title,.pt-hero__title{font-size:clamp(56px,5.2vw,72px)!important}
+}
+@media(max-width:900px){
+ .hero__title,.cover-hero__title,.phero__title{font-size:clamp(34px,8.5vw,42px)!important;line-height:1.1}
+}
