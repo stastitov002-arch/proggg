@@ -1499,17 +1499,118 @@ def build_doc_page(doc: dict, name: str) -> str:
 
     extra = partner_form() if str(meta.get("form", "")).strip() == "partner" else cta_band()
 
-    body = f"""<section class="phero">
+    crumbs = breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])
+
+    if name == "about":
+        hero = f"""<section class="editorial-hero editorial-hero--about">
+  <div class="editorial-hero__inner">
+    <div class="editorial-hero__copy">
+      {crumbs}
+      <p class="eyebrow">40/60 Design · Москва</p>
+      <h1 class="editorial-hero__title">{esc(h1)}</h1>
+      <p class="editorial-hero__lead">{esc(lead)}</p>
+      <div class="editorial-hero__actions">
+        <button class="btn btn--solid" type="button" data-modal-open="lead">Обсудить проект</button>
+        <a class="btn btn--ghost" href="portfolio.html">Смотреть проекты</a>
+      </div>
+    </div>
+    <figure class="editorial-hero__image editorial-hero__image--main">
+      <img src="images/about-main.jpg" alt="Реализованный интерьерный проект 40/60 Design" width="800" height="1000" fetchpriority="high">
+    </figure>
+    <aside class="editorial-hero__aside">
+      <div class="editorial-hero__aside-copy">
+        <span class="editorial-hero__index">01 / 03</span>
+        <h2>От идеи до установленной мебели</h2>
+        <p>Проектирование, спецификация, комплектация и контроль изготовления — в одной согласованной работе.</p>
+        <a href="standards.html">Как мы контролируем качество <span aria-hidden="true">↗</span></a>
+      </div>
+      <img src="images/about-small.jpg" alt="Деталь работы над мебельным проектом" width="400" height="300" loading="lazy">
+    </aside>
+  </div>
+</section>
+<section class="editorial-materials" aria-label="Материалы и фактуры">
+  <div class="editorial-materials__intro">
+    <p class="eyebrow">Материалы и детали</p>
+    <p>Фактура, цвет, покрытие и фурнитура подбираются под задачу конкретного интерьера.</p>
+  </div>
+  <div class="editorial-materials__samples">
+    <img src="images/brands/material-1.jpg" alt="Образец поверхности камня" loading="lazy">
+    <img src="images/brands/material-2.jpg" alt="Образец древесной фактуры" loading="lazy">
+    <img src="images/brands/swatch-1.jpg" alt="Образец отделки 1" loading="lazy">
+    <img src="images/brands/swatch-2.jpg" alt="Образец отделки 2" loading="lazy">
+    <img src="images/brands/swatch-3.jpg" alt="Образец отделки 3" loading="lazy">
+    <img src="images/brands/swatch-4.jpg" alt="Образец отделки 4" loading="lazy">
+    <img src="images/brands/swatch-5.jpg" alt="Образец отделки 5" loading="lazy">
+  </div>
+</section>"""
+        og_image = "images/about-main.jpg"
+
+    elif name == "warranty":
+        hero = f"""<section class="editorial-hero editorial-hero--warranty">
+  <div class="editorial-hero__inner">
+    <div class="editorial-hero__copy">
+      {crumbs}
+      <p class="eyebrow">Сервис и ответственность</p>
+      <h1 class="editorial-hero__title">{esc(h1)}</h1>
+      <p class="editorial-hero__lead">{esc(lead)}</p>
+      <div class="editorial-hero__actions">
+        <button class="btn btn--solid" type="button" data-modal-open="lead">Задать вопрос</button>
+        <a class="btn btn--ghost" href="{PHONE1_HREF}">Позвонить нам</a>
+      </div>
+    </div>
+    <div class="editorial-warranty-visual">
+      <div class="editorial-warranty-visual__photo">
+        <img src="images/hero.jpg" alt="Кухня 40/60 Design в интерьере" width="1200" height="900" fetchpriority="high">
+      </div>
+      <div class="editorial-warranty-visual__seal" aria-label="Три года гарантии на корпус, фасады и фурнитуру">
+        <span class="editorial-warranty-visual__number">3</span>
+        <span class="editorial-warranty-visual__label">года</span>
+        <span class="editorial-warranty-visual__note">на корпус, фасады и фурнитуру</span>
+      </div>
+      <p class="editorial-warranty-visual__foot">1 год на монтажные работы. Сроки по столешницам фиксируются в договоре.</p>
+    </div>
+  </div>
+</section>"""
+        og_image = "images/hero.jpg"
+
+    elif name == "partners":
+        hero = f"""<section class="editorial-hero editorial-hero--partners">
+  <div class="editorial-hero__inner">
+    <div class="editorial-hero__copy">
+      {crumbs}
+      <p class="eyebrow">Профессиональное сотрудничество</p>
+      <h1 class="editorial-hero__title">{esc(h1)}</h1>
+      <p class="editorial-hero__lead">{esc(lead)}</p>
+      <div class="editorial-hero__actions">
+        <a class="btn btn--solid" href="#partner-form">Стать партнёром</a>
+        <a class="btn btn--ghost" href="{TG}" target="_blank" rel="noopener">Обсудить в Telegram</a>
+      </div>
+      <div class="editorial-hero__audience">
+        <span>Дизайнеры</span><span>Строительные компании</span><span>Агентства недвижимости</span><span>Мебельные салоны</span>
+      </div>
+    </div>
+    <figure class="editorial-hero__image editorial-hero__image--partner">
+      <img src="images/showroom.jpg" alt="Шоурум и образцы материалов 40/60 Design" width="900" height="700" fetchpriority="high">
+      <figcaption>Материалы, образцы и комплектация проекта</figcaption>
+    </figure>
+  </div>
+</section>"""
+        og_image = "images/showroom.jpg"
+
+    else:
+        hero = f"""<section class="phero">
   <div class="phero__in">
-    {breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])}
+    {crumbs}
     <p class="eyebrow">{esc(eyebrow)}</p>
     <h1 class="phero__title">{esc(h1)}</h1>
     <p class="phero__sub">{esc(lead)}</p>
   </div>
-</section>
+</section>"""
+        og_image = "images/og-cover.jpg"
 
-<section class="sec sec--tight">
-  <div class="prose">
+    body = f"""{hero}
+<section class="sec sec--tight editorial-content">
+  <div class="prose editorial-content__inner">
     {body_html}
   </div>
 </section>
@@ -1529,6 +1630,7 @@ def build_doc_page(doc: dict, name: str) -> str:
             "description": description,
             "publisher": {"@type": "Organization", "name": BRAND},
         }],
+        og_image=og_image,
     )
 
 
