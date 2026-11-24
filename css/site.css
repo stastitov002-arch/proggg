@@ -1242,3 +1242,20 @@ body.cookie-open .fab{bottom:112px}
 .journey__step.is-current .journey__dot {
   transform:none !important;
 }
+
+
+/* Portfolio cards: no dark image band and no image zoom on hover */
+.pcard__grad {
+  display: none !important;
+  opacity: 0 !important;
+}
+.pcard__img {
+  transform: none !important;
+  transition: none !important;
+}
+.pcard:hover .pcard__img {
+  transform: none !important;
+}
+.pcard__title {
+  text-shadow: 0 2px 9px rgba(0,0,0,.82);
+}
