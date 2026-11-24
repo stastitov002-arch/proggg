@@ -1499,10 +1499,13 @@ def build_doc_page(doc: dict, name: str) -> str:
 
     extra = partner_form() if str(meta.get("form", "")).strip() == "partner" else cta_band()
 
+    crumbs = breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])
+
     if name == "about":
         hero = f"""<section class="editorial-hero editorial-hero--about">
   <div class="editorial-hero__inner">
     <div class="editorial-hero__copy">
+      {crumbs}
       <p class="eyebrow">40/60 Design · Москва</p>
       <h1 class="editorial-hero__title">{esc(h1)}</h1>
       <p class="editorial-hero__lead">{esc(lead)}</p>
@@ -1546,12 +1549,13 @@ def build_doc_page(doc: dict, name: str) -> str:
         hero = f"""<section class="editorial-hero editorial-hero--warranty">
   <div class="editorial-hero__inner">
     <div class="editorial-hero__copy">
+      {crumbs}
       <p class="eyebrow">Сервис и ответственность</p>
       <h1 class="editorial-hero__title">{esc(h1)}</h1>
       <p class="editorial-hero__lead">{esc(lead)}</p>
       <div class="editorial-hero__actions">
         <button class="btn btn--solid" type="button" data-modal-open="lead">Задать вопрос</button>
-        <a class="btn btn--ghost" href="tel:{PHONE1.replace(' ', '').replace('-', '')}">Позвонить нам</a>
+        <a class="btn btn--ghost" href="{PHONE1_HREF}">Позвонить нам</a>
       </div>
     </div>
     <div class="editorial-warranty-visual">
@@ -1573,12 +1577,13 @@ def build_doc_page(doc: dict, name: str) -> str:
         hero = f"""<section class="editorial-hero editorial-hero--partners">
   <div class="editorial-hero__inner">
     <div class="editorial-hero__copy">
+      {crumbs}
       <p class="eyebrow">Профессиональное сотрудничество</p>
       <h1 class="editorial-hero__title">{esc(h1)}</h1>
       <p class="editorial-hero__lead">{esc(lead)}</p>
       <div class="editorial-hero__actions">
         <a class="btn btn--solid" href="#partner-form">Стать партнёром</a>
-        <a class="btn btn--ghost" href="https://t.me/design4060" target="_blank" rel="noopener">Обсудить в Telegram</a>
+        <a class="btn btn--ghost" href="{TG}" target="_blank" rel="noopener">Обсудить в Telegram</a>
       </div>
       <div class="editorial-hero__audience">
         <span>Дизайнеры</span><span>Строительные компании</span><span>Агентства недвижимости</span><span>Мебельные салоны</span>
@@ -1595,7 +1600,7 @@ def build_doc_page(doc: dict, name: str) -> str:
     else:
         hero = f"""<section class="phero">
   <div class="phero__in">
-    {breadcrumbs([("index.html", "Главная"), ("", eyebrow or h1)])}
+    {crumbs}
     <p class="eyebrow">{esc(eyebrow)}</p>
     <h1 class="phero__title">{esc(h1)}</h1>
     <p class="phero__sub">{esc(lead)}</p>
