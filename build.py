@@ -1624,6 +1624,7 @@ def build_doc_page(doc: dict, name: str) -> str:
         description=description,
         canonical=f"{SITE}/{name}.html",
         body=body,
+        extra_head=('<link rel="stylesheet" href="css/standards.css">' if name == "standards" else ""),
         active=f"{name}.html",
         ld=[{
             "@context": "https://schema.org",
