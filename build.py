@@ -1171,7 +1171,6 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
         description="Производство кухонь и корпусной мебели на заказ в Москве и области. Своё производство, срок 21 день, гарантия 3 года, бесплатный замер и расчёт.",
         canonical=SITE + "/",
         body=body,
-        extra_head=('<link rel="stylesheet" href="css/standards.css">' if name == "standards" else ""),
         active="index.html",
         ld=[faq_ld, {
             "@context": "https://schema.org",
