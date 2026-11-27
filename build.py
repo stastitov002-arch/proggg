@@ -1829,7 +1829,7 @@ Sitemap: {SITE}/sitemap.xml
 def build_legacy_redirects() -> list[tuple[str, str]]:
     """Сохраняет старые URL, но больше не публикует отдельную техническую библиотеку."""
     target = f"{SITE}/standards.html"
-    old_pages = [ROOT / "engineering-base.html"]
+    old_pages = [ROOT / "engineering-base.html", ROOT / "technical-library.html"]
     library = ROOT / "technical-library"
     if library.exists():
         old_pages.extend(library.rglob("*.html"))
