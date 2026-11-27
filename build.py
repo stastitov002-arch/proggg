@@ -2005,7 +2005,7 @@ def build_knowledge_category(category: dict, articles: list[dict], guides: list[
         content = '<div class="kb-empty-state"><span>В РАЗРАБОТКЕ</span><h2>Материалы этого направления готовятся.</h2><p>Мы публикуем технические сведения после проверки по документации производителей и применимым нормативным источникам.</p></div>'
     body = f"""<section class="kb-page-hero kb-page-hero--compact">
   <div class="wrap">
-    {breadcrumbs([("index.html", "Главная"), ("engineering-base.html", "Инженерная база"), ("technical-library.html", "Техническая библиотека"), ("", category["title"])])}
+    {breadcrumbs([("../index.html", "Главная"), ("../engineering-base.html", "Инженерная база"), ("../technical-library.html", "Техническая библиотека"), ("", category["title"])])}
     <p class="eyebrow">Направление {esc(category.get("number", ""))}</p>
     <h1 class="display display--giant">{esc(category["title"])}</h1>
     <p class="lead">{esc(category["description"])}</p>
@@ -2038,7 +2038,7 @@ def build_knowledge_article(article: dict, categories: list[dict]) -> str:
     updated = ru_date(article["updated"]) if article["updated"] else ""
     body = f"""<section class="kb-article-hero">
   <div class="wrap">
-    {breadcrumbs([("index.html", "Главная"), ("engineering-base.html", "Инженерная база"), ("technical-library.html", "Техническая библиотека"), (f"technical-library/{article['category']}.html", category_title), ("", article["h1"])])}
+    {breadcrumbs([("../../index.html", "Главная"), ("../../engineering-base.html", "Инженерная база"), ("../../technical-library.html", "Техническая библиотека"), (f"../{article['category']}.html", category_title), ("", article["h1"])])}
     <p class="eyebrow">{esc(category_title)}</p>
     <h1 class="display display--xl">{esc(article["h1"])}</h1>
     <p class="lead">{esc(article["lead"] or article["description"])}</p>
