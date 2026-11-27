@@ -27,7 +27,7 @@ python build.py
 Скрипт перезаписывает `index.html`, `portfolio.html`, `articles.html`,
 `standards.html`, `requirements.html`, `about.html`, `warranty.html`,
 `partners.html`, `404.html`, страницы `portfolio/*.html`, `articles/*.html`,
-превью черновиков `preview/*.html`, страницы инженерной базы и технической библиотеки, а также `sitemap.xml` и `robots.txt`.
+превью черновиков `preview/*.html`, старые адреса инженерной базы (перенаправления на стандарты), а также `sitemap.xml` и `robots.txt`.
 Устаревшие сгенерированные страницы удаляются автоматически.
 
 Python 3.10+, сторонних библиотек не требуется.
@@ -42,7 +42,7 @@ Python 3.10+, сторонних библиотек не требуется.
    превью, публикация.
 3. **Вручную** — добавить `.md` в `_projects`, `_articles` или `_knowledge/<раздел>` и запушить. Для технической статьи укажите в YAML-полях `slug`, `title`, `description`, `category`, `status`, `version`, `checked`.
 
-После любого пуша GitHub Actions запускает `build.py` и коммитит готовые
+После любого изменения исходников сайта GitHub Actions запускает `build.py` и коммитит готовые
 HTML-страницы (`[skip ci]`), GitHub Pages публикует их через 1–2 минуты.
 
 ## CMS `/admin/`
