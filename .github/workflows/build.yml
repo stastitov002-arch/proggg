@@ -8,9 +8,7 @@ on:
       - "_articles/**"
       - "_content/**"
       - "_data/**"
-      - "_knowledge/**"
       - "css/**"
-      - "js/engineering-base.js"
       - "build.py"
       - ".github/workflows/build.yml"
   workflow_dispatch:
