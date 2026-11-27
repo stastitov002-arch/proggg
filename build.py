@@ -564,8 +564,9 @@ def footer(base: str = "") -> str:
       <p class="ftr__col-title">Разделы</p>
       <ul class="ftr__links">
         <li><a href="{base}portfolio.html">Портфолио</a></li>
-        <li><a href="{base}articles.html">Статьи</a></li>
-        <li><a href="{base}standards.html">Стандарты</a></li>
+        <li><a href="{base}articles.html">Статьи для заказчиков</a></li>
+        <li><a href="{base}engineering-base.html">Инженерная база</a></li>
+        <li><a href="{base}standards.html">Стандарты 40/60</a></li>
         <li><a href="{base}about.html">О компании</a></li>
       </ul>
     </div>
@@ -989,7 +990,7 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
       </div>
       <div>
         <p class="lead" data-cms="standardsBlock.lead">{esc(std_head.get('lead') or 'Правила, по которым проектируем, собираем и сдаём мебель: материалы, фурнитура, допуски, контроль и гарантия.')}</p>
-        <p style="margin-top:18px"><a class="sec__link" href="standards.html">Все стандарты →</a></p>
+        <p style="margin-top:18px"><a class="sec__link" href="engineering-base.html">Инженерная база 40/60 →</a></p>
       </div>
     </div>
     <ul class="std-grid">
@@ -1942,7 +1943,9 @@ def build_technical_library(categories: list[dict], articles: list[dict]) -> str
     for category in categories:
         count = sum(1 for article in articles if article["category"] == category["slug"])
         state = f"{count} материал" if count == 1 else f"{count} материалов" if count else "Раздел пополняется"
-        cards.append(f"""<a class="kb-category" href="technical-library/{esc(category['slug'])}.html" data-kb-card data-search="{esc((category['title'] + ' ' + category['description'] + ' ' + ' '.join(category.get('topics', []))).lower())}">
+        category_docs = [item for item in articles if item["category"] == category["slug"]]
+        search_text = " ".join([category["title"], category["description"], *category.get("topics", []), *[item["title"] + " " + item["description"] for item in category_docs]])
+        cards.append(f"""<a class="kb-category" href="technical-library/{esc(category['slug'])}.html" data-kb-card data-search="{esc(search_text.lower())}">
   <span class="kb-category__num">{esc(category.get('number', ''))}</span>
   <span class="kb-category__body"><strong>{esc(category['title'])}</strong><span>{esc(category['description'])}</span><small>{state}</small></span>
   <span class="kb-category__arrow" aria-hidden="true">↗</span>
@@ -2074,7 +2077,8 @@ def build_engineering_pages(guides: list[dict]) -> list[tuple[str, str]]:
     for category in categories:
         write(ROOT / "technical-library" / f"{category['slug']}.html",
               build_knowledge_category(category, articles, guides))
-        paths.append((f"technical-library/{category['slug']}.html", today))
+        if any(article["category"] == category["slug"] for article in articles):
+            paths.append((f"technical-library/{category['slug']}.html", today))
     for article in articles:
         write(ROOT / "technical-library" / "articles" / f"{article['slug']}.html",
               build_knowledge_article(article, categories))
