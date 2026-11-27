@@ -8,7 +8,8 @@ HTML-страницы **генерируются** из Markdown и JSON скр�
 ```
 _projects/*.md      проекты портфолио (YAML front matter)
 _articles/*.md      статьи блога (front matter + Markdown)
-_content/*.md       страницы «Стандарты» и «Требования к мебели»
+_content/*.md       страница «Стандарты» и «Требования к мебели»
+_knowledge/         публичная техническая библиотека и источники знаний
 _content/pages/     тела страниц «О нас», «Партнёрам», «Гарантия», «404»
 _data/site.json     общие тексты и контакты (переопределяются на клиенте)
 build.py            генератор страниц
@@ -26,7 +27,7 @@ python build.py
 Скрипт перезаписывает `index.html`, `portfolio.html`, `articles.html`,
 `standards.html`, `requirements.html`, `about.html`, `warranty.html`,
 `partners.html`, `404.html`, страницы `portfolio/*.html`, `articles/*.html`,
-превью черновиков `preview/*.html`, а также `sitemap.xml` и `robots.txt`.
+превью черновиков `preview/*.html`, страницы инженерной базы и технической библиотеки, а также `sitemap.xml` и `robots.txt`.
 Устаревшие сгенерированные страницы удаляются автоматически.
 
 Python 3.10+, сторонних библиотек не требуется.
@@ -39,7 +40,7 @@ Python 3.10+, сторонних библиотек не требуется.
    вопросы, проекты, статьи, фотографии.
 2. **Telegram-бот** (`bot/README.md`) — фото, описание, ИИ приводит к стандарту,
    превью, публикация.
-3. **Вручную** — добавить `.md` в `_projects` или `_articles` и запушить.
+3. **Вручную** — добавить `.md` в `_projects`, `_articles` или `_knowledge/<раздел>` и запушить. Для технической статьи укажите в YAML-полях `slug`, `title`, `description`, `category`, `status`, `version`, `checked`.
 
 После любого пуша GitHub Actions запускает `build.py` и коммитит готовые
 HTML-страницы (`[skip ci]`), GitHub Pages публикует их через 1–2 минуты.
