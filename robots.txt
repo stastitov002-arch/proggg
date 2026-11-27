@@ -6,5 +6,6 @@ Disallow: /_articles/
 Disallow: /_projects/
 Disallow: /_content/
 Disallow: /_data/
+Disallow: /_knowledge/
 
 Sitemap: https://4060design.ru/sitemap.xml
