@@ -15,6 +15,7 @@
   requirements.html, about.html, warranty.html, partners.html, 404.html,
   portfolio/<slug>.html, articles/<slug>.html, preview/<slug>.html,
   sitemap.xml, robots.txt
+  старые адреса инженерной базы перенаправляются на standards.html
 
 Запуск:  python build.py
 """
@@ -48,7 +49,7 @@ TG_NAME = "@design4060"
 NAV = [
     ("about.html", "О нас"),
     ("portfolio.html", "Портфолио"),
-    ("engineering-base.html", "Инженерная база"),
+    ("standards.html", "Стандарты"),
     ("articles.html", "Статьи"),
     ("warranty.html", "Гарантия"),
     ("partners.html", "Партнёрам"),
@@ -565,7 +566,6 @@ def footer(base: str = "") -> str:
       <ul class="ftr__links">
         <li><a href="{base}portfolio.html">Портфолио</a></li>
         <li><a href="{base}articles.html">Статьи для заказчиков</a></li>
-        <li><a href="{base}engineering-base.html">Инженерная база</a></li>
         <li><a href="{base}standards.html">Стандарты 40/60</a></li>
         <li><a href="{base}about.html">О компании</a></li>
       </ul>
@@ -990,7 +990,7 @@ def build_index(site: dict, projects: list[dict], articles: list[dict]) -> str:
       </div>
       <div>
         <p class="lead" data-cms="standardsBlock.lead">{esc(std_head.get('lead') or 'Правила, по которым проектируем, собираем и сдаём мебель: материалы, фурнитура, допуски, контроль и гарантия.')}</p>
-        <p style="margin-top:18px"><a class="sec__link" href="engineering-base.html">Инженерная база 40/60 →</a></p>
+        <p style="margin-top:18px"><a class="sec__link" href="standards.html">Посмотреть стандарты 40/60 →</a></p>
       </div>
     </div>
     <ul class="std-grid">
@@ -1610,7 +1610,7 @@ def build_doc_page(doc: dict, name: str) -> str:
         og_image = "images/og-cover.jpg"
 
     body = f"""{hero}
-<section class="sec sec--tight editorial-content">
+<section class="sec sec--tight editorial-content{" standards-content" if name == "standards" else ""}">
   <div class="prose editorial-content__inner">
     {body_html}
   </div>
@@ -1623,6 +1623,7 @@ def build_doc_page(doc: dict, name: str) -> str:
         description=description,
         canonical=f"{SITE}/{name}.html",
         body=body,
+        extra_head=('<link rel="stylesheet" href="css/standards.css">' if name == "standards" else ""),
         active=f"{name}.html",
         ld=[{
             "@context": "https://schema.org",
@@ -1822,269 +1823,30 @@ Sitemap: {SITE}/sitemap.xml
 
 
 # --------------------------------------------------------------------------
-# Публичная инженерная база 40/60
+# Старые адреса инженерной базы: перенаправление на единые стандарты
 # --------------------------------------------------------------------------
 
-def load_knowledge() -> tuple[list[dict], list[dict]]:
-    categories_path = ROOT / "_knowledge" / "categories.json"
-    categories = json.loads(read(categories_path)) if categories_path.exists() else []
-    articles: list[dict] = []
-    folder = ROOT / "_knowledge"
-    for path in sorted(folder.rglob("*.md")):
-        if path.name.lower() in ("readme.md", "catalog.md"):
-            continue
-        meta, body = parse_front_matter(read(path))
-        if not meta or not body.strip():
-            continue
-        slug = str(meta.get("slug") or path.stem).strip()
-        articles.append({
-            "slug": slug,
-            "title": str(meta.get("title") or slug).strip(),
-            "h1": str(meta.get("h1") or meta.get("title") or slug).strip(),
-            "description": str(meta.get("description") or "").strip(),
-            "lead": str(meta.get("lead") or "").strip(),
-            "category": str(meta.get("category") or "").strip(),
-            "status": str(meta.get("status") or "Обзор").strip(),
-            "version": str(meta.get("version") or "").strip(),
-            "checked": str(meta.get("checked") or "").strip(),
-            "updated": str(meta.get("updated") or meta.get("checked") or "").strip(),
-            "body_md": re.sub(r"^\s*#\s+.+?\n+", "", body.strip(), count=1),
-            "body_html": md(re.sub(r"^\s*#\s+.+?\n+", "", body.strip(), count=1)),
-            "path": str(path.relative_to(ROOT)).replace("\\", "/"),
-        })
-    articles.sort(key=lambda item: (item["category"], item["title"].lower()))
-    return categories, articles
+def build_legacy_redirects() -> list[tuple[str, str]]:
+    """Сохраняет старые URL, но больше не публикует отдельную техническую библиотеку."""
+    target = f"{SITE}/standards.html"
+    old_pages = [ROOT / "engineering-base.html"]
+    library = ROOT / "technical-library"
+    if library.exists():
+        old_pages.extend(library.rglob("*.html"))
 
+    for old in old_pages:
+        output = old
+        output.parent.mkdir(parents=True, exist_ok=True)
+        write(output, f"""<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Стандарты 40/60 Design</title><link rel="canonical" href="{target}">
+<meta http-equiv="refresh" content="0;url={target}">
+<meta name="robots" content="noindex,follow"></head>
+<body><p>Раздел объединён. <a href="{target}">Перейти к стандартам 40/60</a>.</p>
+<script>location.replace("{target}");</script></body></html>""")
 
-def kb_head(base: str = "") -> str:
-    return f'<link rel="stylesheet" href="{base}css/engineering-base.css">'
-
-
-def kb_breadcrumbs(items: list[tuple[str, str]], base: str = "") -> str:
-    return breadcrumbs([(base + href if href else "", label) for href, label in items])
-
-
-def build_engineering_home() -> str:
-    crumbs = breadcrumbs([("index.html", "Главная"), ("", "Инженерная база")])
-    body = f"""<section class="kb-hero">
-  <div class="wrap kb-hero__inner">
-    {crumbs}
-    <p class="eyebrow">Инженерная база 40/60</p>
-    <h1 class="display display--giant kb-hero__title">Мебель начинается <em>с понимания</em>.</h1>
-    <p class="lead kb-hero__lead">Открытая база знаний о материалах, конструкциях и технологиях корпусной мебели. Объясняем, как устроены решения, на чём основаны требования и как мы контролируем результат.</p>
-    <div class="kb-hero__actions">
-      <a class="btn btn--solid" href="technical-library.html">Перейти в техническую библиотеку</a>
-      <a class="btn btn--ghost" href="standards.html">Стандарты 40/60</a>
-    </div>
-    <div class="kb-hero__note"><span>01</span><p>Не рекламные обещания, а технические сведения, первичные источники и проверяемые критерии.</p></div>
-  </div>
-</section>
-<section class="sec kb-pathways">
-  <div class="wrap">
-    <div class="sec__head">
-      <div><p class="eyebrow">Три уровня знаний</p><h2 class="display display--xl">Выберите глубину <em>изучения</em>.</h2></div>
-      <p class="lead">От первого знакомства с мебельными материалами — до подробной технической документации и правил контроля качества.</p>
-    </div>
-    <div class="kb-pathways__grid">
-      <a class="kb-pathway kb-pathway--client" href="articles.html">
-        <span class="kb-pathway__num">01 / ДЛЯ ЗАКАЗЧИКА</span>
-        <span class="kb-pathway__title">Разобраться в мебели</span>
-        <span class="kb-pathway__text">Понятные объяснения, сравнения материалов и ответы на вопросы, которые возникают перед заказом кухни.</span>
-        <span class="kb-pathway__link">Читать материалы <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="kb-pathway kb-pathway--library" href="technical-library.html">
-        <span class="kb-pathway__num">02 / ТЕХНИЧЕСКАЯ БАЗА</span>
-        <span class="kb-pathway__title">Изучить глубже</span>
-        <span class="kb-pathway__text">Свойства материалов, устройство узлов, технологические процессы, таблицы, ограничения и документация производителей.</span>
-        <span class="kb-pathway__link">Открыть библиотеку <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="kb-pathway kb-pathway--standards" href="standards.html">
-        <span class="kb-pathway__num">03 / ПОДХОД 40/60</span>
-        <span class="kb-pathway__title">Проверить наши стандарты</span>
-        <span class="kb-pathway__text">Собственные требования к проектированию, спецификации, изготовлению, монтажу и приёмке мебели.</span>
-        <span class="kb-pathway__link">Стандарты качества <b aria-hidden="true">↗</b></span>
-      </a>
-    </div>
-  </div>
-</section>
-<section class="sec sec--alt kb-principles">
-  <div class="wrap">
-    <div class="sec__head">
-      <div><p class="eyebrow">Как устроена база</p><h2 class="display display--xl">Каждое утверждение должно иметь <em>основание</em>.</h2></div>
-      <p class="lead">Мы разделяем требования нормативов, инструкции производителей, инженерные выводы и практический опыт. Это разные уровни доказательности.</p>
-    </div>
-    <div class="kb-principles__grid">
-      <div><span>01</span><h3>Первоисточники</h3><p>Технические листы, каталоги, инструкции и применимые нормативные документы.</p></div>
-      <div><span>02</span><h3>Область применения</h3><p>Указываем материал, систему, условия эксплуатации и ограничения конкретного решения.</p></div>
-      <div><span>03</span><h3>Проверяемость</h3><p>Показываем, откуда взяты данные и когда материал проверялся в последний раз.</p></div>
-      <div><span>04</span><h3>Ответственность</h3><p>Не выдаём частное мнение за ГОСТ и не называем проект внутреннего правила утверждённым стандартом.</p></div>
-    </div>
-  </div>
-</section>
-<section class="sec kb-final">
-  <div class="wrap kb-final__inner">
-    <div><p class="eyebrow">40/60 Design</p><h2 class="display display--xl">Понимать конструкцию — значит понимать <em>качество</em>.</h2></div>
-    <a class="btn btn--solid" href="technical-library.html">Исследовать библиотеку</a>
-  </div>
-</section>"""
-    return page(
-        title="Инженерная база 40/60 Design — материалы, технологии и стандарты мебели",
-        description="Открытая инженерная база 40/60 Design: техническая библиотека материалов и технологий корпусной мебели, понятные объяснения для заказчиков и стандарты качества компании.",
-        canonical=f"{SITE}/engineering-base.html",
-        body=body,
-        active="engineering-base.html",
-        extra_head=kb_head(),
-        ld=[{"@context":"https://schema.org","@type":"WebPage","name":"Инженерная база 40/60 Design","description":"Открытая техническая база знаний о корпусной мебели."}],
-    )
-
-
-def build_technical_library(categories: list[dict], articles: list[dict]) -> str:
-    cards = []
-    for category in categories:
-        count = sum(1 for article in articles if article["category"] == category["slug"])
-        state = f"{count} материал" if count == 1 else f"{count} материалов" if count else "Раздел пополняется"
-        category_docs = [item for item in articles if item["category"] == category["slug"]]
-        search_text = " ".join([category["title"], category["description"], *category.get("topics", []), *[item["title"] + " " + item["description"] for item in category_docs]])
-        cards.append(f"""<a class="kb-category" href="technical-library/{esc(category['slug'])}.html" data-kb-card data-search="{esc(search_text.lower())}">
-  <span class="kb-category__num">{esc(category.get('number', ''))}</span>
-  <span class="kb-category__body"><strong>{esc(category['title'])}</strong><span>{esc(category['description'])}</span><small>{state}</small></span>
-  <span class="kb-category__arrow" aria-hidden="true">↗</span>
-</a>""")
-    featured = ""
-    if articles:
-        items = []
-        for article in articles[:4]:
-            items.append(f'<a class="kb-featured" href="technical-library/articles/{esc(article["slug"])}.html"><span>{esc(article["category"])}</span><strong>{esc(article["title"])}</strong><small>{esc(article["status"])}</small></a>')
-        featured = '<section class="kb-featured-section"><p class="eyebrow">Материалы библиотеки</p><h2 class="display display--l">Последние технические документы</h2><div class="kb-featured-grid">' + "".join(items) + '</div></section>'
-    body = f"""<section class="kb-page-hero">
-  <div class="wrap">
-    {breadcrumbs([("index.html", "Главная"), ("engineering-base.html", "Инженерная база"), ("", "Техническая библиотека")])}
-    <p class="eyebrow">Инженерная база 40/60</p>
-    <h1 class="display display--giant">Техническая <em>библиотека</em>.</h1>
-    <p class="lead">Справочник по материалам, фурнитуре, конструкциям и производственным процессам. Здесь собраны определения, характеристики, ограничения, схемы и ссылки на документацию.</p>
-    <label class="kb-search"><span class="sr-only">Поиск по технической библиотеке</span><input type="search" id="kb-search" placeholder="Найти материал, технологию или термин…" autocomplete="off"><span aria-hidden="true">⌕</span></label>
-    <p class="kb-search__hint" id="kb-search-count">15 тематических направлений</p>
-  </div>
-</section>
-<section class="sec sec--tight">
-  <div class="wrap">
-    <div class="kb-category-grid" id="kb-category-grid">{''.join(cards)}</div>
-    <p class="kb-empty" id="kb-empty" hidden>По вашему запросу ничего не найдено. Попробуйте другое название или термин.</p>
-  </div>
-</section>
-<div class="wrap">{featured}</div>
-<section class="sec sec--tight sec--alt">
-  <div class="wrap kb-library-foot">
-    <div><p class="eyebrow">Система 40/60</p><h2 class="display display--l">Технические знания превращаются в <em>проверяемые требования</em>.</h2><p class="lead">Отдельно мы публикуем собственные стандарты проектирования, изготовления и монтажа. Они не подменяют нормативы и документацию производителей.</p></div>
-    <a class="btn btn--ghost" href="standards.html">Открыть стандарты 40/60</a>
-  </div>
-</section>"""
-    return page(
-        title="Техническая библиотека мебели — материалы, фурнитура, технологии | 40/60",
-        description="Техническая библиотека 40/60 Design: ЛДСП, МДФ, фасады, кромки, фурнитура, столешницы, конструкция мебели, проектирование, производство и монтаж.",
-        canonical=f"{SITE}/technical-library.html",
-        body=body,
-        active="engineering-base.html",
-        extra_head=kb_head(),
-        scripts='<script src="js/engineering-base.js" defer></script>',
-        ld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Техническая библиотека 40/60 Design","url":f"{SITE}/technical-library.html"}],
-    )
-
-
-def build_knowledge_category(category: dict, articles: list[dict], guides: list[dict]) -> str:
-    docs = [article for article in articles if article["category"] == category["slug"]]
-    doc_links = "".join(
-        f'<a class="kb-doc-link" href="articles/{esc(article["slug"])}.html"><span>{esc(article["status"])}</span><strong>{esc(article["title"])}</strong><small>{esc(article["description"])}</small></a>'
-        for article in docs
-    )
-    guide_slugs = category.get("related_guides", [])
-    related = [guide for guide in guides if guide["slug"] in guide_slugs and not guide["draft"]]
-    guide_links = "".join(
-        f'<a class="kb-doc-link kb-doc-link--guide" href="../articles/{esc(guide["slug"])}.html"><span>Материал для заказчика</span><strong>{esc(guide["h1"])}</strong><small>{esc(guide["description"])}</small></a>'
-        for guide in related
-    )
-    content = doc_links + guide_links
-    if not content:
-        content = '<div class="kb-empty-state"><span>В РАЗРАБОТКЕ</span><h2>Материалы этого направления готовятся.</h2><p>Мы публикуем технические сведения после проверки по документации производителей и применимым нормативным источникам.</p></div>'
-    body = f"""<section class="kb-page-hero kb-page-hero--compact">
-  <div class="wrap">
-    {breadcrumbs([("../index.html", "Главная"), ("../engineering-base.html", "Инженерная база"), ("../technical-library.html", "Техническая библиотека"), ("", category["title"])])}
-    <p class="eyebrow">Направление {esc(category.get("number", ""))}</p>
-    <h1 class="display display--giant">{esc(category["title"])}</h1>
-    <p class="lead">{esc(category["description"])}</p>
-    <div class="kb-topic-list">{''.join(f'<span>{esc(topic)}</span>' for topic in category.get("topics", []))}</div>
-  </div>
-</section>
-<section class="sec sec--tight"><div class="wrap">
-  <div class="kb-section-heading"><div><p class="eyebrow">Материалы раздела</p><h2 class="display display--l">Изучить <em>подробнее</em>.</h2></div><a class="sec__link" href="../technical-library.html">Все направления ↗</a></div>
-  <div class="kb-doc-grid">{content}</div>
-</div></section>
-<section class="sec sec--tight sec--alt"><div class="wrap kb-library-foot"><div><p class="eyebrow">Подход 40/60</p><h2 class="display display--l">От технического знания — к <em>стандарту качества</em>.</h2></div><a class="btn btn--ghost" href="../standards.html">Стандарты 40/60</a></div></section>"""
-    has_docs = bool(docs)
-    return page(
-        title=f"{category['title']} — техническая библиотека 40/60 Design",
-        description=category["description"],
-        canonical=f"{SITE}/technical-library/{category['slug']}.html",
-        body=body,
-        active="engineering-base.html",
-        base="../",
-        extra_head=kb_head("../"),
-        noindex=not has_docs,
-        ld=[{"@context":"https://schema.org","@type":"CollectionPage","name":category["title"],"description":category["description"]}],
-    )
-
-
-def build_knowledge_article(article: dict, categories: list[dict]) -> str:
-    category = next((item for item in categories if item["slug"] == article["category"]), None)
-    category_title = category["title"] if category else "Техническая библиотека"
-    status = esc(article["status"])
-    updated = ru_date(article["updated"]) if article["updated"] else ""
-    body = f"""<section class="kb-article-hero">
-  <div class="wrap">
-    {breadcrumbs([("../../index.html", "Главная"), ("../../engineering-base.html", "Инженерная база"), ("../../technical-library.html", "Техническая библиотека"), (f"../{article['category']}.html", category_title), ("", article["h1"])])}
-    <p class="eyebrow">{esc(category_title)}</p>
-    <h1 class="display display--xl">{esc(article["h1"])}</h1>
-    <p class="lead">{esc(article["lead"] or article["description"])}</p>
-    <div class="kb-article-meta"><span>{status}</span>{f'<span>Проверено: {esc(updated)}</span>' if updated else ''}{f'<span>Редакция {esc(article["version"])}</span>' if article["version"] else ''}</div>
-  </div>
-</section>
-<section class="sec sec--tight">
-  <div class="wrap kb-article-layout">
-    <aside class="kb-toc" aria-label="Содержание статьи"><p>СОДЕРЖАНИЕ</p><nav id="kb-toc"></nav></aside>
-    <article class="prose kb-prose" id="kb-article-content">{article["body_html"]}</article>
-  </div>
-</section>
-<section class="sec sec--tight sec--alt"><div class="wrap kb-library-foot"><div><p class="eyebrow">Следующий уровень</p><h2 class="display display--l">Как эти знания применяются в <em>40/60</em>.</h2><p class="lead">Смотрите наши требования к проектированию, изготовлению и контролю качества мебели.</p></div><a class="btn btn--ghost" href="../../standards.html">Стандарты 40/60</a></div></section>"""
-    return page(
-        title=f"{article['title']} | Техническая библиотека 40/60",
-        description=article["description"] or article["lead"],
-        canonical=f"{SITE}/technical-library/articles/{article['slug']}.html",
-        body=body,
-        active="engineering-base.html",
-        base="../../",
-        extra_head=kb_head("../../"),
-        scripts='<script src="../../js/engineering-base.js" defer></script>',
-        ld=[{"@context":"https://schema.org","@type":"TechArticle","headline":article["h1"],"description":article["description"] or article["lead"],"author":{"@type":"Organization","name":BRAND},"publisher":{"@type":"Organization","name":BRAND},"dateModified":article["updated"] or article["checked"] or date.today().isoformat()}],
-    )
-
-
-def build_engineering_pages(guides: list[dict]) -> list[tuple[str, str]]:
-    categories, articles = load_knowledge()
-    write(ROOT / "engineering-base.html", build_engineering_home())
-    write(ROOT / "technical-library.html", build_technical_library(categories, articles))
-    today = date.today().isoformat()
-    paths = [("engineering-base.html", today), ("technical-library.html", today)]
-    for category in categories:
-        write(ROOT / "technical-library" / f"{category['slug']}.html",
-              build_knowledge_category(category, articles, guides))
-        if any(article["category"] == category["slug"] for article in articles):
-            paths.append((f"technical-library/{category['slug']}.html", today))
-    for article in articles:
-        write(ROOT / "technical-library" / "articles" / f"{article['slug']}.html",
-              build_knowledge_article(article, categories))
-        paths.append((f"technical-library/articles/{article['slug']}.html", iso_date(article["updated"] or article["checked"])))
-    print(f"Инженерная база: {len(categories)} направлений, {len(articles)} технических документов")
-    return paths
+    print(f"Старые адреса инженерной базы перенаправлены: {len(old_pages)}")
+    return []
 
 
 # --------------------------------------------------------------------------
@@ -2145,7 +1907,7 @@ def main() -> int:
 
     write(ROOT / "404.html", build_404())
 
-    engineering_paths = build_engineering_pages(articles)
+    legacy_paths = build_legacy_redirects()
 
     for doc_name in ("standards", "requirements"):
         doc = load_doc(doc_name)
@@ -2157,7 +1919,6 @@ def main() -> int:
     paths = [("", today), ("portfolio.html", today), ("articles.html", today),
              ("standards.html", today), ("requirements.html", today),
              ("about.html", today), ("warranty.html", today), ("partners.html", today)]
-    paths += engineering_paths
     paths += [(f"portfolio/{p['slug']}.html", today) for p in projects]
     paths += [(f"articles/{a['slug']}.html", iso_date(a["updated"] or a["date"])) for a in published]
     write(ROOT / "sitemap.xml", build_sitemap(paths))
